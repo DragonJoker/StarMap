@@ -14,12 +14,30 @@ namespace starmap
 {
 	/**
 	*\brief
+	*	Structure contenant les billboards pour une couleur d'étoile
+	*/
+	struct StarHolder
+	{
+		StarHolder( glm::vec3 const & colour
+			, render::BillboardBufferPtr buffer )
+			: m_colour{ colour }
+			, m_buffer{ buffer }
+		{
+		}
+		glm::vec3 m_colour;
+		render::BillboardBufferPtr m_buffer;
+		bool m_initialised{ false };
+	};
+	//! Un tableau de StarHolder.
+	using StarHolderArray = std::vector< StarHolder >;
+	/**
+	*\brief
 	*	L'état de la carte du ciel.
 	*/
 	struct StarMapState
 	{
-		//! La liste d'étoiles.
-		StarArray m_stars;
+		//! Le tableau de StarHolders.
+		StarHolderArray m_holders;
 		//! L'état de la caméra.
 		CameraState m_cameraState;
 	};

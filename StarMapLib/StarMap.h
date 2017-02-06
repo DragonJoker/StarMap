@@ -21,28 +21,6 @@ namespace starmap
 	*/
 	class StarMap
 	{
-	private:
-		/**
-		*\brief
-		*	Structure contenant les billboards pour une couleur d'étoile
-		*/
-		struct StarHolder
-		{
-			StarHolder( glm::vec3 const & colour
-				, render::Billboard & stars
-				, render::Billboard & halos )
-				: m_colour{ colour }
-				, m_stars{ stars }
-				, m_halos{ halos }
-			{
-			}
-			glm::vec3 m_colour;
-			render::Billboard & m_stars;
-			render::Billboard & m_halos;
-		};
-		//! Un tableau de StarHolder.
-		using StarHolderArray = std::vector< StarHolder >;
-
 	public:
 		/**
 		*\brief
@@ -159,18 +137,20 @@ namespace starmap
 			, uint32_t index );
 		/**
 		*\brief
-		*	Ajoute une étoile pour le rendu.
-		*\param[in] star
-		*	L'étoile.
-		*/
-		void doAdd( Star const & star );
-		/**
-		*\brief
-		*	Initialise un billboard pour les étoiles de la couleur donnée.
+		*	Récupère un conteneur de billboard pour les étoiles de la couleur donnée.
 		*\param[in] colour
 		*	La couleur.
+		*\return
+		*	Le conteneur
 		*/
-		StarHolder & doInitialiseStarsHolder( glm::vec3 const & colour );
+		StarHolder & doFindHolder( glm::vec3 const & colour );
+		/**
+		*\brief
+		*	Initialise les billboards pour les étoiles du conteneur.
+		*\param[in] holder
+		*	Le conteneur du tampon et de la couleur.
+		*/
+		void doInitialiseHolder( StarHolder & holder );
 
 	private:
 		//! L'état de la carte.
@@ -199,8 +179,6 @@ namespace starmap
 		render::Billboard * m_pickedBillboard{ nullptr };
 		//! Le billboard apparaissant sur la sélection (billboard ou objet).
 		render::BillboardPtr m_picked;
-		//! Le tableau de StarHolders.
-		StarHolderArray m_holders;
 		//! La texture d'opacité.
 		render::TexturePtr m_opacity;
 	};

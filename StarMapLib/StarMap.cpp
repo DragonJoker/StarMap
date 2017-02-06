@@ -11,7 +11,8 @@ namespace starmap
 {
 	namespace
 	{
-		glm::vec3 doConvertSphericalToCartesian( glm::vec2 const & coord, float distance = 100.0f )
+		glm::vec3 doConvertSphericalToCartesian( glm::vec2 const & coord
+			, float distance = 100.0f )
 		{
 			auto sint = sin( coord.x );
 			auto cost = cos( coord.x );
@@ -111,12 +112,16 @@ namespace starmap
 			render::loadTexture( opacityMap, *m_opacity );
 		}
 
-		render::MaterialPtr pickedMat = scene.getMaterials().addElement( "picked" );
+		render::MaterialPtr pickedMat = scene.getMaterials().addElement
+			( "picked" );
 		pickedMat->setOpacityMap( m_opacity );
 		pickedMat->setAmbient( glm::vec3{ 0.0, 0.0, 0.5 } );
 		pickedMat->setDiffuse( glm::vec3{ 0.0, 0.0, 0.5 } );
-		m_picked = std::make_shared< render::Billboard >( "picked" );
-		m_picked->add( { glm::vec3{ 0, 0, 0 }, glm::vec2{ 1, 1 } } );
+		auto pickedBuffers = scene.getBillboardsBuffers().addElement
+			( "picked" );
+		pickedBuffers->add( { glm::vec3{ 0, 0, 0 }, glm::vec2{ 1, 1 } } );
+		m_picked = std::make_shared< render::Billboard >( "picked"
+			, *pickedBuffers );
 		m_picked->setMaterial( pickedMat );
 		m_picked->show( false );
 		scene.add( m_picked, false );
@@ -135,9 +140,9 @@ namespace starmap
 		//lines->setMaterial( linesMat );
 		//scene.add( lines );
 
-		for ( auto & star : m_state.m_stars )
+		for ( auto & holder : m_state.m_holders )
 		{
-			doAdd( star );
+			doInitialiseHolder( holder );
 		}
 
 		m_onObjectPicked = m_window->getPicking().onObjectPicked.connect
@@ -161,8 +166,12 @@ namespace starmap
 		m_onObjectPicked.disconnect();
 		m_onBillboardPicked.disconnect();
 		m_onUnpick.disconnect();
-		m_holders.clear();
 		m_window.reset();
+
+		for ( auto & holder : m_state.m_holders )
+		{
+			holder.m_initialised = false;
+		}
 	}
 
 	void StarMap::beginFrame()
@@ -173,8 +182,11 @@ namespace starmap
 	void StarMap::drawFrame()
 	{
 		m_state.m_cameraState.update();
-		m_window->getScene().getCamera().setOrientation( glm::quat{ glm::vec3{ m_state.m_cameraState.getAngle(), 0.0f } } );
-		m_window->getScene().getCamera().moveTo( { 0, 0, m_state.m_cameraState.getZoom() } );
+		m_window->getScene().getCamera().setOrientation( glm::quat{
+			{ m_state.m_cameraState.getAngle(), 0.0f } } );
+		m_window->getScene().getCamera().moveTo( { 0
+			, 0
+			, m_state.m_cameraState.getZoom() } );
 		m_window->update();
 		m_window->draw();
 	}
@@ -186,11 +198,14 @@ namespace starmap
 
 	void StarMap::add( Star const & star )
 	{
-		m_state.m_stars.push_back( star );
+		auto & holder = doFindHolder( star.getColour() );
+		auto position = doConvertSphericalToCartesian( star.getPosition() );
+		holder.m_buffer->add( { position
+			, glm::vec2{ star.getMagnitude(), star.getMagnitude() } } );
 
 		if ( m_window )
 		{
-			doAdd( star );
+			doInitialiseHolder( holder );
 		}
 	}
 
@@ -208,7 +223,8 @@ namespace starmap
 		doUpdatePicked( object );
 	}
 
-	void StarMap::onBillboardPicked( render::Billboard & billboard, uint32_t index )
+	void StarMap::onBillboardPicked( render::Billboard & billboard
+		, uint32_t index )
 	{
 		m_pickedBillboard = &billboard;
 		doUpdatePicked( billboard );
@@ -235,7 +251,7 @@ namespace starmap
 	void StarMap::doUpdatePicked( render::Billboard const & billboard
 		, uint32_t index )
 	{
-		auto data = billboard[index];
+		auto data = billboard.getBuffer()[index];
 		auto pos = data.position;
 		auto transform = billboard.getTransform();
 		pos = glm::vec3{ transform * glm::vec4{ pos, 1.0 } };
@@ -243,58 +259,62 @@ namespace starmap
 		doUpdatePicked( static_cast< render::Movable const & >( billboard ) );
 	}
 
-	void StarMap::doAdd( Star const & star )
+	StarHolder & StarMap::doFindHolder( glm::vec3 const & colour )
 	{
-		auto & holder = doInitialiseStarsHolder( star.getColour() );
-		auto position = doConvertSphericalToCartesian( star.getPosition() );
-		holder.m_stars.add( { position, glm::vec2{ star.getMagnitude(), star.getMagnitude() } } );
-		holder.m_halos.add( { position, glm::vec2{ star.getMagnitude(), star.getMagnitude() } } );
-	}
-
-	StarMap::StarHolder & StarMap::doInitialiseStarsHolder( glm::vec3 const & colour )
-	{
-		auto it = std::find_if( std::begin( m_holders )
-			, std::end( m_holders )
+		auto it = std::find_if( std::begin( m_state.m_holders )
+			, std::end( m_state.m_holders )
 			, [&colour]( StarHolder const & holder )
 			{
 				return holder.m_colour == colour;
 			} );
 
-		if ( it == std::end( m_holders ) )
+		if ( it == std::end( m_state.m_holders ) )
+		{
+			m_state.m_holders.emplace_back( colour
+				, std::make_shared< render::BillboardBuffer >() );
+			it = m_state.m_holders.begin() + m_state.m_holders.size() - 1;
+		}
+
+		return *it;
+	}
+
+	void StarMap::doInitialiseHolder( StarHolder & holder )
+	{
+		if ( !holder.m_initialised )
 		{
 			using render::operator<<;
 			std::stringstream scolour;
-			scolour << colour;
+			scolour << holder.m_colour;
+			std::string const shalos = "halos_" + scolour.str();
+			std::string const sstars = "stars_" + scolour.str();
 			auto & scene = m_window->getScene();
-			render::MaterialPtr starsMat = scene.getMaterials().addElement( "stars_" + scolour.str() );
+			auto starsMat = scene.getMaterials().addElement( sstars );
 			starsMat->setOpacityMap( m_opacity );
-			starsMat->setAmbient( colour );
-			starsMat->setDiffuse( colour );
-			starsMat->setEmissive( colour );
+			starsMat->setAmbient( holder.m_colour );
+			starsMat->setDiffuse( holder.m_colour );
+			starsMat->setEmissive( holder.m_colour );
 			starsMat->setAlphaTest( true );
+			auto halosMat = scene.getMaterials().addElement( shalos );
+			halosMat->setOpacityMap( m_opacity );
+			halosMat->setAmbient( holder.m_colour );
+			halosMat->setDiffuse( holder.m_colour );
+			halosMat->setEmissive( holder.m_colour );
 
-			render::BillboardPtr stars = std::make_shared< render::Billboard >( "stars_" + scolour.str() );
+			auto stars = std::make_shared< render::Billboard >( sstars
+				, *holder.m_buffer );
 			stars->setDimensions( glm::vec2{ 1, 1 } );
 			stars->moveTo( glm::vec3{ 0, 0, 8 } );
 			stars->setMaterial( starsMat );
 			scene.add( stars, true );
 
-			render::MaterialPtr halosMat = scene.getMaterials().addElement( "halos_" + scolour.str() );
-			halosMat->setOpacityMap( m_opacity );
-			halosMat->setAmbient( colour );
-			halosMat->setDiffuse( colour );
-			halosMat->setEmissive( colour );
-
-			render::BillboardPtr halos = std::make_shared< render::Billboard >( "halos_" + scolour.str() );
+			auto halos = std::make_shared< render::Billboard >( shalos
+				, *holder.m_buffer );
 			halos->setDimensions( glm::vec2{ 2, 2 } );
 			halos->moveTo( glm::vec3{ 0, 0, 8 } );
 			halos->setMaterial( halosMat );
 			scene.add( halos, false );
 
-			m_holders.emplace_back( colour, *stars, *halos );
-			it = m_holders.begin() + m_holders.size() - 1;
+			holder.m_initialised = true;
 		}
-
-		return *it;
 	}
 }
