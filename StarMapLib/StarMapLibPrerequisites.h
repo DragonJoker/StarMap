@@ -1,0 +1,29 @@
+#pragma once
+
+#include <RenderLib/RenderLibPrerequisites.h>
+
+#include <memory>
+
+namespace starmap
+{
+	class Constellation;
+	class ScreenEvents;
+	class Star;
+	class StarMap;
+
+	struct StarMapState;
+
+	using StarArray = std::vector< Star >;
+	using ConstellationArray = std::vector< Constellation >;
+
+	using OnScreenTap = render::Signal< std::function< void( glm::ivec2 const & ) > >;
+	using OnScreenDoubleTap = render::Signal< std::function< void( glm::ivec2 const & ) > >;
+	using OnScreenSingleMove = render::Signal< std::function< void( glm::ivec2 const & ) > >;
+	using OnScreenDoubleMove = render::Signal< std::function< void( glm::ivec2 const &, float ) > >;
+	using OnPick = render::Signal< std::function< void( glm::ivec2 const & ) > >;
+	using OnReset = render::Signal< std::function< void() > >;
+	using OnSetVelocity = render::Signal< std::function< void( glm::ivec2 const & ) > >;
+	using OnSetZoomVelocity = render::Signal< std::function< void( float ) > >;
+
+	using StarMapPtr = std::unique_ptr< StarMap >;
+}
