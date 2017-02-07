@@ -14,15 +14,15 @@ namespace starmap
 		glm::vec3 doConvertSphericalToCartesian( glm::vec2 const & coord
 			, float distance = 100.0f )
 		{
-			auto sint = sin( coord.x );
-			auto cost = cos( coord.x );
-			auto sinp = sin( coord.y );
-			auto cosp = cos( coord.y );
+			auto const sint = sin( coord.x );
+			auto const cost = cos( coord.x );
+			auto const sinp = sin( coord.y );
+			auto const cosp = cos( coord.y );
 			return glm::vec3
 			{
-				distance * sint * cosp,
-				distance * sint * sinp,
-				distance * cost
+				distance * sinp * cost,
+				distance * sinp * sint,
+				distance * cosp
 			};
 		}
 	}
@@ -76,16 +76,6 @@ namespace starmap
 		// Initialise the render window
 		m_window = std::make_unique< render::RenderWindow >( size );
 
-		m_window->getViewport().setPerspective( 45.0f
-			, ratio
-			, 0.1f
-			, 200.0f );
-		m_window->getViewport().setOrtho( ratio * -10.0f
-			, ratio * 10.0f
-			, -10.0f
-			, 10.0f
-			, -200.0f
-			, 200.0f );
 		m_window->getViewport().setInfinitePerspective( 45.0f
 			, ratio
 			, 0.1f );
@@ -252,7 +242,7 @@ namespace starmap
 		, uint32_t index )
 	{
 		auto data = billboard.getBuffer()[index];
-		auto pos = data.position;
+		auto pos = data.center;
 		auto transform = billboard.getTransform();
 		pos = glm::vec3{ transform * glm::vec4{ pos, 1.0 } };
 		m_picked->translate( pos );
@@ -271,7 +261,7 @@ namespace starmap
 		if ( it == std::end( m_state.m_holders ) )
 		{
 			m_state.m_holders.emplace_back( colour
-				, std::make_shared< render::BillboardBuffer >() );
+				, render::BillboardBuffer::create() );
 			it = m_state.m_holders.begin() + m_state.m_holders.size() - 1;
 		}
 
@@ -303,14 +293,12 @@ namespace starmap
 			auto stars = std::make_shared< render::Billboard >( sstars
 				, *holder.m_buffer );
 			stars->setDimensions( glm::vec2{ 1, 1 } );
-			stars->moveTo( glm::vec3{ 0, 0, 8 } );
 			stars->setMaterial( starsMat );
 			scene.add( stars, true );
 
 			auto halos = std::make_shared< render::Billboard >( shalos
 				, *holder.m_buffer );
 			halos->setDimensions( glm::vec2{ 2, 2 } );
-			halos->moveTo( glm::vec3{ 0, 0, 8 } );
 			halos->setMaterial( halosMat );
 			scene.add( halos, false );
 

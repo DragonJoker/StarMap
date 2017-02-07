@@ -91,13 +91,22 @@ Engine::Engine( android_app * state )
 			return uidistribution( engine );
 		};
 
-		for ( uint32_t i = 0; i < 1000000; ++i )
+		for ( uint32_t i = 0; i < 10000; ++i )
 		{
 			m_starmap.add( { "Coin"
 				, randm()
 				,{ randf(), randf() }
 				,colours[randui()] } );
 		}
+		//m_starmap.add( starmap::Star{ "Coin3", randm(), { 0.0, -M_PI / 4 }, colours[0] } );
+		//m_starmap.add( starmap::Star{ "Coin4", randm(), { 0.0, 0.0 }, colours[0] } );
+		//m_starmap.add( starmap::Star{ "Coin5", randm(), { 0.0, M_PI / 4 }, colours[0] } );
+		//m_starmap.add( starmap::Star{ "Coin6", randm(), { M_PI / 4, -M_PI / 4 }, colours[0] } );
+		//m_starmap.add( starmap::Star{ "Coin7", randm(), { M_PI / 4, 0.0 }, colours[0] } );
+		//m_starmap.add( starmap::Star{ "Coin8", randm(), { M_PI / 4, M_PI / 4 }, colours[0] } );
+		//m_starmap.add( starmap::Star{ "Coin0", randm(), { -M_PI / 4, -M_PI / 4 }, colours[0] } );
+		//m_starmap.add( starmap::Star{ "Coin1", randm(), { -M_PI / 4, 0.0 }, colours[0] } );
+		//m_starmap.add( starmap::Star{ "Coin2", randm(), { -M_PI / 4, M_PI / 4 }, colours[0] } );
 	}
 
 	ANativeActivity_setWindowFlags( m_app->activity
@@ -475,12 +484,9 @@ int Engine::doInitialiseDisplay()
 				m_height = std::min( h, w );
 
 				// Initialisation de l'état GL.
-				glEnable( GL_CULL_FACE );
-				glCheckError( "glEnable GL_CULL_FACE" );
-				glEnable( GL_TEXTURE_2D );
-				glCheckError( "glEnable GL_TEXTURE_2D" );
-				glFrontFace( GL_CCW );
-				glCheckError( "GL_CCW" );
+				glCheckError( glEnable, GL_CULL_FACE );
+				glCheckError( glEnable, GL_TEXTURE_2D );
+				glCheckError( glFrontFace, GL_CCW );
 
 				auto content = utils::getFileBinaryContent( *m_app->activity
 					, "arial.ttf" );
