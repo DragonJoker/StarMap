@@ -1,3 +1,11 @@
+/**
+*\file
+*	StarMapLibPrerequisites.h
+*\author
+*	Sylvain Doremus
+*/
+#ifndef ___StarMapLib_Prerequisites_HPP___
+#define ___StarMapLib_Prerequisites_HPP___
 #pragma once
 
 #include <RenderLib/RenderLibPrerequisites.h>
@@ -27,3 +35,5 @@ namespace starmap
 
 	using StarMapPtr = std::unique_ptr< StarMap >;
 }
+
+#endif

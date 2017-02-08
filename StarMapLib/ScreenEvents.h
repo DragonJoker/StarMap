@@ -6,6 +6,7 @@
 */
 #ifndef ___StarMapLib_ScreenEvents_HPP___
 #define ___StarMapLib_ScreenEvents_HPP___
+#pragma once
 
 #include "CameraState.h"
 

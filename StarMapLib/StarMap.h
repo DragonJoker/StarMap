@@ -6,6 +6,7 @@
 */
 #ifndef ___StarMapLib_StarMap_HPP___
 #define ___StarMapLib_StarMap_HPP___
+#pragma once
 
 #include "StarMapState.h"
 

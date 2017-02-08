@@ -6,6 +6,7 @@
 */
 #ifndef ___StarMapLib_CameraState_HPP___
 #define ___StarMapLib_CameraState_HPP___
+#pragma once
 
 #include "StarMapLibPrerequisites.h"
 
