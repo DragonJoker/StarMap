@@ -73,7 +73,7 @@ Engine::Engine( android_app * state )
 
 		std::mt19937 engine( std::chrono::system_clock::now().time_since_epoch().count() );
 		std::uniform_real_distribution< float > fdistribution{ float( -M_PI ) / 2, float( M_PI ) / 2 };
-		std::uniform_real_distribution< float > mdistribution{ 0.5f, 1.0f };
+		std::uniform_real_distribution< float > mdistribution{ 10.0f, 110.0f };
 		std::uniform_int_distribution< uint32_t > uidistribution{ 0u, uint32_t( ( sizeof( colours ) / sizeof( glm::vec3 ) ) - 1 ) };
 
 		auto randf = [&engine, &fdistribution]()
@@ -83,7 +83,7 @@ Engine::Engine( android_app * state )
 
 		auto randm = [&engine, &mdistribution]()
 		{
-			return mdistribution( engine );
+			return mdistribution( engine ) + 1.0f;
 		};
 
 		auto randui = [&engine, &uidistribution]()
@@ -91,22 +91,13 @@ Engine::Engine( android_app * state )
 			return uidistribution( engine );
 		};
 
-		for ( uint32_t i = 0; i < 10000; ++i )
+		for ( uint32_t i = 0; i < 20000; ++i )
 		{
 			m_starmap.add( { "Coin"
 				, randm()
 				,{ randf(), randf() }
 				,colours[randui()] } );
 		}
-		//m_starmap.add( starmap::Star{ "Coin3", randm(), { 0.0, -M_PI / 4 }, colours[0] } );
-		//m_starmap.add( starmap::Star{ "Coin4", randm(), { 0.0, 0.0 }, colours[0] } );
-		//m_starmap.add( starmap::Star{ "Coin5", randm(), { 0.0, M_PI / 4 }, colours[0] } );
-		//m_starmap.add( starmap::Star{ "Coin6", randm(), { M_PI / 4, -M_PI / 4 }, colours[0] } );
-		//m_starmap.add( starmap::Star{ "Coin7", randm(), { M_PI / 4, 0.0 }, colours[0] } );
-		//m_starmap.add( starmap::Star{ "Coin8", randm(), { M_PI / 4, M_PI / 4 }, colours[0] } );
-		//m_starmap.add( starmap::Star{ "Coin0", randm(), { -M_PI / 4, -M_PI / 4 }, colours[0] } );
-		//m_starmap.add( starmap::Star{ "Coin1", randm(), { -M_PI / 4, 0.0 }, colours[0] } );
-		//m_starmap.add( starmap::Star{ "Coin2", randm(), { -M_PI / 4, M_PI / 4 }, colours[0] } );
 	}
 
 	ANativeActivity_setWindowFlags( m_app->activity
@@ -490,8 +481,8 @@ int Engine::doInitialiseDisplay()
 
 				auto content = utils::getFileBinaryContent( *m_app->activity
 					, "arial.ttf" );
-				std::string dataPath = std::string{ m_app->activity->internalDataPath }
-					+"/arial.ttf";
+				std::string dataPath{ m_app->activity->internalDataPath 
+					+ std::string{ "/arial.ttf" } };
 				FILE * fp = fopen( dataPath.c_str(), "w" );
 
 				if ( fp )

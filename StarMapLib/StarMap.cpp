@@ -84,7 +84,7 @@ namespace starmap
 		m_debug.initialise( scene );
 
 		// Initialise the scene
-		scene.setBackgroundColour( glm::vec4{ 0.5, 0.5, 0.5, 1.0 } );
+		scene.setBackgroundColour( glm::vec4{ 0, 0, 0, 1 } );
 
 		// Load the font's texture.
 		render::FontPtr font = std::make_unique< render::Font >( "Arial"
@@ -107,9 +107,9 @@ namespace starmap
 		pickedMat->setOpacityMap( m_opacity );
 		pickedMat->setAmbient( glm::vec3{ 0.0, 0.0, 0.5 } );
 		pickedMat->setDiffuse( glm::vec3{ 0.0, 0.0, 0.5 } );
-		auto pickedBuffers = scene.getBillboardsBuffers().addElement
-			( "picked" );
-		pickedBuffers->add( { glm::vec3{ 0, 0, 0 }, glm::vec2{ 1, 1 } } );
+		auto pickedBuffers = render::BillboardBuffer::create();
+		pickedBuffers->add( { 1000.0, glm::vec3{ 0, 0, 0 }, glm::vec2{ 1, 1 } } );
+		scene.addBillboardBuffer( "picked", pickedBuffers );
 		m_picked = std::make_shared< render::Billboard >( "picked"
 			, *pickedBuffers );
 		m_picked->setMaterial( pickedMat );
@@ -190,8 +190,9 @@ namespace starmap
 	{
 		auto & holder = doFindHolder( star.getColour() );
 		auto position = doConvertSphericalToCartesian( star.getPosition() );
-		holder.m_buffer->add( { position
-			, glm::vec2{ star.getMagnitude(), star.getMagnitude() } } );
+		holder.m_buffer->add( { star.getMagnitude()
+			, position
+			, glm::vec2{ 1.0, 1.0 } } );
 
 		if ( m_window )
 		{
@@ -301,6 +302,8 @@ namespace starmap
 			halos->setDimensions( glm::vec2{ 2, 2 } );
 			halos->setMaterial( halosMat );
 			scene.add( halos, false );
+
+			scene.addBillboardBuffer( sstars, holder.m_buffer );
 
 			holder.m_initialised = true;
 		}
