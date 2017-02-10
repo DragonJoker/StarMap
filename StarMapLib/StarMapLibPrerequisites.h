@@ -21,6 +21,7 @@ namespace starmap
 
 	struct StarMapState;
 
+	using StarMapPtr = std::unique_ptr< StarMap >;
 	using StarArray = std::vector< Star >;
 	using ConstellationArray = std::vector< Constellation >;
 

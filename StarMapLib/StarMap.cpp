@@ -130,9 +130,9 @@ namespace starmap
 		//lines->setMaterial( linesMat );
 		//scene.add( lines );
 
-		for ( auto & holder : m_state.m_holders )
+		for ( auto & star : m_stars )
 		{
-			doInitialiseHolder( holder );
+			doAdd( star );
 		}
 
 		m_onObjectPicked = m_window->getPicking().onObjectPicked.connect
@@ -164,6 +164,14 @@ namespace starmap
 		}
 	}
 
+	void StarMap::resize( glm::ivec2 const & size )
+	{
+		if ( m_window )
+		{
+			m_window->resize( size );
+		}
+	}
+
 	void StarMap::beginFrame()
 	{
 		m_debug.start();
@@ -188,16 +196,7 @@ namespace starmap
 
 	void StarMap::add( Star const & star )
 	{
-		auto & holder = doFindHolder( star.getColour() );
-		auto position = doConvertSphericalToCartesian( star.getPosition() );
-		holder.m_buffer->add( { star.getMagnitude()
-			, position
-			, glm::vec2{ 1.0, 1.0 } } );
-
-		if ( m_window )
-		{
-			doInitialiseHolder( holder );
-		}
+		m_stars.push_back( star );
 	}
 
 	void StarMap::add( StarArray const & stars )
@@ -307,5 +306,15 @@ namespace starmap
 
 			holder.m_initialised = true;
 		}
+	}
+
+	void StarMap::doAdd( Star const & star )
+	{
+		auto & holder = doFindHolder( star.getColour() );
+		auto position = doConvertSphericalToCartesian( star.getPosition() );
+		holder.m_buffer->add( { star.getMagnitude()
+			, position
+			, glm::vec2{ 1.0, 1.0 } } );
+		doInitialiseHolder( holder );
 	}
 }

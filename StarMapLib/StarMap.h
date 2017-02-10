@@ -1,4 +1,4 @@
-﻿/**
+/**
 *\file
 *	StarMap.h
 *\author
@@ -60,6 +60,13 @@ namespace starmap
 		*	Nettoie les données GPU.
 		*/
 		void cleanup();
+		/**
+		*\brief
+		*	Redimensionne la fenêtre.
+		*\param[in] size
+		*	Les nouvelles dimensions.
+		*/
+		void resize( glm::ivec2 const & size );
 		/**
 		*\brief
 		*	Démarre le dessin d'une image.
@@ -152,6 +159,7 @@ namespace starmap
 		*	Le conteneur du tampon et de la couleur.
 		*/
 		void doInitialiseHolder( StarHolder & holder );
+		void doAdd( Star const & star );
 
 	private:
 		//! L'état de la carte.
@@ -160,6 +168,8 @@ namespace starmap
 		render::RenderWindowPtr m_window;
 		//! Les informations de débogage.
 		render::Debug m_debug;
+		//! Les étoiles.
+		StarArray m_stars;
 		//! La connexion à la notification d'objet sélectionné.
 		render::Connection< render::OnObjectPicked > m_onObjectPicked;
 		//! La connexion à la notification de billboard sélectionné.

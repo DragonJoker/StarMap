@@ -60,20 +60,32 @@ Engine::Engine( android_app * state )
 	}
 	else
 	{
-		glm::vec3 colours[7]
+		glm::vec3 colours[]
 		{
 			glm::vec3{ 1.0, 1.0, 1.0 },
+			glm::vec3{ 0.7, 1.0, 1.0 },
+			glm::vec3{ 1.0, 0.7, 1.0 },
+			glm::vec3{ 1.0, 1.0, 0.7 },
+			glm::vec3{ 0.7, 0.7, 1.0 },
+			glm::vec3{ 1.0, 0.7, 0.7 },
+			glm::vec3{ 0.7, 1.0, 0.7 },
 			glm::vec3{ 0.8, 1.0, 1.0 },
 			glm::vec3{ 1.0, 0.8, 1.0 },
 			glm::vec3{ 1.0, 1.0, 0.8 },
 			glm::vec3{ 0.8, 0.8, 1.0 },
 			glm::vec3{ 1.0, 0.8, 0.8 },
-			glm::vec3{ 0.8, 1.0, 0.8 }
+			glm::vec3{ 0.8, 1.0, 0.8 },
+			glm::vec3{ 0.9, 1.0, 1.0 },
+			glm::vec3{ 1.0, 0.9, 1.0 },
+			glm::vec3{ 1.0, 1.0, 0.9 },
+			glm::vec3{ 0.9, 0.9, 1.0 },
+			glm::vec3{ 1.0, 0.9, 0.9 },
+			glm::vec3{ 0.9, 1.0, 0.9 },
 		};
 
 		std::mt19937 engine( std::chrono::system_clock::now().time_since_epoch().count() );
 		std::uniform_real_distribution< float > fdistribution{ float( -M_PI ) / 2, float( M_PI ) / 2 };
-		std::uniform_real_distribution< float > mdistribution{ 10.0f, 110.0f };
+		std::uniform_real_distribution< float > mdistribution{ -50.0f, 50.0f };
 		std::uniform_int_distribution< uint32_t > uidistribution{ 0u, uint32_t( ( sizeof( colours ) / sizeof( glm::vec3 ) ) - 1 ) };
 
 		auto randf = [&engine, &fdistribution]()
@@ -91,7 +103,7 @@ Engine::Engine( android_app * state )
 			return uidistribution( engine );
 		};
 
-		for ( uint32_t i = 0; i < 20000; ++i )
+		for ( uint32_t i = 0; i < 5000; ++i )
 		{
 			m_starmap.add( { "Coin"
 				, randm()

@@ -4,9 +4,11 @@ namespace starmap
 {
 	namespace
 	{
+		constexpr double Pi = 3.14159265358979323846;
+
 		float toRadians( float degrees )
 		{
-			return float( degrees * M_PI / 180.0f );
+			return float( degrees * Pi / 180.0f );
 		}
 
 		float clamp( float value, float min, float max )
@@ -63,8 +65,8 @@ namespace starmap
 		m_angle.x += toRadians( m_velocity.y ) / 2.0f;
 		m_angle.y += toRadians( m_velocity.x ) / 2.0f;
 
-		m_angle.x = clamp( m_angle.x, -M_PI / 6, M_PI / 6 );
-		m_angle.y = clamp( m_angle.y, -M_PI / 6, M_PI / 6 );
+		m_angle.x = clamp( m_angle.x, float( -Pi / 6 ), float( Pi / 6 ) );
+		m_angle.y = clamp( m_angle.y, float( -Pi / 6 ), float( Pi / 6 ) );
 
 		m_velocity = doUpdateVelocity( m_velocity );
 		m_zoomVelocity = doUpdateVelocity( m_zoomVelocity );
