@@ -23,6 +23,7 @@ namespace starmap
 
 	using StarMapPtr = std::unique_ptr< StarMap >;
 	using StarArray = std::vector< Star >;
+	using StarSet = std::multiset< Star >;
 	using ConstellationArray = std::vector< Constellation >;
 
 	using OnScreenTap = render::Signal< std::function< void( glm::ivec2 const & ) > >;

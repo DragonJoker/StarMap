@@ -75,6 +75,30 @@ namespace starmap
 		glm::vec2 m_position;
 		glm::vec3 m_colour;
 	};
+	/**
+	*\brief
+	*	Opérateur de comparaison "inférieur à".
+	*\param[in] lhs, rhs
+	*	Les étoiles à comparer.
+	*\return
+	*	\p true si la magnitude de lhs est inférieure à la magnitude de rhs.
+	*/
+	inline bool operator<( Star const & lhs, Star const & rhs )
+	{
+		return lhs.getMagnitude() < rhs.getMagnitude();
+	}
+	/**
+	*\brief
+	*	Opérateur de comparaison "supérieur à".
+	*\param[in] lhs, rhs
+	*	Les étoiles à comparer.
+	*\return
+	*	\p true si la magnitude de lhs est supérieure à la magnitude de rhs.
+	*/
+	inline bool operator>( Star const & lhs, Star const & rhs )
+	{
+		return lhs.getMagnitude() > rhs.getMagnitude();
+	}
 }
 
 #endif

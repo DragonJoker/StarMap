@@ -169,7 +169,7 @@ namespace starmap
 		//! Les informations de débogage.
 		render::Debug m_debug;
 		//! Les étoiles.
-		StarArray m_stars;
+		StarSet m_stars;
 		//! La connexion à la notification d'objet sélectionné.
 		render::Connection< render::OnObjectPicked > m_onObjectPicked;
 		//! La connexion à la notification de billboard sélectionné.

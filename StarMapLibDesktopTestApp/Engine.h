@@ -1,9 +1,10 @@
 #pragma once
 
+#include <RenderLib/CameraState.h>
+
 #include <StarMapLib/ScreenEvents.h>
 #include <StarMapLib/StarMap.h>
 
-#include <DesktopUtils/EventHandler.h>
 #include <DesktopUtils/MsWindow.h>
 
 #include <Windows.h>
@@ -111,7 +112,7 @@ private:
 	glm::ivec2 m_size;
 
 	glm::ivec2 m_mouse;
-	utils::EventHandler m_handler;
+	render::CameraState m_handler;
 
 	//! Le signal émis lorsque l'on "clique" sur l'écran.
 	starmap::OnScreenTap m_onScreenTap;

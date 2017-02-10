@@ -86,7 +86,7 @@ Engine::Engine()
 		glm::vec3{ 0.9, 1.0, 0.9 },
 	};
 
-	std::mt19937 engine( std::chrono::system_clock::now().time_since_epoch().count() );
+	std::mt19937 engine{ uint32_t( std::chrono::system_clock::now().time_since_epoch().count() ) };
 	std::uniform_real_distribution< float > fdistribution{ float( -M_PI ) / 2, float( M_PI ) / 2 };
 	std::uniform_real_distribution< float > mdistribution{ -50.0f, 50.0f };
 	std::uniform_int_distribution< uint32_t > uidistribution{ 0u, uint32_t( ( sizeof( colours ) / sizeof( glm::vec3 ) ) - 1 ) };

@@ -196,7 +196,7 @@ namespace starmap
 
 	void StarMap::add( Star const & star )
 	{
-		m_stars.push_back( star );
+		m_stars.insert( star );
 	}
 
 	void StarMap::add( StarArray const & stars )
