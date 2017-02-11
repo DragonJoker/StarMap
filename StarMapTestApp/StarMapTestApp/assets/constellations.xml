@@ -1,0 +1,20 @@
+<Constellation Name="Canis Majoris">
+  <StarsList>
+    <Star Name="Sirius"/>
+    <Star Name="Adhara"/>
+    <Star Name="Wezen"/>
+    <Star Name="Mirzam"/>
+    <Star Name="Aludra"/>
+    <Star Name="Furud"/>
+    <Star Name="Menkelb Posterior"/>
+    <Star Name="Muliphen"/>
+  </StarsList>
+  <LinkList>
+    <Link StarA="Sirius" StarB="Muliphein"/>
+    <Link StarA="Sirius" StarB="Mirzam"/>
+    <Link StarA="Sirius" StarB="Wezen"/>
+    <Link StarA="Wezen" StarB="Aludra"/>
+    <Link StarA="Wezen" StarB="Adhara"/>
+    <Link StarA="Adhara" StarB="Furud"/>
+  </LinkList>
+</Constellation>

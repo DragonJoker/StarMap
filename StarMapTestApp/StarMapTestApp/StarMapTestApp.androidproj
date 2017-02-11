@@ -151,7 +151,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Content Include="assets\arial.ttf" />
+    <Content Include="assets\constellations.xml" />
     <Content Include="assets\halo.bmp" />
+    <Content Include="assets\stars.csv" />
     <Content Include="res\drawable-hdpi\castor.png" />
     <Content Include="res\drawable-ldpi\castor.png" />
     <Content Include="res\drawable-mdpi\castor.png" />

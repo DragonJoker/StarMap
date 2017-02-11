@@ -75,11 +75,6 @@ namespace starmap
 
 		// Initialise the render window
 		m_window = std::make_unique< render::RenderWindow >( size );
-
-		m_window->getViewport().setInfinitePerspective( 45.0f
-			, ratio
-			, 0.1f );
-
 		auto & scene = m_window->getScene();
 		m_debug.initialise( scene );
 
@@ -182,9 +177,7 @@ namespace starmap
 		m_state.m_cameraState.update();
 		m_window->getScene().getCamera().setOrientation( glm::quat{
 			{ m_state.m_cameraState.getAngle(), 0.0f } } );
-		m_window->getScene().getCamera().moveTo( { 0
-			, 0
-			, m_state.m_cameraState.getZoom() } );
+		m_window->getScene().getCamera().setFovY( m_state.m_cameraState.getZoom() );
 		m_window->update();
 		m_window->draw();
 	}

@@ -1,4 +1,4 @@
-﻿/**
+/**
 *\file
 *	ScreenEvents.h
 *\author
@@ -8,7 +8,7 @@
 #define ___StarMapLib_ScreenEvents_HPP___
 #pragma once
 
-#include "CameraState.h"
+#include "StarMapLibPrerequisites.h"
 
 #include <RenderLib/Signal.h>
 

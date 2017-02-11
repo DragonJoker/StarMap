@@ -177,7 +177,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CameraState.h" />
+    <ClInclude Include="CsvReader.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ScreenEvents.h" />
     <ClInclude Include="Star.h" />
@@ -186,7 +186,7 @@
     <ClInclude Include="StarMapState.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CameraState.cpp" />
+    <ClCompile Include="CsvReader.cpp" />
     <ClCompile Include="ScreenEvents.cpp" />
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="StarMap.cpp" />

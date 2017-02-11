@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\StarMapLib\CameraState.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="..\StarMapLib\pch.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -36,11 +33,11 @@
     <ClInclude Include="..\StarMapLib\StarMapState.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="..\StarMapLib\CsvReader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\StarMapLib\CameraState.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\StarMapLib\ScreenEvents.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -51,6 +48,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="..\StarMapLib\StarMapLibPrerequisites.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\StarMapLib\CsvReader.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

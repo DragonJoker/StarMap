@@ -1,4 +1,4 @@
-﻿/**
+/**
 *\file
 *	StarMapState.h
 *\author
@@ -9,7 +9,8 @@
 #pragma once
 
 #include "Star.h"
-#include "CameraState.h"
+
+#include <RenderLib/CameraState.h>
 
 namespace starmap
 {
@@ -40,7 +41,7 @@ namespace starmap
 		//! Le tableau de StarHolders.
 		StarHolderArray m_holders;
 		//! L'état de la caméra.
-		CameraState m_cameraState;
+		render::CameraState m_cameraState;
 	};
 }
 

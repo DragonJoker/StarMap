@@ -22,12 +22,12 @@ public:
 	*\brief
 	*	Mise à jour du contenu.
 	*/
-	void onUpdate( HDC hdc )override;
+	void onUpdate()override;
 	/**
 	*\brief
 	*	Dessin de la fenêtre.
 	*/
-	void onPaint( HDC hdc )override;
+	void onPaint()override;
 	/**
 	*\brief
 	*	Création de la fenêtre.
@@ -68,23 +68,8 @@ public:
 	*	Un évènement de molette.
 	*/
 	void onMouseWheel( utils::MouseEvent const & event )override;
-	/**
-	*\brief
-	*	Démarre la surveillance de l'accéléromètre.
-	*/
-	void onGainedFocus();
-	/**
-	*\brief
-	*	Stoppe la surveillance de l'accéléromètre.
-	*/
-	void onLostFocus();
 
 private:
-	/**
-	*\brief
-	*	Initialisation d'un contexte EGL pour l'affichage en cours.
-	*/
-	int doInitialiseDisplay();
 	/**
 	*\brief
 	*	Initialisation des éléments 3D affichés.
@@ -105,11 +90,6 @@ private:
 	std::streambuf * m_cout;
 	std::streambuf * m_cerr;
 	std::streambuf * m_clog;
-
-	bool m_animating{ false };
-	HDC m_hdc{ NULL };
-	HGLRC m_context{ NULL };
-	glm::ivec2 m_size;
 
 	glm::ivec2 m_mouse;
 	render::CameraState m_handler;

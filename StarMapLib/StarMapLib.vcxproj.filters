@@ -16,10 +16,10 @@
     <ClInclude Include="ScreenEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CameraState.h">
+    <ClInclude Include="StarMapState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StarMapState.h">
+    <ClInclude Include="CsvReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClCompile Include="ScreenEvents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CameraState.cpp">
+    <ClCompile Include="CsvReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
