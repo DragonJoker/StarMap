@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\rapidxml">
+      <UniqueIdentifier>{c8c76dc2-89a4-422e-81d1-128b1749fb75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\StarMapLib\pch.h">
@@ -36,6 +39,24 @@
     <ClInclude Include="..\StarMapLib\CsvReader.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="..\StarMapLib\Constellation.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\StarMapLib\rapidxml\rapidxml.hpp">
+      <Filter>Fichiers d%27en-tête\rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\StarMapLib\rapidxml\rapidxml_iterators.hpp">
+      <Filter>Fichiers d%27en-tête\rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\StarMapLib\rapidxml\rapidxml_print.hpp">
+      <Filter>Fichiers d%27en-tête\rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\StarMapLib\rapidxml\rapidxml_utils.hpp">
+      <Filter>Fichiers d%27en-tête\rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\StarMapLib\XmlReader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\StarMapLib\ScreenEvents.cpp">
@@ -51,6 +72,12 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="..\StarMapLib\CsvReader.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\StarMapLib\Constellation.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\StarMapLib\XmlReader.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

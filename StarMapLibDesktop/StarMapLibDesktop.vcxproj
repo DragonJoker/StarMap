@@ -137,20 +137,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\StarMapLib\Constellation.h" />
     <ClInclude Include="..\StarMapLib\CsvReader.h" />
     <ClInclude Include="..\StarMapLib\pch.h" />
+    <ClInclude Include="..\StarMapLib\rapidxml\rapidxml.hpp" />
+    <ClInclude Include="..\StarMapLib\rapidxml\rapidxml_iterators.hpp" />
+    <ClInclude Include="..\StarMapLib\rapidxml\rapidxml_print.hpp" />
+    <ClInclude Include="..\StarMapLib\rapidxml\rapidxml_utils.hpp" />
     <ClInclude Include="..\StarMapLib\ScreenEvents.h" />
     <ClInclude Include="..\StarMapLib\Star.h" />
     <ClInclude Include="..\StarMapLib\StarMap.h" />
     <ClInclude Include="..\StarMapLib\StarMapLibPrerequisites.h" />
     <ClInclude Include="..\StarMapLib\StarMapState.h" />
+    <ClInclude Include="..\StarMapLib\XmlReader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\StarMapLib\Constellation.cpp" />
     <ClCompile Include="..\StarMapLib\CsvReader.cpp" />
     <ClCompile Include="..\StarMapLib\ScreenEvents.cpp" />
     <ClCompile Include="..\StarMapLib\Star.cpp" />
     <ClCompile Include="..\StarMapLib\StarMap.cpp" />
     <ClCompile Include="..\StarMapLib\StarMapLibPrerequisites.cpp" />
+    <ClCompile Include="..\StarMapLib\XmlReader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

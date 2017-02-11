@@ -12,6 +12,7 @@
 #include <DesktopUtils/Log.h>
 
 #include <StarMapLib/CsvReader.h>
+#include <StarMapLib/XmlReader.h>
 
 #include <GL/wglew.h>
 
@@ -118,13 +119,21 @@ Engine::Engine()
 
 	try
 	{
-		auto stars = starmap::loadFromCsv( utils::getFileTextContent( "stars.csv" ) );
-		m_starmap.add( stars );
+		starmap::loadStarsFromCsv( m_starmap, utils::getFileTextContent( "stars.csv" ) );
+		starmap::loadConstellationsFromXml( m_starmap, utils::getFileTextContent( "constellations.xml" ) );
 	}
 	catch ( std::exception & exc )
 	{
 		std::cerr << "Csv loading failed: " << exc.what() << std::endl;
 	}
+
+	//auto & constellation = m_starmap.createConstellation( "Canis Majoris" );
+	//constellation.AddLink( "Sirius", "Muliphein" );
+	//constellation.AddLink( "Sirius", "Mirzam" );
+	//constellation.AddLink( "Sirius", "Wezen" );
+	//constellation.AddLink( "Wezen", "Aludra" );
+	//constellation.AddLink( "Wezen", "Adhara" );
+	//constellation.AddLink( "Adhara", "Furud" );
 }
 
 Engine::~Engine()

@@ -11,6 +11,7 @@
 #include <RenderLib/RenderLibPrerequisites.h>
 
 #include <memory>
+#include <unordered_map>
 
 namespace starmap
 {
@@ -24,7 +25,7 @@ namespace starmap
 	using StarMapPtr = std::unique_ptr< StarMap >;
 	using StarArray = std::vector< Star >;
 	using StarSet = std::multiset< Star >;
-	using ConstellationArray = std::vector< Constellation >;
+	using ConstellationMap = std::unordered_map< std::string, Constellation >;
 
 	using OnScreenTap = render::Signal< std::function< void( glm::ivec2 const & ) > >;
 	using OnScreenDoubleTap = render::Signal< std::function< void( glm::ivec2 const & ) > >;

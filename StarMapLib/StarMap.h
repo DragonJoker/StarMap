@@ -96,6 +96,13 @@ namespace starmap
 		*	La liste d'étoiles.
 		*/
 		void add( StarArray const & stars );
+		/**
+		*\brief
+		*	Crée et ajoute une constellation à la carte du ciel.
+		*\param[in] name
+		*	Le nom de la constellation.
+		*/
+		Constellation & createConstellation( std::string const & name );
 
 	private:
 		/**
@@ -159,17 +166,46 @@ namespace starmap
 		*	Le conteneur du tampon et de la couleur.
 		*/
 		void doInitialiseHolder( StarHolder & holder );
-		void doAdd( Star const & star );
+		/**
+		*\brief
+		*	Ajoute une étoile au conteneur de billboards approprié.
+		*\param[in] star
+		*	L'étoile à ajouter.
+		*/
+		void doAddStar( Star const & star );
+		/**
+		*\brief
+		*	Ajoute une constellation à la polyligne.
+		*\param[in] constellation
+		*	La constellation à ajouter.
+		*/
+		void doAddConstellation( Constellation const & constellation );
+		/**
+		*\brief
+		*	Charge la texture de police.
+		*\param[in] loader
+		*	Le loader de police.
+		*/
+		void doLoadFontTexture( render::FontLoader const & loader );
+		/**
+		*\brief
+		*	Charge la texture d'opacité des étoiles.
+		*\param[in] opacityMap
+		*	Le contenu de la texture.
+		*/
+		void doLoadOpacityMap( render::ByteArray const & opacityMap );
+		/**
+		*\brief
+		*	Initialise le billboard affiché par dessus les objets sélectionnés.
+		*/
+		void doInitialisePicked();
+		/**
+		*\brief
+		*	Initialise la polyligne contenant les constellations.
+		*/
+		void doInitialiseLines();
 
 	private:
-		//! L'état de la carte.
-		StarMapState m_state;
-		//! La fenêtre où s'effectue le rendu.
-		render::RenderWindowPtr m_window;
-		//! Les informations de débogage.
-		render::Debug m_debug;
-		//! Les étoiles.
-		StarSet m_stars;
 		//! La connexion à la notification d'objet sélectionné.
 		render::Connection< render::OnObjectPicked > m_onObjectPicked;
 		//! La connexion à la notification de billboard sélectionné.
@@ -184,6 +220,22 @@ namespace starmap
 		render::Connection< OnSetVelocity > m_onSetVelocity;
 		//! La connexion à la notification de définition de la vitesse de zoom de la caméra.
 		render::Connection< OnSetZoomVelocity > m_onSetZoomVelocity;
+
+	private:
+		//! L'état de la carte.
+		StarMapState m_state;
+		//! Le tableau de StarHolders.
+		StarHolderArray m_holders;
+		//! La polyligne contenant les constellations.
+		render::PolyLinePtr m_lines;
+		//! La fenêtre où s'effectue le rendu.
+		render::RenderWindowPtr m_window;
+		//! Les informations de débogage.
+		render::Debug m_debug;
+		//! Les étoiles.
+		StarSet m_stars;
+		//! Les constellations.
+		ConstellationMap m_constellations;
 		//! L'objet sélectionné.
 		render::Object * m_pickedObject{ nullptr };
 		//! Le billboard sélectionné.

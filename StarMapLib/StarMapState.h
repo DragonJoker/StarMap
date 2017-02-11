@@ -8,6 +8,7 @@
 #define ___StarMapLib_StarMapState_HPP___
 #pragma once
 
+#include "Constellation.h"
 #include "Star.h"
 
 #include <RenderLib/CameraState.h>
@@ -38,8 +39,6 @@ namespace starmap
 	*/
 	struct StarMapState
 	{
-		//! Le tableau de StarHolders.
-		StarHolderArray m_holders;
 		//! L'état de la caméra.
 		render::CameraState m_cameraState;
 	};

@@ -1,4 +1,4 @@
-﻿/**
+/**
 *\file
 *	Star.h
 *\author
@@ -38,9 +38,17 @@ namespace starmap
 			, glm::vec3 const & colour );
 		/**
 		*\return
+		*	L'identifiant de l'étoile.
+		*/
+		inline size_t getId()const noexcept
+		{
+			return m_id;
+		}
+		/**
+		*\return
 		*	Le nom de l'étoile.
 		*/
-		inline std::string const & getName()const
+		inline std::string const & getName()const noexcept
 		{
 			return m_name;
 		}
@@ -48,7 +56,7 @@ namespace starmap
 		*\return
 		*	La magnitude de l'étoile.
 		*/
-		inline float getMagnitude()const
+		inline float getMagnitude()const noexcept
 		{
 			return m_magnitude;
 		}
@@ -56,7 +64,7 @@ namespace starmap
 		*\return
 		*	La position de l'étoile, en coordonnées sphériques.
 		*/
-		inline glm::vec2 const & getPosition()const
+		inline glm::vec2 const & getPosition()const noexcept
 		{
 			return m_position;
 		}
@@ -64,12 +72,13 @@ namespace starmap
 		*\return
 		*	La couleur de l'étoile.
 		*/
-		inline glm::vec3 const & getColour()const
+		inline glm::vec3 const & getColour()const noexcept
 		{
 			return m_colour;
 		}
 
 	private:
+		size_t m_id;
 		std::string m_name;
 		float m_magnitude;
 		glm::vec2 m_position;

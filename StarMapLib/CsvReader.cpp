@@ -1,6 +1,6 @@
 #include "CsvReader.h"
 
-#include "Star.h"
+#include "StarMap.h"
 
 #include <RenderLib/StringUtils.h>
 
@@ -19,9 +19,8 @@ namespace starmap
 		}
 	}
 
-	StarArray loadFromCsv( std::string content )
+	void loadStarsFromCsv( StarMap & starmap, std::string content )
 	{
-		StarArray result;
 		content = render::replace( content, '\r', "" );
 		auto begin = std::begin( content );
 		auto end = std::end( content );
@@ -40,10 +39,8 @@ namespace starmap
 				auto magnitude = doParseFloat( values[1] );
 				auto ra = doParseFloat( values[2] );
 				auto dec = doParseFloat( values[3] );
-				result.push_back( { name, magnitude,{ ra, dec },{ 0.8, 0.8, 1.0 } } );
+				starmap.add( Star{ name, magnitude,{ ra, dec },{ 0.8, 0.8, 1.0 } } );
 			}
 		}
-
-		return result;
 	}
 }

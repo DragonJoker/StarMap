@@ -19,7 +19,7 @@ namespace starmap
 	*	Le séparateur des champs doit être ';' et le séparateur de décimales
 	*	doit être '.'.
 	*/
-	StarArray loadFromCsv( std::string content );
+	void loadStarsFromCsv( StarMap & starmap, std::string content );
 }
 
 #endif
