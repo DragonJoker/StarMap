@@ -115,11 +115,10 @@ Engine::Engine( android_app * state )
 		//		,colours[randui()] } );
 		//}
 
-		auto engine = reinterpret_cast< utils::AndroidApp * >( m_app->userData );
 		starmap::loadStarsFromXml( m_starmap
-			, engine->getFileTextContent( "stars.xml", true ) );
+			, getFileTextContent( "stars.xml", true ) );
 		starmap::loadConstellationsFromXml( m_starmap
-			, engine->getFileTextContent( "constellations.xml", true ) );
+			, getFileTextContent( "constellations.xml", true ) );
 	}
 
 	ANativeActivity_setWindowFlags( m_app->activity
@@ -501,15 +500,14 @@ int Engine::doInitialiseDisplay()
 				glCheckError( glEnable, GL_TEXTURE_2D );
 				glCheckError( glFrontFace, GL_CCW );
 
-				auto engine = reinterpret_cast< utils::AndroidApp * >( m_app->userData );
-				auto content = engine->getFileBinaryContent( "arial.ttf", true );
-				std::string dataPath{ engine->setFileBinaryContent( content, "arial.ttf" ) };
+				auto content = getFileBinaryContent( "arial.ttf", true );
+				std::string dataPath{ setFileBinaryContent( content, "arial.ttf" ) };
 
 				if ( !dataPath.empty() )
 				{
 					utils::FontLoader loader{ dataPath };
 					m_starmap.initialise( glm::ivec2{ m_width, m_height }
-						, engine->getFileBinaryContent( "halo.bmp", true )
+						, getFileBinaryContent( "halo.bmp", true )
 						, loader );
 					ret = 0;
 				}

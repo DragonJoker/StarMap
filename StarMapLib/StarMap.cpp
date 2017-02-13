@@ -97,7 +97,7 @@ namespace starmap
 				doAddConstellation( constellation.second );
 			}
 
-			//doInitialiseStarNames();
+			doInitialiseStarNames();
 			doInitialiseConstellationNames();
 		}
 
@@ -145,7 +145,8 @@ namespace starmap
 	void StarMap::drawFrame()
 	{
 		m_window->update();
-		//doUpdateStarNames();
+		doUpdatePickDescription();
+		doUpdateStarNames();
 		doUpdateConstellationNames();
 		m_window->draw();
 	}
@@ -197,6 +198,7 @@ namespace starmap
 	{
 		m_pickBillboard->show( false );
 		m_pickDescription->show( false );
+		m_pickedStar = nullptr;
 	}
 
 	void StarMap::doUpdatePicked( render::Movable const & movable )
@@ -231,11 +233,9 @@ namespace starmap
 		if ( holder.m_stars.size() > index )
 		{
 			auto & star = *holder.m_stars[index];
+			m_pickedStar = &star;
 			m_pickDescription->caption( star.name() );
-			doUpdateOverlay( *m_pickDescription
-				, star.position()
-				, StarNameOffset );
-
+			doUpdatePickDescription();
 			m_pickBillboard->moveTo( billboard.position() - glm::vec3{ 0, 0, 0.2 } );
 			doUpdatePicked( static_cast< render::Movable const & >( billboard ) );
 			auto data = billboard.buffer()[index];
@@ -406,6 +406,7 @@ namespace starmap
 			overlay->caption( star.name() );
 			overlay->colour( glm::vec4{ 1.0, 1.0, 1.0, 1.0 } );
 			overlay->fontTexture( *m_fontTextureNames );
+			overlay->show( false );
 		}
 	}
 
@@ -419,6 +420,16 @@ namespace starmap
 			overlay->caption( constellation.first );
 			overlay->colour( ConstellationTextColour );
 			overlay->fontTexture( *m_fontTextureNames );
+		}
+	}
+
+	void StarMap::doUpdatePickDescription()
+	{
+		if ( m_pickedStar )
+		{
+			doUpdateOverlay( *m_pickDescription
+				, m_pickedStar->position()
+				, StarNameOffset );
 		}
 	}
 

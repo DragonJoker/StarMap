@@ -223,6 +223,11 @@ namespace starmap
 		void doInitialiseConstellationNames();
 		/**
 		*\brief
+		*	Met à jour la position de l'incrustation de sélection.
+		*/
+		void doUpdatePickDescription();
+		/**
+		*\brief
 		*	Met à jour la position des noms des étoiles.
 		*/
 		void doUpdateStarNames();
@@ -277,6 +282,8 @@ namespace starmap
 		render::Object * m_pickedObject{ nullptr };
 		//! Le billboard sélectionné.
 		render::Billboard * m_pickedBillboard{ nullptr };
+		//! L'étoile sélectionnée.
+		Star const * m_pickedStar{ nullptr };
 		//! Le billboard apparaissant sur la sélection (billboard ou objet).
 		render::BillboardPtr m_pickBillboard;
 		//! L'incrustation décrivant la sélection (billboard ou objet).
