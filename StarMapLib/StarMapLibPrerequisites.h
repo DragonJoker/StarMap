@@ -24,7 +24,9 @@ namespace starmap
 
 	using StarMapPtr = std::unique_ptr< StarMap >;
 	using StarArray = std::vector< Star >;
+	using StarPtrArray = std::vector< Star const * >;
 	using StarSet = std::multiset< Star >;
+	using StarPtrMap = std::map< std::string, Star const * >;
 	using ConstellationMap = std::unordered_map< std::string, Constellation >;
 
 	using OnScreenTap = render::Signal< std::function< void( glm::ivec2 const & ) > >;

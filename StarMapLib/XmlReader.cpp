@@ -2,6 +2,8 @@
 
 #include "StarMap.h"
 
+#include <RenderLib/StringUtils.h>
+
 #define RAPIDXML_NO_EXCEPTIONS
 #include "rapidxml/rapidxml.hpp"
 
@@ -17,6 +19,23 @@ namespace starmap
 {
 	namespace
 	{
+		std::string doParseString( rapidxml::xml_attribute< char > * node )
+		{
+			return std::string{ node->value()
+				, node->value() + node->value_size() };
+		}
+
+		float doParseFloat( rapidxml::xml_attribute< char > * node )
+		{
+			auto text = doParseString( node );
+			text = render::replace( text, "\"", "" );
+			text = render::replace( text, ",", "." );
+			std::stringstream stream{ text };
+			float result;
+			stream >> result;
+			return result;
+		}
+
 		void doLoadStars( Constellation & constellation
 			, rapidxml::xml_node<> * node )
 		{
@@ -30,11 +49,9 @@ namespace starmap
 				{
 					auto lAttrib = lNode->first_attribute( "Letter" );
 					auto nAttrib = lNode->first_attribute( "Name" );
-					std::string letter{ lAttrib->value()
-						, lAttrib->value() + lAttrib->value_size() };
-					std::string name{ nAttrib->value()
-						, nAttrib->value() + nAttrib->value_size() };
-					constellation.AddStar( letter, name );
+					std::string letter{ doParseString( lAttrib ) };
+					std::string name{ doParseString( nAttrib ) };
+					constellation.addStar( letter, name );
 				}
 			}
 		}
@@ -52,12 +69,36 @@ namespace starmap
 				{
 					auto aAttrib = lNode->first_attribute( "StarA" );
 					auto bAttrib = lNode->first_attribute( "StarB" );
-					std::string nameA{ aAttrib->value()
-						, aAttrib->value() + aAttrib->value_size() };
-					std::string nameB{ bAttrib->value()
-						, bAttrib->value() + bAttrib->value_size() };
-					constellation.AddLink( nameA, nameB );
+					std::string nameA{ doParseString( aAttrib ) };
+					std::string nameB{ doParseString( bAttrib ) };
+					constellation.addLink( nameA, nameB );
 				}
+			}
+		}
+	}
+
+	void loadStarsFromXml( StarMap & starmap, std::string content )
+	{
+		rapidxml::xml_document<> doc;
+		doc.parse< rapidxml::parse_non_destructive >( &content[0] );
+
+		for ( auto slNode = doc.first_node( "StarList" );
+			slNode;
+			slNode = slNode->next_sibling() )
+		{
+			for ( auto sNode = slNode->first_node( "Star" );
+				sNode;
+				sNode = sNode->next_sibling() )
+			{
+				auto nAttrib = sNode->first_attribute( "Name" );
+				auto mAttrib = sNode->first_attribute( "Magnitude" );
+				auto dAttrib = sNode->first_attribute( "Dec" );
+				auto rAttrib = sNode->first_attribute( "Ra" );
+				std::string name{ doParseString( nAttrib ) };
+				auto magnitude = doParseFloat( mAttrib );
+				auto ra = doParseFloat( rAttrib );
+				auto dec = doParseFloat( dAttrib );
+				starmap.add( Star{ name, magnitude,{ ra, dec },{ 1.0, 1.0, 1.0 } } );
 			}
 		}
 	}
@@ -76,8 +117,7 @@ namespace starmap
 				cNode = cNode->next_sibling() )
 			{
 				auto nAttrib = cNode->first_attribute( "Name" );
-				std::string name{ nAttrib->value()
-					, nAttrib->value() + nAttrib->value_size() };
+				std::string name{ doParseString( nAttrib ) };
 				auto & constellation = starmap.createConstellation( name );
 				doLoadStars( constellation, cNode );
 				doLoadLinks( constellation, cNode );

@@ -48,7 +48,7 @@ namespace starmap
 		*\brief
 		*	D�finit la carte des étoiles.
 		*/
-		void setStarMap( StarMap * starmap )
+		void starMap( StarMap * starmap )
 		{
 			m_starmap = starmap;
 		}

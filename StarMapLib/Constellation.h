@@ -44,7 +44,7 @@ namespace starmap
 		*\param[in] letter
 		*	La lettre grecque désignant l'étoile dans la constellation.
 		*/
-		void AddStar( std::string const & letter
+		void addStar( std::string const & letter
 			, std::string const & name );
 		/**
 		*\brief
@@ -52,38 +52,57 @@ namespace starmap
 		*\param[in] a, b
 		*	Les lettres des 2 étoiles.
 		*/
-		void AddLink( std::string const & a
+		void addLink( std::string const & a
 			, std::string const & b );
 		/**
 		*\return
 		*	Le nom de l'étoile.
 		*/
-		inline std::string const & getName()const
+		inline std::string const & name()const noexcept
 		{
 			return m_name;
 		}
 		/**
 		*\return
-		*	L'itérateur de début des liens.
+		*	La liste des liens composant cette constellation.
 		*/
-		inline typename LinkArray::const_iterator begin()const
+		inline LinkArray const & links()const noexcept
 		{
-			return m_links.begin();
+			return m_links;
 		}
 		/**
 		*\return
-		*	L'itérateur de fin des liens.
+		*	La liste de étoiles composant cette constellation.
 		*/
-		inline typename LinkArray::const_iterator end()const
+		inline StarPtrMap const & stars()const noexcept
 		{
-			return m_links.end();
+			return m_letters;
+		}
+		/**
+		*\brief
+		*	Définit la position de la constellation.
+		*\param[in] position
+		*	La nouvelle valeur.
+		*/
+		inline void position( glm::vec3 const & position )noexcept
+		{
+			m_position = position;
+		}
+		/**
+		*\return
+		*	La position de la constellation.
+		*/
+		inline glm::vec3 const & position()const noexcept
+		{
+			return m_position;
 		}
 
 	private:
 		std::string m_name;
 		StarSet const & m_stars;
-		StarLetters m_letters;
+		StarPtrMap m_letters;
 		LinkArray m_links;
+		glm::vec3 m_position;
 	};
 }
 

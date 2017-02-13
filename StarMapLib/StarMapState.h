@@ -30,18 +30,10 @@ namespace starmap
 		glm::vec3 m_colour;
 		render::BillboardBufferPtr m_buffer;
 		bool m_initialised{ false };
+		StarPtrArray m_stars;
 	};
 	//! Un tableau de StarHolder.
 	using StarHolderArray = std::vector< StarHolder >;
-	/**
-	*\brief
-	*	L'état de la carte du ciel.
-	*/
-	struct StarMapState
-	{
-		//! L'état de la caméra.
-		render::CameraState m_cameraState;
-	};
 }
 
 #endif

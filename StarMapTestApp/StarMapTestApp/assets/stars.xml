@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StarList>
+  <Star Name="Sol" Magnitude="-26.7" Ra="0" Dec="0"/>
+  <Star Name="Sirius" Magnitude="-1.44" Ra="1.76779536960219" Dec="-0.291751258517685"/>
+  <Star Name="Canopus" Magnitude="-0.62" Ra="1.67530535199972" Dec="-0.919712774890267"/>
+  <Star Name="Arcturus" Magnitude="-0.05" Ra="3.73352902854208" Dec="0.334796218058621"/>
+  <Star Name="Rigil Kentaurus" Magnitude="-0.01" Ra="3.83817921177722" Dec="-1.06175317577041"/>
+  <Star Name="Vega" Magnitude="0.03" Ra="4.87356309550903" Dec="0.676903116397302"/>
+  <Star Name="Capella" Magnitude="0.08" Ra="1.3818164126488" Dec="0.802816392634111"/>
+  <Star Name="Rigel" Magnitude="0.18" Ra="1.37243036932763" Dec="-0.143145630755865"/>
+  <Star Name="Procyon" Magnitude="0.4" Ra="2.00408304124283" Dec="0.09119333187796"/>
+  <Star Name="Achernar" Magnitude="0.45" Ra="0.426355065913764" Dec="-0.998969869241576"/>
+  <Star Name="Betelgeuse" Magnitude="0.45" Ra="1.54972911837131" Dec="0.129277631694193"/>
+  <Star Name="Hadar" Magnitude="0.61" Ra="3.68187566037614" Dec="-1.05370831407519"/>
+  <Star Name="Altair" Magnitude="0.76" Ra="5.19577210554699" Dec="0.15478141706831"/>
+  <Star Name="Acrux" Magnitude="0.77" Ra="3.25765128156226" Dec="-1.10128690286423"/>
+  <Star Name="Aldebaran" Magnitude="0.87" Ra="1.20393081120275" Dec="0.288141666122131"/>
+  <Star Name="Spica" Magnitude="0.98" Ra="3.51331721809912" Dec="-0.194801818024575"/>
+  <Star Name="Antares" Magnitude="1.06" Ra="4.31710546600063" Dec="-0.461325470595981"/>
+  <Star Name="Pollux" Magnitude="1.16" Ra="2.03032688748121" Dec="0.489149441745997"/>
+  <Star Name="Fomalhaut" Magnitude="1.17" Ra="6.01113338390649" Dec="-0.517005551408977"/>
+  <Star Name="Becrux" Magnitude="1.25" Ra="3.34981702660145" Dec="-1.04176544983973"/>
+  <Star Name="Deneb" Magnitude="1.25" Ra="5.41676854217706" Dec="0.790290982752855"/>
+  <Star Name="Regulus" Magnitude="1.36" Ra="2.65452317215345" Dec="0.208867165288071"/>
+  <Star Name="Adhara" Magnitude="1.5" Ra="1.82659964856774" Dec="-0.505658251855461"/>
+  <Star Name="Castor" Magnitude="1.58" Ra="1.98355827023441" Dec="0.556555413027028"/>
+  <Star Name="Gacrux" Magnitude="1.59" Ra="3.27757892924824" Dec="-0.996813589195008"/>
+  <Star Name="Shaula" Magnitude="1.62" Ra="4.59723515245134" Dec="-0.647583842514848"/>
+  <Star Name="Bellatrix" Magnitude="1.64" Ra="1.41865183381452" Dec="0.11082320964651"/>
+  <Star Name="Alnath" Magnitude="1.65" Ra="1.42371680856546" Dec="0.499294192379052"/>
+  <Star Name="Miaplacidus" Magnitude="1.67" Ra="2.41380117287407" Dec="-1.21679481890743"/>
+  <Star Name="Alnilam" Magnitude="1.69" Ra="1.46700838720758" Dec="-0.0209774579664687"/>
+  <Star Name="Alnair" Magnitude="1.73" Ra="5.79550764294474" Dec="-0.819623639519247"/>
+  <Star Name="Alnitak" Magnitude="1.74" Ra="1.48684068726057" Dec="-0.0339042812501637"/>
+  <Star Name="Alioth" Magnitude="1.76" Ra="3.37733559014455" Dec="0.976683126633446"/>
+  <Star Name="Mirphak" Magnitude="1.79" Ra="0.89152600377506" Dec="0.870241751624667"/>
+  <Star Name="Kaus Australis" Magnitude="1.79" Ra="4.81785945269638" Dec="-0.600124762349487"/>
+  <Star Name="Dubhe" Magnitude="1.81" Ra="2.89606535020345" Dec="1.0777588446528"/>
+  <Star Name="Wezen" Magnitude="1.83" Ra="1.8692101323417" Dec="-0.460648233737418"/>
+  <Star Name="Alkaid" Magnitude="1.85" Ra="3.61082990127828" Dec="0.860678838926179"/>
+  <Star Name="Avior" Magnitude="1.86" Ra="2.19263167604686" Dec="-1.0386364141904"/>
+  <Star Name="Sargas" Magnitude="1.86" Ra="4.61342366507245" Dec="-0.750453596300128"/>
+  <Star Name="Menkalinan" Magnitude="1.9" Ra="1.56874094502027" Dec="0.78448069066935"/>
+  <Star Name="Atria" Magnitude="1.91" Ra="4.40112958621836" Dec="-1.2047609005058"/>
+  <Star Name="Alhena" Magnitude="1.93" Ra="1.73534459346075" Dec="0.286220944173493"/>
+  <Star Name="Peacock" Magnitude="1.94" Ra="5.34789637906742" Dec="-0.990214121586118"/>
+  <Star Name="Polaris" Magnitude="1.97" Ra="0.662287074865333" Dec="1.55795261297514"/>
+  <Star Name="Mirzam" Magnitude="1.98" Ra="1.66984269564687" Dec="-0.31338988393796"/>
+  <Star Name="Alphard" Magnitude="1.99" Ra="2.47656718031685" Dec="-0.151121122495205"/>
+  <Star Name="Hamal" Magnitude="2.01" Ra="0.554898130994913" Dec="0.409496533262107"/>
+  <Star Name="Algieba" Magnitude="2.01" Ra="2.7051398372354" Dec="0.346299305647402"/>
+  <Star Name="Diphda" Magnitude="2.04" Ra="0.19019464223046" Dec="-0.313925470402652"/>
+  <Star Name="Nunki" Magnitude="2.05" Ra="4.953529829382" Dec="-0.458964384476017"/>
+  <Star Name="Menkent" Magnitude="2.06" Ra="3.69435454809658" Dec="-0.634775452665311"/>
+  <Star Name="Alpheratz" Magnitude="2.07" Ra="0.0365971627080155" Dec="0.507723818465944"/>
+  <Star Name="Mirach" Magnitude="2.07" Ra="0.304261792737989" Dec="0.621696012069061"/>
+  <Star Name="Saiph" Magnitude="2.07" Ra="1.51737389275285" Dec="-0.168766439905435"/>
+  <Star Name="Kochab" Magnitude="2.07" Ra="3.88643929021954" Dec="1.29425771723645"/>
+  <Star Name="Rasalhague" Magnitude="2.08" Ra="4.60302002272537" Dec="0.219213960617327"/>
+  <Star Name="Algol" Magnitude="2.09" Ra="0.821041501386661" Dec="0.714810897913476"/>
+  <Star Name="Almaak" Magnitude="2.1" Ra="0.540611676505168" Dec="0.738793066882135"/>
+  <Star Name="Denebola" Magnitude="2.14" Ra="3.09385696597424" Dec="0.254330430316206"/>
+  <Star Name="Cih" Magnitude="2.15" Ra="0.247437951103704" Dec="1.05970702895103"/>
+  <Star Name="Naos" Magnitude="2.21" Ra="2.1100341325787" Dec="-0.698186637596527"/>
+  <Star Name="Tureis" Magnitude="2.21" Ra="2.43076493672462" Dec="-1.03454791385811"/>
+  <Star Name="Alphekka" Magnitude="2.22" Ra="4.0783442886637" Dec="0.466259350848143"/>
+  <Star Name="Mizar" Magnitude="2.23" Ra="3.50778385472171" Dec="0.958628404309453"/>
+  <Star Name="Sadr" Magnitude="2.23" Ra="5.3329772550835" Dec="0.702611597548288"/>
+  <Star Name="Shedir" Magnitude="2.24" Ra="0.176744881331483" Dec="0.986762576310091"/>
+  <Star Name="Etamin" Magnitude="2.24" Ra="4.6975807915714" Dec="0.898650744191411"/>
+  <Star Name="Mintaka" Magnitude="2.25" Ra="1.44865241684339" Dec="-0.005220140244135"/>
+  <Star Name="Caph" Magnitude="2.28" Ra="0.0400258528303232" Dec="1.03235840436763"/>
+  <Star Name="Dschubba" Magnitude="2.29" Ra="4.19024512520822" Dec="-0.39482331934217"/>
+  <Star Name="Merak" Magnitude="2.34" Ra="2.88782456911495" Dec="0.984058986291181"/>
+  <Star Name="Izar" Magnitude="2.35" Ra="3.86148433836636" Dec="0.47253432342394"/>
+  <Star Name="Enif" Magnitude="2.38" Ra="5.69058477548433" Dec="0.172351459541244"/>
+  <Star Name="Ankaa" Magnitude="2.4" Ra="0.114682902957825" Dec="-0.738378668832116"/>
+  <Star Name="Phad" Magnitude="2.41" Ra="3.11467124530819" Dec="0.937150353420552"/>
+  <Star Name="Scheat" Magnitude="2.44" Ra="6.03785330400395" Dec="0.490137131580918"/>
+  <Star Name="Aludra" Magnitude="2.45" Ra="1.93773018849629" Dec="-0.511435637474828"/>
+  <Star Name="Alderamin" Magnitude="2.45" Ra="5.57884815236164" Dec="1.09232430467117"/>
+  <Star Name="Gienah" Magnitude="2.48" Ra="5.43761981873354" Dec="0.59289281587296"/>
+  <Star Name="Markab" Magnitude="2.49" Ra="6.04215914593513" Dec="0.265381926553857"/>
+  <Star Name="Menkar" Magnitude="2.54" Ra="0.795344514005662" Dec="0.0713793229065275"/>
+  <Star Name="Zosma" Magnitude="2.56" Ra="2.94135216538174" Dec="0.358206432003273"/>
+  <Star Name="Graffias" Magnitude="2.56" Ra="4.21251438265692" Dec="-0.345670369863593"/>
+  <Star Name="Arneb" Magnitude="2.58" Ra="1.45180965171731" Dec="-0.311057614671362"/>
+  <Star Name="Gienah Ghurab" Magnitude="2.58" Ra="3.21056040742537" Dec="-0.306164425583095"/>
+  <Star Name="Zubeneschemali" Magnitude="2.61" Ra="4.00119752702081" Dec="-0.16376280166405"/>
+  <Star Name="Unukalhai" Magnitude="2.63" Ra="4.12014598643839" Dec="0.112148346471632"/>
+  <Star Name="Sheratan" Magnitude="2.64" Ra="0.500211742009699" Dec="0.363168721573765"/>
+  <Star Name="Phakt" Magnitude="2.65" Ra="1.48199832675788" Dec="-0.594705371229787"/>
+  <Star Name="Kraz" Magnitude="2.65" Ra="3.29163530048222" Dec="-0.408350480587033"/>
+  <Star Name="Ruchbah" Magnitude="2.66" Ra="0.37442958727661" Dec="1.05130401557496"/>
+  <Star Name="Mufrid" Magnitude="2.68" Ra="3.64199895242804" Dec="0.321100735969337"/>
+  <Star Name="Hassaleh" Magnitude="2.69" Ra="1.29587921098894" Dec="0.57885747451101"/>
+  <Star Name="Kaus Meridionalis" Magnitude="2.72" Ra="4.80399251293906" Dec="-0.520598610071169"/>
+  <Star Name="Tarazed" Magnitude="2.72" Ra="5.17603418586121" Dec="0.185236351342716"/>
+  <Star Name="Porrima" Magnitude="2.74" Ra="3.32337177354462" Dec="-0.0252963627301925"/>
+  <Star Name="Hatsya" Magnitude="2.75" Ra="1.46360274229611" Dec="-0.103147236301135"/>
+  <Star Name="Zubenelgenubi" Magnitude="2.75" Ra="3.88719116950368" Dec="-0.279981846062591"/>
+  <Star Name="Cebalrai" Magnitude="2.76" Ra="4.64027438272991" Dec="0.079714471486085"/>
+  <Star Name="Cursa" Magnitude="2.78" Ra="1.34324795349637" Dec="-0.0887752322551"/>
+  <Star Name="Kornephoros" Magnitude="2.78" Ra="4.32065013148157" Dec="0.375064505316857"/>
+  <Star Name="Rasalgethi" Magnitude="2.78" Ra="4.51450198135376" Dec="0.251158687566835"/>
+  <Star Name="Rastaban" Magnitude="2.79" Ra="4.58337771165353" Dec="0.912831406813242"/>
+  <Star Name="Nihal" Magnitude="2.81" Ra="1.43224069862137" Dec="-0.362320594829247"/>
+  <Star Name="Kaus Borealis" Magnitude="2.82" Ra="4.83443427510616" Dec="-0.443692367644793"/>
+  <Star Name="Algenib" Magnitude="2.83" Ra="0.0577524133796261" Dec="0.265003740449338"/>
+  <Star Name="Alcyone" Magnitude="2.85" Ra="0.992588774850162" Dec="0.420714009222201"/>
+  <Star Name="Vindemiatrix" Magnitude="2.85" Ra="3.41288954304975" Dec="0.191273256727087"/>
+  <Star Name="Acamar" Magnitude="2.88" Ra="0.777812118193322" Dec="-0.703449236351026"/>
+  <Star Name="Albaldah" Magnitude="2.88" Ra="5.01679134536719" Dec="-0.366931299372682"/>
+  <Star Name="Gomeisa" Magnitude="2.89" Ra="1.95106305906221" Dec="0.144675846904975"/>
+  <Star Name="Cor Caroli" Magnitude="2.89" Ra="3.38606271761997" Dec="0.668781890317408"/>
+  <Star Name="Sadalsuud" Magnitude="2.9" Ra="5.63548881177908" Dec="-0.097235298222015"/>
+  <Star Name="Matar" Magnitude="2.93" Ra="5.94721932514189" Dec="0.527460231382553"/>
+  <Star Name="Algorab" Magnitude="2.94" Ra="3.27190043482125" Dec="-0.288248674272748"/>
+  <Star Name="Sadalmelik" Magnitude="2.95" Ra="5.78482367433942" Dec="-0.0055824472424825"/>
+  <Star Name="Zaurak" Magnitude="2.97" Ra="1.03859928390663" Dec="-0.235768069176071"/>
+  <Star Name="Ras Elased Australis" Magnitude="2.97" Ra="2.55625834380702" Dec="0.414939020029146"/>
+  <Star Name="Nash" Magnitude="2.98" Ra="4.73773203401826" Dec="-0.531000563719897"/>
+  <Star Name="Albireo" Magnitude="3.05" Ra="5.10823554723371" Dec="0.487988492168662"/>
+  <Star Name="Megrez" Magnitude="3.32" Ra="3.20889759913916" Dec="0.995406944309545"/>
+  <Star Name="Sheliak" Magnitude="3.52" Ra="4.93090379866331" Dec="0.582288385801462"/>
+  <Star Name="Thuban" Magnitude="3.67" Ra="3.68434590635394" Dec="1.12357054822037"/>
+  <Star Name="Alshain" Magnitude="3.71" Ra="5.21553781122248" Dec="0.111819115829438"/>
+  <Star Name="Alcor" Magnitude="3.99" Ra="3.51345583039106" Dec="0.959720908384926"/>
+  <Star Name="82 G, Eri" Magnitude="4.26" Ra="0.872300798990329" Dec="-0.751709535787738"/>
+  <Star Name="96 G, Psc" Magnitude="5.74" Ra="0.21111031896421" Dec="0.0921641160815062"/>
+  <Star Name="268 G, Cet" Magnitude="5.79" Ra="0.681033735135593" Dec="0.120198561576742"/>
+  <Star Name="p Eridani" Magnitude="5.8" Ra="0.435373049958666" Dec="-0.9807811326846"/>
+</StarList>

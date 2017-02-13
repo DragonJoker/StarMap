@@ -11,54 +11,43 @@ namespace starmap
 	{
 	}
 
-	void Constellation::AddStar( std::string const & letter
+	void Constellation::addStar( std::string const & letter
 		, std::string const & name )
 	{
+		static std::hash< std::string > hash;
+
 		if ( !letter.empty()
 			&& !name.empty() )
 		{
-			m_letters.insert( { letter, name } );
-		}
-	}
-
-	void Constellation::AddLink( std::string const & a
-		, std::string const & b )
-	{
-		static std::hash< std::string > hash;
-		auto na = m_letters.find( a );
-		auto nb = m_letters.find( b );
-
-		if ( na != m_letters.end()
-			&& nb != m_letters.end() )
-		{
-			auto ida = hash( na->second );
-			auto idb = hash( nb->second );
-			auto ita = std::find_if( std::begin( m_stars )
+			auto id = hash( name );
+			auto it = std::find_if( std::begin( m_stars )
 				, std::end( m_stars )
-				, [&ida]( Star const & star )
+				, [&id]( Star const & star )
 			{
-				return star.getId() == ida;
-			} );
-			auto itb = std::find_if( std::begin( m_stars )
-				, std::end( m_stars )
-				, [&idb]( Star const & star )
-			{
-				return star.getId() == idb;
+				return star.id() == id;
 			} );
 
-			if ( ita != std::end( m_stars )
-				&& itb != std::end( m_stars ) )
+			if ( it != std::end( m_stars ) )
 			{
-				m_links.push_back( { &( *ita ), &( *itb ) } );
-			}
-			else if ( ita == std::end( m_stars ) )
-			{
-				std::cerr << "Star [" << m_letters[a] << "] not found." << std::endl;
+				m_letters.insert( { letter, &( *it ) } );
 			}
 			else
 			{
-				std::cerr << "Star [" << m_letters[b] << "] not found." << std::endl;
+				std::cerr << "Star [" << name << "] was not found." << std::endl;
 			}
+		}
+	}
+
+	void Constellation::addLink( std::string const & a
+		, std::string const & b )
+	{
+		auto sa = m_letters.find( a );
+		auto sb = m_letters.find( b );
+
+		if ( sa != m_letters.end()
+			&& sb != m_letters.end() )
+		{
+			m_links.push_back( { sa->second, sb->second } );
 		}
 	}
 }

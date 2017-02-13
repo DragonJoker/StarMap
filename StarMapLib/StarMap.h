@@ -34,14 +34,14 @@ namespace starmap
 		*\param[in] state
 		*	L'état à récupérer.
 		*/
-		void restore( StarMapState const & state );
+		void restore( render::CameraState const & state );
 		/**
 		*\brief
 		*	Sauvegarde l'état de la carte du ciel.
 		*\param[out] state
 		*	Reçoit l'état actuel.
 		*/
-		void save( StarMapState & state );
+		void save( render::CameraState & state );
 		/**
 		*\brief
 		*	Initialise les données GPU.
@@ -54,7 +54,7 @@ namespace starmap
 		*/
 		void initialise( glm::ivec2 const & size
 			, render::ByteArray const & opacityMap
-			, render::FontLoader const & loader );
+			, render::FontLoader & loader );
 		/**
 		*\brief
 		*	Nettoie les données GPU.
@@ -171,22 +171,28 @@ namespace starmap
 		*	Ajoute une étoile au conteneur de billboards approprié.
 		*\param[in] star
 		*	L'étoile à ajouter.
+		*\param[in] minMagnitude
+		*	La magnitude minimale parmis toutes les étoiles.
+		*\param[in] maxMagnitude
+		*	La magnitude maximale parmis toutes les étoiles.
 		*/
-		void doAddStar( Star const & star );
+		void doAddStar( Star const & star
+			, float minMagnitude
+			, float maxMagnitude );
 		/**
 		*\brief
 		*	Ajoute une constellation à la polyligne.
 		*\param[in] constellation
 		*	La constellation à ajouter.
 		*/
-		void doAddConstellation( Constellation const & constellation );
+		void doAddConstellation( Constellation & constellation );
 		/**
 		*\brief
-		*	Charge la texture de police.
+		*	Charge les textures de police.
 		*\param[in] loader
 		*	Le loader de police.
 		*/
-		void doLoadFontTexture( render::FontLoader const & loader );
+		void doLoadFontTextures( render::FontLoader & loader );
 		/**
 		*\brief
 		*	Charge la texture d'opacité des étoiles.
@@ -196,14 +202,47 @@ namespace starmap
 		void doLoadOpacityMap( render::ByteArray const & opacityMap );
 		/**
 		*\brief
-		*	Initialise le billboard affiché par dessus les objets sélectionnés.
+		*	Initialise les objets affichés par dessus les éléments
+		*	sélectionnés.
 		*/
-		void doInitialisePicked();
+		void doInitialisePickObjects();
 		/**
 		*\brief
 		*	Initialise la polyligne contenant les constellations.
 		*/
 		void doInitialiseLines();
+		/**
+		*\brief
+		*	Initialise les incrustations contenant les noms des étoiles.
+		*/
+		void doInitialiseStarNames();
+		/**
+		*\brief
+		*	Initialise les incrustations contenant les noms des constellations.
+		*/
+		void doInitialiseConstellationNames();
+		/**
+		*\brief
+		*	Met à jour la position des noms des étoiles.
+		*/
+		void doUpdateStarNames();
+		/**
+		*\brief
+		*	Met à jour la position des noms des constellations.
+		*/
+		void doUpdateConstellationNames();
+		/**
+		*\brief
+		*	Met à jour la position d'une incrustation texte par rapport à la
+		*	position donnée.
+		*\param[in] position
+		*\	La position monde 3D de l'objet.
+		*\param[in] offset
+		*\	L'offset 2D donné à la position écran de l'incrustation.
+		*/
+		void doUpdateOverlay( render::TextOverlay & overlay
+			, glm::vec3 const & position
+			, glm::ivec2 const & offset );
 
 	private:
 		//! La connexion à la notification d'objet sélectionné.
@@ -222,8 +261,6 @@ namespace starmap
 		render::Connection< OnSetZoomVelocity > m_onSetZoomVelocity;
 
 	private:
-		//! L'état de la carte.
-		StarMapState m_state;
 		//! Le tableau de StarHolders.
 		StarHolderArray m_holders;
 		//! La polyligne contenant les constellations.
@@ -241,9 +278,13 @@ namespace starmap
 		//! Le billboard sélectionné.
 		render::Billboard * m_pickedBillboard{ nullptr };
 		//! Le billboard apparaissant sur la sélection (billboard ou objet).
-		render::BillboardPtr m_picked;
+		render::BillboardPtr m_pickBillboard;
+		//! L'incrustation décrivant la sélection (billboard ou objet).
+		render::TextOverlayPtr m_pickDescription;
 		//! La texture d'opacité.
 		render::TexturePtr m_opacity;
+		//! La texture de police des noms.
+		render::FontTexturePtr m_fontTextureNames;
 	};
 }
 

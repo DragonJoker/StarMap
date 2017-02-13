@@ -119,21 +119,15 @@ Engine::Engine()
 
 	try
 	{
-		starmap::loadStarsFromCsv( m_starmap, utils::getFileTextContent( "stars.csv" ) );
-		starmap::loadConstellationsFromXml( m_starmap, utils::getFileTextContent( "constellations.xml" ) );
+		starmap::loadStarsFromXml( m_starmap
+			, utils::getFileTextContent( "stars.xml" ) );
+		starmap::loadConstellationsFromXml( m_starmap
+			, utils::getFileTextContent( "constellations.xml" ) );
 	}
 	catch ( std::exception & exc )
 	{
 		std::cerr << "Csv loading failed: " << exc.what() << std::endl;
 	}
-
-	//auto & constellation = m_starmap.createConstellation( "Canis Majoris" );
-	//constellation.AddLink( "Sirius", "Muliphein" );
-	//constellation.AddLink( "Sirius", "Mirzam" );
-	//constellation.AddLink( "Sirius", "Wezen" );
-	//constellation.AddLink( "Wezen", "Aludra" );
-	//constellation.AddLink( "Wezen", "Adhara" );
-	//constellation.AddLink( "Adhara", "Furud" );
 }
 
 Engine::~Engine()
@@ -159,10 +153,9 @@ void Engine::onPaint()
 void Engine::onCreate()
 {
 	std::string dataPath{ doGetExecutableDir() + "\\arial.ttf" };
-	uint32_t size = 32;
-	m_starmap.initialise( getSize()
+	m_starmap.initialise( size()
 		, utils::getFileBinaryContent( "halo.bmp" )
-		, utils::FontLoader{ dataPath, size } );
+		, utils::FontLoader{ dataPath } );
 }
 
 void Engine::onDestroy()

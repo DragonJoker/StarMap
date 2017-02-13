@@ -40,7 +40,7 @@ namespace starmap
 		*\return
 		*	L'identifiant de l'étoile.
 		*/
-		inline size_t getId()const noexcept
+		inline size_t id()const noexcept
 		{
 			return m_id;
 		}
@@ -48,7 +48,7 @@ namespace starmap
 		*\return
 		*	Le nom de l'étoile.
 		*/
-		inline std::string const & getName()const noexcept
+		inline std::string const & name()const noexcept
 		{
 			return m_name;
 		}
@@ -56,15 +56,15 @@ namespace starmap
 		*\return
 		*	La magnitude de l'étoile.
 		*/
-		inline float getMagnitude()const noexcept
+		inline float magnitude()const noexcept
 		{
 			return m_magnitude;
 		}
 		/**
 		*\return
-		*	La position de l'étoile, en coordonnées sphériques.
+		*	La position de l'étoile, en coordonnées cartésiennes.
 		*/
-		inline glm::vec2 const & getPosition()const noexcept
+		inline glm::vec3 const & position()const noexcept
 		{
 			return m_position;
 		}
@@ -72,7 +72,7 @@ namespace starmap
 		*\return
 		*	La couleur de l'étoile.
 		*/
-		inline glm::vec3 const & getColour()const noexcept
+		inline glm::vec3 const & colour()const noexcept
 		{
 			return m_colour;
 		}
@@ -81,7 +81,7 @@ namespace starmap
 		size_t m_id;
 		std::string m_name;
 		float m_magnitude;
-		glm::vec2 m_position;
+		glm::vec3 m_position;
 		glm::vec3 m_colour;
 	};
 	/**
@@ -94,7 +94,7 @@ namespace starmap
 	*/
 	inline bool operator<( Star const & lhs, Star const & rhs )
 	{
-		return lhs.getMagnitude() < rhs.getMagnitude();
+		return lhs.magnitude() < rhs.magnitude();
 	}
 	/**
 	*\brief
@@ -106,7 +106,7 @@ namespace starmap
 	*/
 	inline bool operator>( Star const & lhs, Star const & rhs )
 	{
-		return lhs.getMagnitude() > rhs.getMagnitude();
+		return lhs.magnitude() > rhs.magnitude();
 	}
 }
 
