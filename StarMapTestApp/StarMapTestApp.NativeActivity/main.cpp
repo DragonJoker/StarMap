@@ -1,5 +1,20 @@
 #include "Engine.h"
 
+#include <AndroidUtils/AndroidApp.h>
+
+namespace
+{
+	namespace
+	{
+		utils::AndroidWindowPtr doCreateWindow( utils::AndroidApp const & app
+			, ANativeWindow * window
+			, void * saved
+			, size_t savedSize )
+		{
+			return std::make_unique< Window >( app, window, saved, savedSize );
+		}
+	}
+}
 /**
 * Il s'agit du point d'entrée principal d'une application native qui utilise
 * android_native_app_glue. Elle s'exécute dans son propre thread, avec sa propre boucle d'évènements
@@ -7,7 +22,11 @@
 */
 void android_main( android_app * state )
 {
-	Engine engine{ state };
+	utils::AndroidApp engine{ state->activity
+		, state->config
+		, state->looper
+		, LOOPER_ID_USER
+		, doCreateWindow };
 
 	state->userData = &engine;
 	state->onAppCmd = &Engine::handleCommand;
@@ -25,7 +44,7 @@ void android_main( android_app * state )
 		// Si aucune animation n'a lieu, l'attente d'évènements est bloquée indéfiniment.
 		// En cas d'animation, la boucle est répétée jusqu'à ce que tous les évènements soient lus, puis
 		// la prochaine image d'animation est dessinée.
-		while ( ( ident = ALooper_pollAll( engine.isAnimating() ? 0 : -1
+		while ( ( ident = ALooper_pollAll( engine.animating() ? 0 : -1
 			, nullptr
 			, &events
 			, reinterpret_cast< void ** >( &source ) ) ) >= 0 )
