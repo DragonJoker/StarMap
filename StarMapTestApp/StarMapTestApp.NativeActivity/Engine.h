@@ -27,6 +27,56 @@ public:
 	void update();
 	/**
 	*\brief
+	*	Charge le contenu d'un fichier texte dans un std::string.
+	*\param[in] fileName
+	*	Le nom du fichier texte.
+	*\param[in] fromResource
+	*	Précise si le fichier se trouve dans les ressources, ou sur le
+	*	système de fichier.
+	*\return
+	*	Le contenu du fichier, vide si non trouvé
+	*/
+	std::string getFileTextContent( std::string const & fileName
+		, bool fromResource )const;
+	/**
+	*\brief
+	*	Charge le contenu d'un fichier binaire dans un std::vector< uint8_t >.
+	*\param[in] fileName
+	*	Le nom du fichier binaire.
+	*\param[in] fromResource
+	*	Précise si le fichier se trouve dans les ressources, ou sur le
+	*	système de fichier.
+	*\return
+	*	Le contenu du fichier, vide si non trouvé
+	*/
+	std::vector< uint8_t > getFileBinaryContent( std::string const & fileName
+		, bool fromResource )const;
+	/**
+	*\brief
+	*	Ecrit un std::string contenu d'un fichier texte des assets dans un std::string.
+	*\param[content]
+	*	Le contenu du fichier.
+	*\param[in] fileName
+	*	Le nom du fichier texte.
+	*\return
+	*	Le chemin d'accès au fichier en cas de succès, vide sinon.
+	*/
+	std::string setFileTextContent( std::string const & content
+		, std::string const & fileName )const;
+	/**
+	*\brief
+	*	Charge le contenu d'un fichier binaire des assets dans un std::vector< uint8_t >.
+	*\param[content]
+	*	Le contenu du fichier.
+	*\param[in] fileName
+	*	Le nom du fichier binaire.
+	*\return
+	*	Le chemin d'accès au fichier en cas de succès, vide sinon.
+	*/
+	std::string setFileBinaryContent( std::vector< uint8_t > const & content
+		, std::string const & fileName )const;
+	/**
+	*\brief
 	*	Traitement de l'évènement d'entrée suivant.
 	*/
 	static int32_t handleInput( android_app * app, AInputEvent * event );

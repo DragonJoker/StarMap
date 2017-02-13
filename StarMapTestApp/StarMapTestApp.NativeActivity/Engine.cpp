@@ -7,11 +7,13 @@
 #include <android/configuration.h>
 #include <android/window.h>
 
+#include <AndroidUtils/AndroidApp.h>
 #include <AndroidUtils/FontLoader.h>
 #include <AndroidUtils/Log.h>
 #include <AndroidUtils/AndroidUtils.h>
 
 #include <StarMapLib/CsvReader.h>
+#include <StarMapLib/XmlReader.h>
 
 #define ALLOW_OPENGL_ES_2 1
 
@@ -57,8 +59,8 @@ Engine::Engine( android_app * state )
 	if ( state->savedState )
 	{
 		// Un état enregistré précédent est utilisé pour procéder à la restauration.
-		assert( state->savedStateSize == sizeof( starmap::StarMapState ) );
-		m_starmap.restore( *reinterpret_cast< starmap::StarMapState * >( state->savedState ) );
+		assert( state->savedStateSize == sizeof( render::CameraState ) );
+		m_starmap.restore( *reinterpret_cast< render::CameraState * >( state->savedState ) );
 	}
 	else
 	{
@@ -113,8 +115,11 @@ Engine::Engine( android_app * state )
 		//		,colours[randui()] } );
 		//}
 
-		auto stars = starmap::loadFromCsv( utils::getFileTextContent( *m_app->activity, "stars.csv" ) );
-		m_starmap.add( stars );
+		auto engine = reinterpret_cast< utils::AndroidApp * >( m_app->userData );
+		starmap::loadStarsFromXml( m_starmap
+			, engine->getFileTextContent( "stars.xml", true ) );
+		starmap::loadConstellationsFromXml( m_starmap
+			, engine->getFileTextContent( "constellations.xml", true ) );
 	}
 
 	ANativeActivity_setWindowFlags( m_app->activity
@@ -237,10 +242,10 @@ void Engine::handleCommand( android_app * app, int32_t cmd )
 
 void Engine::onSaveState()
 {
-	auto state = new starmap::StarMapState;
+	auto state = new render::CameraState;
 	m_starmap.save( *state );
 	m_app->savedState = state;
-	m_app->savedStateSize = sizeof( starmap::StarMapState );
+	m_app->savedStateSize = sizeof( render::CameraState );
 }
 
 void Engine::onInitWindow()
@@ -345,17 +350,17 @@ int Engine::onSingleTouchEvent( AInputEvent * event )
 
 	if ( m_doubleTapDetector.detect( event ) == utils::ResultType::eDoubleTap )
 	{
-		m_onScreenDoubleTap( m_doubleTapDetector.getResult() );
+		m_onScreenDoubleTap( m_doubleTapDetector.result() );
 		ret = 1;
 	}
 	else if ( m_tapDetector.detect( event ) == utils::ResultType::eTap )
 	{
-		m_onScreenTap( m_tapDetector.getResult() );
+		m_onScreenTap( m_tapDetector.result() );
 		ret = 1;
 	}
 	else if ( m_moveDetector.detect( event ) == utils::ResultType::eMove )
 	{
-		m_onScreenSingleMove( m_moveDetector.getResult() );
+		m_onScreenSingleMove( m_moveDetector.result() );
 		ret = 1;
 	}
 
@@ -368,8 +373,8 @@ int Engine::onMultiTouchEvent( AInputEvent * event )
 
 	if ( m_dblMoveDetector.detect( event ) == utils::ResultType::eMove )
 	{
-		m_onScreenDoubleMove( m_dblMoveDetector.getResult()
-			, m_dblMoveDetector.getDistanceOffset() );
+		m_onScreenDoubleMove( m_dblMoveDetector.result()
+			, m_dblMoveDetector.distanceOffset() );
 		ret = 1;
 	}
 
@@ -496,21 +501,16 @@ int Engine::doInitialiseDisplay()
 				glCheckError( glEnable, GL_TEXTURE_2D );
 				glCheckError( glFrontFace, GL_CCW );
 
-				auto content = utils::getFileBinaryContent( *m_app->activity
-					, "arial.ttf" );
-				std::string dataPath{ m_app->activity->internalDataPath 
-					+ std::string{ "/arial.ttf" } };
-				FILE * fp = fopen( dataPath.c_str(), "w" );
+				auto engine = reinterpret_cast< utils::AndroidApp * >( m_app->userData );
+				auto content = engine->getFileBinaryContent( "arial.ttf", true );
+				std::string dataPath{ engine->setFileBinaryContent( content, "arial.ttf" ) };
 
-				if ( fp )
+				if ( !dataPath.empty() )
 				{
-					fwrite( content.data(), 1, content.size(), fp );
-					fclose( fp );
-					uint32_t size = 32;
-
+					utils::FontLoader loader{ dataPath };
 					m_starmap.initialise( glm::ivec2{ m_width, m_height }
-						, utils::getFileBinaryContent( *m_app->activity, "halo.bmp" )
-						, utils::FontLoader{ dataPath, size } );
+						, engine->getFileBinaryContent( "halo.bmp", true )
+						, loader );
 					ret = 0;
 				}
 			}
@@ -529,4 +529,102 @@ void Engine::doDrawFrame()
 		eglSwapBuffers( m_display, m_surface );
 		m_starmap.endFrame();
 	}
+}
+
+std::string Engine::getFileTextContent( std::string const & fileName
+	, bool fromResource )const
+{
+	auto asset = AAssetManager_open( m_app->activity->assetManager
+		, fileName.c_str()
+		, AASSET_MODE_STREAMING );
+	std::string content;
+
+	if ( asset )
+	{
+		std::array< char, 1024 > buffer;
+		int read = 0;
+
+		while ( ( read = AAsset_read( asset
+			, buffer.data()
+			, buffer.size() ) ) > 0 )
+		{
+			content += std::string{ buffer.data(), buffer.data() + read };
+		}
+
+		AAsset_close( asset );
+	}
+
+	return content;
+}
+
+std::vector< uint8_t > Engine::getFileBinaryContent( std::string const & fileName
+	, bool fromResource )const
+{
+	auto asset = AAssetManager_open( m_app->activity->assetManager
+		, fileName.c_str()
+		, AASSET_MODE_STREAMING );
+	std::vector< uint8_t > content;
+
+	if ( asset )
+	{
+		std::array< uint8_t, 1024 > buffer;
+		int read = 0;
+
+		while ( ( read = AAsset_read( asset
+			, buffer.data()
+			, buffer.size() ) ) > 0 )
+		{
+			content.insert( content.end()
+				, buffer.data()
+				, buffer.data() + read );
+		}
+
+		AAsset_close( asset );
+	}
+
+	return content;
+}
+
+std::string Engine::setFileTextContent( std::string const & content
+	, std::string const & fileName )const
+{
+	std::string dataPath = std::string{ m_app->activity->internalDataPath }
+	+"/" + fileName;
+	FILE * fp = fopen( dataPath.c_str(), "w" );
+	bool result{ false };
+
+	if ( fp )
+	{
+		result = fwrite( content.data(), 1, content.size(), fp ) == content.size();
+		fclose( fp );
+	}
+
+	if ( !result )
+	{
+		dataPath.clear();
+	}
+
+	return dataPath;
+}
+
+std::string Engine::setFileBinaryContent( std::vector< uint8_t > const & content
+	, std::string const & fileName )const
+{
+	std::string dataPath = std::string{ m_app->activity->internalDataPath }
+	+"/" + fileName;
+	FILE * fp = fopen( dataPath.c_str(), "wb" );
+	bool result{ false };
+
+	if ( fp )
+	{
+		result = fwrite( content.data(), 1, content.size(), fp ) == content.size();
+		fclose( fp );
+	}
+
+	if ( !result )
+	{
+		dataPath.clear();
+	}
+
+	return dataPath;
 }

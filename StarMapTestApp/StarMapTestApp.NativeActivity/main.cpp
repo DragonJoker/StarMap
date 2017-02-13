@@ -1,4 +1,4 @@
-﻿#include "Engine.h"
+#include "Engine.h"
 
 /**
 * Il s'agit du point d'entrée principal d'une application native qui utilise
