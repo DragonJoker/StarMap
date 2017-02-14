@@ -52,7 +52,7 @@ namespace starmap
 		*\param[in] loader
 		*	Le loader de police.
 		*/
-		void initialise( glm::ivec2 const & size
+		void initialise( gl::Size2D const & size
 			, render::ByteArray const & opacityMap
 			, render::FontLoader & loader );
 		/**
@@ -66,7 +66,7 @@ namespace starmap
 		*\param[in] size
 		*	Les nouvelles dimensions.
 		*/
-		void resize( glm::ivec2 const & size );
+		void resize( gl::Size2D const & size );
 		/**
 		*\brief
 		*	Démarre le dessin d'une image.
@@ -103,6 +103,16 @@ namespace starmap
 		*	Le nom de la constellation.
 		*/
 		Constellation & createConstellation( std::string const & name );
+		/**
+		*\brief
+		*	Applique un filtre.
+		*\param[in] type
+		*	Le type d'élément sur lequel est appliqué le filtre.
+		*\param[in] show
+		*	\p true pour afficher les éléments du type donné,
+		*	\p false pour les cacher
+		*/
+		void filter( ElementType type, bool show );
 
 	private:
 		/**
@@ -158,7 +168,7 @@ namespace starmap
 		*\return
 		*	Le conteneur
 		*/
-		StarHolder & doFindHolder( glm::vec3 const & colour );
+		StarHolder & doFindHolder( gl::RgbColour const & colour );
 		/**
 		*\brief
 		*	Initialise les billboards pour les étoiles du conteneur.
@@ -246,8 +256,18 @@ namespace starmap
 		*\	L'offset 2D donné à la position écran de l'incrustation.
 		*/
 		void doUpdateOverlay( render::TextOverlay & overlay
-			, glm::vec3 const & position
-			, glm::ivec2 const & offset );
+			, gl::Vector3D const & position
+			, gl::Offset2D const & offset );
+		/**
+		*\brief
+		*	Affiche ou cache les constellations.
+		*/
+		void doFilterConstellations( bool show );
+		/**
+		*\brief
+		*	Affiche ou cache les étoiles.
+		*/
+		void doFilterStars( bool show );
 
 	private:
 		//! La connexion à la notification d'objet sélectionné.

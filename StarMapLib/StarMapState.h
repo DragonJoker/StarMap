@@ -21,13 +21,14 @@ namespace starmap
 	*/
 	struct StarHolder
 	{
-		StarHolder( glm::vec3 const & colour
+		StarHolder( gl::RgbColour const & colour
 			, render::BillboardBufferPtr buffer )
 			: m_colour{ colour }
 			, m_buffer{ buffer }
 		{
 		}
-		glm::vec3 m_colour;
+
+		gl::RgbColour m_colour;
 		render::BillboardBufferPtr m_buffer;
 		bool m_initialised{ false };
 		StarPtrArray m_stars;

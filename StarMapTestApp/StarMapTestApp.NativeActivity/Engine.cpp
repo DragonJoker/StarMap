@@ -9,73 +9,18 @@
 
 Window::Window( utils::AndroidApp const & parent
 	, ANativeWindow * window
-	, void * saved
-	, size_t savedSize )
-	: utils::AndroidWindow{ parent, window, saved, savedSize }
+	, render::ByteArray const & state )
+	: utils::AndroidWindow{ parent, window, state }
 	, m_events{ m_onScreenTap
 		, m_onScreenDoubleTap
 		, m_onScreenSingleMove
 		, m_onScreenDoubleMove }
 	, m_starmap{ m_events }
 {
-	if ( !saved )
-	{
-		//glm::vec3 colours[]
-		//{
-		//	glm::vec3{ 1.0, 1.0, 1.0 },
-		//	glm::vec3{ 0.7, 1.0, 1.0 },
-		//	glm::vec3{ 1.0, 0.7, 1.0 },
-		//	glm::vec3{ 1.0, 1.0, 0.7 },
-		//	glm::vec3{ 0.7, 0.7, 1.0 },
-		//	glm::vec3{ 1.0, 0.7, 0.7 },
-		//	glm::vec3{ 0.7, 1.0, 0.7 },
-		//	glm::vec3{ 0.8, 1.0, 1.0 },
-		//	glm::vec3{ 1.0, 0.8, 1.0 },
-		//	glm::vec3{ 1.0, 1.0, 0.8 },
-		//	glm::vec3{ 0.8, 0.8, 1.0 },
-		//	glm::vec3{ 1.0, 0.8, 0.8 },
-		//	glm::vec3{ 0.8, 1.0, 0.8 },
-		//	glm::vec3{ 0.9, 1.0, 1.0 },
-		//	glm::vec3{ 1.0, 0.9, 1.0 },
-		//	glm::vec3{ 1.0, 1.0, 0.9 },
-		//	glm::vec3{ 0.9, 0.9, 1.0 },
-		//	glm::vec3{ 1.0, 0.9, 0.9 },
-		//	glm::vec3{ 0.9, 1.0, 0.9 },
-		//};
-
-		//std::mt19937 engine( std::chrono::system_clock::now().time_since_epoch().count() );
-		//std::uniform_real_distribution< float > fdistribution{ float( -M_PI ) / 2, float( M_PI ) / 2 };
-		//std::uniform_real_distribution< float > mdistribution{ -50.0f, 50.0f };
-		//std::uniform_int_distribution< uint32_t > uidistribution{ 0u, uint32_t( ( sizeof( colours ) / sizeof( glm::vec3 ) ) - 1 ) };
-
-		//auto randf = [&engine, &fdistribution]()
-		//{
-		//	return fdistribution( engine );
-		//};
-
-		//auto randm = [&engine, &mdistribution]()
-		//{
-		//	return mdistribution( engine ) + 1.0f;
-		//};
-
-		//auto randui = [&engine, &uidistribution]()
-		//{
-		//	return uidistribution( engine );
-		//};
-
-		//for ( uint32_t i = 0; i < 5000; ++i )
-		//{
-		//	m_starmap.add( { "Coin"
-		//		, randm()
-		//		,{ randf(), randf() }
-		//		,colours[randui()] } );
-		//}
-
-		starmap::loadStarsFromXml( m_starmap
-			, m_parent.getFileTextContent( "stars.xml", true ) );
-		starmap::loadConstellationsFromXml( m_starmap
-			, m_parent.getFileTextContent( "constellations.xml", true ) );
-	}
+	starmap::loadStarsFromXml( m_starmap
+		, m_parent.getFileTextContent( "stars.xml", true ) );
+	starmap::loadConstellationsFromXml( m_starmap
+		, m_parent.getFileTextContent( "constellations.xml", true ) );
 }
 
 Window::~Window()
@@ -107,36 +52,34 @@ void Window::onDraw()
 	m_starmap.endFrame();
 }
 
-void Window::onSave( void * state, size_t & stateSize )
+void Window::onSave( render::ByteArray & state )
 {
-	auto camState = new render::CameraState;
-	m_starmap.save( *camState);
-	state = camState;
-	stateSize = sizeof( render::CameraState );
+	state.resize( sizeof( render::CameraState ) );
+	m_starmap.save( *reinterpret_cast< render::CameraState * >( state.data() ) );
 }
 
-void Window::onRestore( void const * state, size_t stateSize )
+void Window::onRestore( render::ByteArray const & state )
 {
-	assert( stateSize == sizeof( render::CameraState ) );
-	m_starmap.restore( *reinterpret_cast< render::CameraState const * >( state ) );
+	assert( state.size() == sizeof( render::CameraState ) );
+	m_starmap.restore( *reinterpret_cast< render::CameraState const * >( state.data() ) );
 }
 
-void Window::onSingleTap( glm::ivec2 const & position )
+void Window::onSingleTap( gl::Position2D const & position )
 {
 	m_onScreenTap( position );
 }
 
-void Window::onDoubleTap( glm::ivec2 const & position )
+void Window::onDoubleTap( gl::Position2D const & position )
 {
 	m_onScreenDoubleTap( position );
 }
 
-void Window::onSingleMove( glm::ivec2 const & position )
+void Window::onSingleMove( gl::Position2D const & position )
 {
 	m_onScreenSingleMove( position );
 }
 
-void Window::onDoubleMove( glm::ivec2 const & posDiff, int distDiff )
+void Window::onDoubleMove( gl::Position2D const & posDiff, int distDiff )
 {
 	m_onScreenDoubleMove( posDiff, distDiff );
 }

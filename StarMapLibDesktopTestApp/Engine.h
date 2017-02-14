@@ -10,24 +10,19 @@
 #include <Windows.h>
 #include <GL/glew.h>
 
-class Engine
+class Window
 	: public utils::MsWindow
 {
 public:
-	Engine();
-	~Engine();
+	Window();
+	~Window();
 
 public:
 	/**
 	*\brief
 	*	Mise à jour du contenu.
 	*/
-	void onUpdate()override;
-	/**
-	*\brief
-	*	Dessin de la fenêtre.
-	*/
-	void onPaint()override;
+	void onDraw()override;;
 	/**
 	*\brief
 	*	Création de la fenêtre.
@@ -42,7 +37,7 @@ public:
 	*\brief
 	*	Initialisation de la fenêtre.
 	*/
-	void onResize( glm::ivec2 const & event )override;
+	void onResize( gl::Size2D const & event )override;
 	/**
 	*\brief
 	*	Déplacement de la souris.
@@ -91,7 +86,7 @@ private:
 	std::streambuf * m_cerr;
 	std::streambuf * m_clog;
 
-	glm::ivec2 m_mouse;
+	gl::Position2D m_mouse;
 	render::CameraState m_handler;
 
 	//! Le signal émis lorsque l'on "clique" sur l'écran.

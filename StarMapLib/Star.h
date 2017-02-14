@@ -34,8 +34,8 @@ namespace starmap
 		*/
 		Star( std::string const & name
 			, float magnitude
-			, glm::vec2 const & position
-			, glm::vec3 const & colour );
+			, gl::Vector2D const & position
+			, gl::RgbColour const & colour );
 		/**
 		*\return
 		*	L'identifiant de l'étoile.
@@ -64,7 +64,7 @@ namespace starmap
 		*\return
 		*	La position de l'étoile, en coordonnées cartésiennes.
 		*/
-		inline glm::vec3 const & position()const noexcept
+		inline gl::Vector3D const & position()const noexcept
 		{
 			return m_position;
 		}
@@ -72,7 +72,7 @@ namespace starmap
 		*\return
 		*	La couleur de l'étoile.
 		*/
-		inline glm::vec3 const & colour()const noexcept
+		inline gl::RgbColour const & colour()const noexcept
 		{
 			return m_colour;
 		}
@@ -81,8 +81,8 @@ namespace starmap
 		size_t m_id;
 		std::string m_name;
 		float m_magnitude;
-		glm::vec3 m_position;
-		glm::vec3 m_colour;
+		gl::Vector3D m_position;
+		gl::RgbColour m_colour;
 	};
 	/**
 	*\brief

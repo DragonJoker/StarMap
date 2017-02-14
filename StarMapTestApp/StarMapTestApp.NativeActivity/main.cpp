@@ -8,10 +8,9 @@ namespace
 	{
 		utils::AndroidWindowPtr doCreateWindow( utils::AndroidApp const & app
 			, ANativeWindow * window
-			, void * saved
-			, size_t savedSize )
+			, render::ByteArray const & state )
 		{
-			return std::make_unique< Window >( app, window, saved, savedSize );
+			return std::make_unique< Window >( app, window, state );
 		}
 	}
 }

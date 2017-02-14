@@ -84,7 +84,7 @@ namespace starmap
 		*\param[in] position
 		*	La nouvelle valeur.
 		*/
-		inline void position( glm::vec3 const & position )noexcept
+		inline void position( gl::Vector3D const & position )noexcept
 		{
 			m_position = position;
 		}
@@ -92,7 +92,7 @@ namespace starmap
 		*\return
 		*	La position de la constellation.
 		*/
-		inline glm::vec3 const & position()const noexcept
+		inline gl::Vector3D const & position()const noexcept
 		{
 			return m_position;
 		}
@@ -102,7 +102,7 @@ namespace starmap
 		StarSet const & m_stars;
 		StarPtrMap m_letters;
 		LinkArray m_links;
-		glm::vec3 m_position;
+		gl::Vector3D m_position;
 	};
 }
 

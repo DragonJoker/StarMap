@@ -182,9 +182,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StarMapLibDesktopTestApp.h" />

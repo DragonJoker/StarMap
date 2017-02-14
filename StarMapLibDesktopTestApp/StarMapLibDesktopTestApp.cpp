@@ -27,9 +27,9 @@ int APIENTRY wWinMain( _In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER( hPrevInstance );
 	UNREFERENCED_PARAMETER( lpCmdLine );
 
-	Engine engine;
+	Window window;
 
-	engine.create( hInstance
+	window.create( hInstance
 		, doLoadString( hInstance, IDC_STARMAPLIBDESKTOPTESTAPP )
 		, IDI_STARMAPLIBDESKTOPTESTAPP
 		, IDI_SMALL

@@ -48,7 +48,7 @@ namespace
 
 //*****************************************************************************
 
-Engine::Engine()
+Window::Window()
 	: MsWindow{}
 	, m_events{ m_onScreenTap
 		, m_onScreenDoubleTap
@@ -66,57 +66,6 @@ Engine::Engine()
 
 	::SetCurrentDirectoryA( doGetExecutableDir().c_str() );
 
-	//glm::vec3 colours[]
-	//{
-	//	glm::vec3{ 1.0, 1.0, 1.0 },
-	//	glm::vec3{ 0.7, 1.0, 1.0 },
-	//	glm::vec3{ 1.0, 0.7, 1.0 },
-	//	glm::vec3{ 1.0, 1.0, 0.7 },
-	//	glm::vec3{ 0.7, 0.7, 1.0 },
-	//	glm::vec3{ 1.0, 0.7, 0.7 },
-	//	glm::vec3{ 0.7, 1.0, 0.7 },
-	//	glm::vec3{ 0.8, 1.0, 1.0 },
-	//	glm::vec3{ 1.0, 0.8, 1.0 },
-	//	glm::vec3{ 1.0, 1.0, 0.8 },
-	//	glm::vec3{ 0.8, 0.8, 1.0 },
-	//	glm::vec3{ 1.0, 0.8, 0.8 },
-	//	glm::vec3{ 0.8, 1.0, 0.8 },
-	//	glm::vec3{ 0.9, 1.0, 1.0 },
-	//	glm::vec3{ 1.0, 0.9, 1.0 },
-	//	glm::vec3{ 1.0, 1.0, 0.9 },
-	//	glm::vec3{ 0.9, 0.9, 1.0 },
-	//	glm::vec3{ 1.0, 0.9, 0.9 },
-	//	glm::vec3{ 0.9, 1.0, 0.9 },
-	//};
-
-	//std::mt19937 engine{ uint32_t( std::chrono::system_clock::now().time_since_epoch().count() ) };
-	//std::uniform_real_distribution< float > fdistribution{ float( -M_PI ) / 2, float( M_PI ) / 2 };
-	//std::uniform_real_distribution< float > mdistribution{ -50.0f, 50.0f };
-	//std::uniform_int_distribution< uint32_t > uidistribution{ 0u, uint32_t( ( sizeof( colours ) / sizeof( glm::vec3 ) ) - 1 ) };
-
-	//auto randf = [&engine, &fdistribution]()
-	//{
-	//	return fdistribution( engine );
-	//};
-
-	//auto randm = [&engine, &mdistribution]()
-	//{
-	//	return mdistribution( engine ) + 1.0f;
-	//};
-
-	//auto randui = [&engine, &uidistribution]()
-	//{
-	//	return uidistribution( engine );
-	//};
-
-	//for ( uint32_t i = 0; i < 5000; ++i )
-	//{
-	//	m_starmap.add( { "Coin"
-	//		, randm()
-	//		,{ randf(), randf() }
-	//	,colours[randui()] } );
-	//}
-
 	try
 	{
 		starmap::loadStarsFromXml( m_starmap
@@ -130,14 +79,14 @@ Engine::Engine()
 	}
 }
 
-Engine::~Engine()
+Window::~Window()
 {
 	delete m_cout;
 	delete m_cerr;
 	delete m_clog;
 }
 
-void Engine::onUpdate()
+void Window::onDraw()
 {
 	m_starmap.beginFrame();
 	m_starmap.drawFrame();
@@ -145,12 +94,7 @@ void Engine::onUpdate()
 	m_starmap.endFrame();
 }
 
-void Engine::onPaint()
-{
-	onUpdate();
-}
-
-void Engine::onCreate()
+void Window::onCreate()
 {
 	std::string dataPath{ doGetExecutableDir() + "\\arial.ttf" };
 	m_starmap.initialise( size()
@@ -158,17 +102,17 @@ void Engine::onCreate()
 		, utils::FontLoader{ dataPath } );
 }
 
-void Engine::onDestroy()
+void Window::onDestroy()
 {
 	m_starmap.cleanup();
 }
 
-void Engine::onResize( glm::ivec2 const & event )
+void Window::onResize( gl::Size2D const & event )
 {
 	m_starmap.resize( event );
 }
 
-void Engine::onMouseMove( utils::MouseEvent const & event )
+void Window::onMouseMove( utils::MouseEvent const & event )
 {
 	if ( event.ldown )
 	{
@@ -178,22 +122,22 @@ void Engine::onMouseMove( utils::MouseEvent const & event )
 	}
 }
 
-void Engine::onLButtonDown( utils::MouseEvent const & event )
+void Window::onLButtonDown( utils::MouseEvent const & event )
 {
 	m_mouse = event.position;
 }
 
-void Engine::onLButtonClick( utils::MouseEvent const & event )
+void Window::onLButtonClick( utils::MouseEvent const & event )
 {
 	m_onScreenTap( event.position );
 }
 
-void Engine::onLButtonDblClick( utils::MouseEvent const & event )
+void Window::onLButtonDblClick( utils::MouseEvent const & event )
 {
 	m_onScreenDoubleTap( event.position );
 }
 
-void Engine::onMouseWheel( utils::MouseEvent const & event )
+void Window::onMouseWheel( utils::MouseEvent const & event )
 {
 	m_onScreenDoubleMove( event.position, -float( event.delta ) );
 }

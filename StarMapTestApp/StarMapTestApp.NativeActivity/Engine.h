@@ -11,8 +11,7 @@ class Window
 public:
 	Window( utils::AndroidApp const & parent
 		, ANativeWindow * window
-		, void * saved
-		, size_t savedSize );
+		, render::ByteArray const & state );
 	~Window();
 
 private:
@@ -35,32 +34,32 @@ private:
 	*\return
 	*	Sauvegarde les données de l'application.
 	*/
-	void onSave( void * state, size_t & stateSize )override;
+	void onSave( render::ByteArray & state )override;
 	/**
 	*\return
 	*	Restaure les données de l'application.
 	*/
-	void onRestore( void const * state, size_t stateSize )override;
+	void onRestore( render::ByteArray const & state )override;
 	/**
 	*\brief
 	*	Gestion d'un évènement de type tap.
 	*/
-	void onSingleTap( glm::ivec2 const & position )override;
+	void onSingleTap( gl::Position2D const & position )override;
 	/**
 	*\brief
 	*	Gestion d'un évènement de type double tap.
 	*/
-	void onDoubleTap( glm::ivec2 const & position )override;
+	void onDoubleTap( gl::Position2D const & position )override;
 	/**
 	*\brief
 	*	Gestion d'un évènement de type déplacement avec un pointeur.
 	*/
-	void onSingleMove( glm::ivec2 const & position )override;
+	void onSingleMove( gl::Position2D const & position )override;
 	/**
 	*\brief
 	*	Gestion d'un évènement de type déplacement avec deux pointeur.
 	*/
-	void onDoubleMove( glm::ivec2 const & posDiff, int distDiff )override;
+	void onDoubleMove( gl::Position2D const & posDiff, int distDiff )override;
 
 private:
 	//! Le signal émis lorsque l'on "clique" sur l'écran.

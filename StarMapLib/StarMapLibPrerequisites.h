@@ -29,16 +29,28 @@ namespace starmap
 	using StarPtrMap = std::map< std::string, Star const * >;
 	using ConstellationMap = std::unordered_map< std::string, Constellation >;
 
-	using OnScreenTap = render::Signal< std::function< void( glm::ivec2 const & ) > >;
-	using OnScreenDoubleTap = render::Signal< std::function< void( glm::ivec2 const & ) > >;
-	using OnScreenSingleMove = render::Signal< std::function< void( glm::ivec2 const & ) > >;
-	using OnScreenDoubleMove = render::Signal< std::function< void( glm::ivec2 const &, float ) > >;
-	using OnPick = render::Signal< std::function< void( glm::ivec2 const & ) > >;
+	using OnScreenTap = render::Signal< std::function< void( gl::Position2D const & ) > >;
+	using OnScreenDoubleTap = render::Signal< std::function< void( gl::Position2D const & ) > >;
+	using OnScreenSingleMove = render::Signal< std::function< void( gl::Position2D const & ) > >;
+	using OnScreenDoubleMove = render::Signal< std::function< void( gl::Position2D const &, float ) > >;
+	using OnPick = render::Signal< std::function< void( gl::Position2D const & ) > >;
 	using OnReset = render::Signal< std::function< void() > >;
-	using OnSetVelocity = render::Signal< std::function< void( glm::ivec2 const & ) > >;
+	using OnSetVelocity = render::Signal< std::function< void( gl::Offset2D const & ) > >;
 	using OnSetZoomVelocity = render::Signal< std::function< void( float ) > >;
 
 	using StarMapPtr = std::unique_ptr< StarMap >;
+
+	/**
+	*\brief
+	*	Le type des éléments supportés pour les filtres.
+	*/
+	enum class ElementType
+	{
+		//! Etoiles.
+		eStar,
+		//! Constellations.
+		eConstellation,
+	};
 }
 
 #endif

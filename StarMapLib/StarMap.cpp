@@ -14,17 +14,17 @@ namespace starmap
 {
 	namespace
 	{
-		static const glm::vec4 ConstellationColour{ 0.8, 0.5, 0.8, 1.0 };
-		static const glm::vec4 ConstellationTextColour{ 0.5, 0.0, 0.5, 1.0 };
-		static const glm::vec3 PickBillboardColour{ 0.0, 0.0, 0.5 };
-		static const glm::vec4 PickDescriptionColour{ 1.0, 1.0, 1.0, 1.0 };
-		static const glm::ivec2 StarNameOffset{ 50, 50 };
-		static const glm::ivec2 ConstellationNameOffset{};
+		static const gl::RgbaColour ConstellationColour{ 0.8, 0.5, 0.8, 0.5 };
+		static const gl::RgbaColour ConstellationTextColour{ 0.5, 0.0, 0.5, 1.0 };
+		static const gl::RgbColour PickBillboardColour{ 0.0, 0.0, 0.5 };
+		static const gl::RgbaColour PickDescriptionColour{ 1.0, 1.0, 1.0, 1.0 };
+		static const gl::Offset2D StarNameOffset{ 50, 50 };
+		static const gl::Offset2D ConstellationNameOffset{};
 	}
 
 	StarMap::StarMap( ScreenEvents & events )
 		: m_onPick{ events.onPick.connect
-		( [this]( glm::ivec2 const & coord )
+		( [this]( gl::Position2D const & coord )
 		{
 			if ( m_window )
 			{
@@ -37,7 +37,7 @@ namespace starmap
 			m_window->state().reset();
 		} ) }
 		, m_onSetVelocity{ events.onSetVelocity.connect
-		( [this]( glm::ivec2 const & value )
+		( [this]( gl::Offset2D const & value )
 		{
 			m_window->state().velocity( value );
 		} ) }
@@ -61,7 +61,7 @@ namespace starmap
 		state = m_window->state();
 	}
 
-	void StarMap::initialise( glm::ivec2 const & size
+	void StarMap::initialise( gl::Size2D const & size
 		, render::ByteArray const & opacityMap
 		, render::FontLoader & loader )
 	{
@@ -77,7 +77,7 @@ namespace starmap
 		m_debug.initialise( scene, loader );
 
 		// Initialise the scene
-		scene.backgroundColour( glm::vec4{ 0, 0, 0, 1 } );
+		scene.backgroundColour( gl::RgbaColour{ 0, 0, 0, 1 } );
 
 		doInitialisePickObjects();
 		doInitialiseLines();
@@ -129,7 +129,7 @@ namespace starmap
 		m_window.reset();
 	}
 
-	void StarMap::resize( glm::ivec2 const & size )
+	void StarMap::resize( gl::Size2D const & size )
 	{
 		if ( m_window )
 		{
@@ -146,8 +146,9 @@ namespace starmap
 	{
 		m_window->update();
 		doUpdatePickDescription();
-		doUpdateStarNames();
+		//doUpdateStarNames();
 		doUpdateConstellationNames();
+		m_window->updateOverlays();
 		m_window->draw();
 	}
 
@@ -179,6 +180,20 @@ namespace starmap
 		}
 
 		return it->second;
+	}
+
+	void StarMap::filter( ElementType type, bool show )
+	{
+		switch ( type )
+		{
+		case ElementType::eConstellation:
+			doFilterConstellations( show );
+			break;
+
+		case ElementType::eStar:
+			doFilterStars( show );
+			break;
+		}
 	}
 
 	void StarMap::onObjectPicked( render::Object & object )
@@ -219,10 +234,12 @@ namespace starmap
 			, object.position()
 			, StarNameOffset );
 
-		m_pickBillboard->moveTo( object.position() - glm::vec3{ 0, 0, object.boundaries().z + 0.2 } );
+		m_pickBillboard->moveTo( object.position()
+			- gl::Vector3D{ 0, 0, object.boundaries().z + 0.2 } );
 		doUpdatePicked( static_cast< render::Movable const & >( object ) );
 		m_pickBillboard->dimensions( object.boundaries() * 2.0f );
-		m_pickBillboard->buffer().at( 0u, { -1000.0f, glm::vec3{ 0, 0, 0 }, glm::vec2{ 1, 1 } } );
+		m_pickBillboard->buffer().at( 0u
+			, { -1000.0f, gl::Vector3D{ 0, 0, 0 }, gl::Vector2D{ 1, 1 } } );
 	}
 
 	void StarMap::doUpdatePicked( render::Billboard const & billboard
@@ -236,14 +253,17 @@ namespace starmap
 			m_pickedStar = &star;
 			m_pickDescription->caption( star.name() );
 			doUpdatePickDescription();
-			m_pickBillboard->moveTo( billboard.position() - glm::vec3{ 0, 0, 0.2 } );
+			m_pickBillboard->moveTo( billboard.position()
+				- gl::Vector3D{ 0, 0, 0.2 } );
 			doUpdatePicked( static_cast< render::Movable const & >( billboard ) );
 			auto data = billboard.buffer()[index];
-			m_pickBillboard->buffer().at( 0u, { -1000.0f, data.center, glm::vec2{ 1, 1 } } );
+			auto scale = 0.1f + m_window->state().zoomBounds().percent( m_window->state().zoom() );
+			m_pickBillboard->buffer().at( 0u
+				, { -1000.0f, data.center, gl::Vector2D{ scale, scale } } );
 		}
 	}
 
-	StarHolder & StarMap::doFindHolder( glm::vec3 const & colour )
+	StarHolder & StarMap::doFindHolder( gl::RgbColour const & colour )
 	{
 		auto it = std::find_if( std::begin( m_holders )
 			, std::end( m_holders )
@@ -286,13 +306,13 @@ namespace starmap
 
 			auto stars = std::make_shared< render::Billboard >( sstars
 				, *holder.m_buffer );
-			stars->dimensions( glm::vec2{ 1, 1 } );
+			stars->dimensions( gl::Size2D{ 1, 1 } );
 			stars->material( starsMat );
 			scene.add( stars );
 
 			auto halos = std::make_shared< render::Billboard >( shalos
 				, *holder.m_buffer );
-			halos->dimensions( glm::vec2{ 2, 2 } );
+			halos->dimensions( gl::Size2D{ 2, 2 } );
 			halos->material( halosMat );
 			scene.add( halos );
 
@@ -313,13 +333,13 @@ namespace starmap
 		holder.m_stars.push_back( &star );
 		holder.m_buffer->add( { star.magnitude()
 			, star.position()
-			, glm::vec2{ scale, scale } } );
+			, gl::Vector2D{ scale, scale } } );
 		doInitialiseHolder( holder );
 	}
 
 	void StarMap::doAddConstellation( Constellation & constellation )
 	{
-		glm::vec3 position;
+		gl::Vector3D position;
 
 		for ( auto & star : constellation.stars() )
 		{
@@ -337,7 +357,6 @@ namespace starmap
 
 	void StarMap::doLoadFontTextures( render::FontLoader & loader )
 	{
-		// Load the font's texture.
 		render::FontPtr font = std::make_unique< render::Font >( "Arial"
 			, 24 );
 		render::loadFont( loader, *font );
@@ -367,8 +386,8 @@ namespace starmap
 		pickedMat->diffuse( PickBillboardColour );
 		auto pickedBuffers = render::BillboardBuffer::create();
 		pickedBuffers->add( { -1000.0
-			, glm::vec3{ 0, 0, 0 }
-			, glm::vec2{ 1, 1 } } );
+			, gl::Vector3D{ 0, 0, 0 }
+			, gl::Vector2D{ 1, 1 } } );
 		scene.addBillboardBuffer( "picked", pickedBuffers );
 		m_pickBillboard = std::make_shared< render::Billboard >( "picked"
 			, *pickedBuffers );
@@ -391,7 +410,7 @@ namespace starmap
 		linesMat->diffuse( ConstellationColour );
 		linesMat->emissive( ConstellationColour );
 
-		m_lines = std::make_shared< render::PolyLine >( "lines", 0.1f );
+		m_lines = std::make_shared< render::PolyLine >( "lines", 0.06f, 1.0f );
 		m_lines->material( linesMat );
 		scene.add( m_lines );
 	}
@@ -404,7 +423,7 @@ namespace starmap
 		{
 			auto overlay = scene.overlays().addElement( star.name() );
 			overlay->caption( star.name() );
-			overlay->colour( glm::vec4{ 1.0, 1.0, 1.0, 1.0 } );
+			overlay->colour( gl::RgbaColour{ 1.0, 1.0, 1.0, 1.0 } );
 			overlay->fontTexture( *m_fontTextureNames );
 			overlay->show( false );
 		}
@@ -430,6 +449,11 @@ namespace starmap
 			doUpdateOverlay( *m_pickDescription
 				, m_pickedStar->position()
 				, StarNameOffset );
+
+			auto scale = 0.1f + m_window->state().zoomBounds().percent( m_window->state().zoom() );
+			auto & data = m_pickBillboard->buffer()[0u];
+			m_pickBillboard->buffer().at( 0u
+				, { data.magnitude, data.center, gl::Vector2D{ scale, scale } } );
 		}
 	}
 
@@ -460,8 +484,8 @@ namespace starmap
 	}
 
 	void StarMap::doUpdateOverlay( render::TextOverlay & overlay
-		, glm::vec3 const & position
-		, glm::ivec2 const & offset )
+		, gl::Vector3D const & position
+		, gl::Offset2D const & offset )
 	{
 		auto & scene = m_window->scene();
 		auto const & camera = scene.camera();
@@ -471,8 +495,44 @@ namespace starmap
 		auto projected = glm::project( position
 			, view
 			, projection
-			, glm::vec4{ 0, 0, viewport.size().x, viewport.size().y } );
-		overlay.position( offset + glm::ivec2{ viewport.size().x - projected.x
+			, gl::Vector4D{ 0, 0, viewport.size().x, viewport.size().y } );
+		overlay.position( offset + gl::Offset2D{ viewport.size().x - projected.x
 			, viewport.size().y - projected.y } );
+	}
+
+	void StarMap::doFilterConstellations( bool show )
+	{
+		auto & scene = m_window->scene();
+		m_lines->show( show );
+
+		for ( auto const & constellation : m_constellations )
+		{
+			auto overlay = scene.overlays().findElement( constellation.first );
+			overlay->show( show );
+		}
+	}
+
+	void StarMap::doFilterStars( bool show )
+	{
+		for ( auto & holder : m_holders )
+		{
+			auto it = std::find_if( m_window->scene().billboards().begin()
+				, m_window->scene().billboards().end()
+				, [&holder]( render::BillboardPtr & billboard )
+			{
+				return &billboard->buffer() == holder.m_buffer.get();
+			} );
+			while ( it != m_window->scene().billboards().end() )
+			{
+				( *it )->show( show );
+				++it;
+				it = std::find_if( it
+					, m_window->scene().billboards().end()
+					, [&holder]( render::BillboardPtr & billboard )
+				{
+					return &billboard->buffer() == holder.m_buffer.get();
+				} );
+			}
+		}
 	}
 }

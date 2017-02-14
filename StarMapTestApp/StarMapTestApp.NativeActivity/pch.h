@@ -1,9 +1,9 @@
 //
 // pch.h
-// En-t�te pour fichiers Include syst�me standard.
+// En-tête pour fichiers Include système standard.
 //
-// Utilis� par le syst�me de g�n�ration pour g�n�rer l'en-t�te pr�compil�. Notez qu'aucun(e)
-// pch.cpp n'est n�cessaire et que pch.h est automatiquement inclus dans tous les fichiers cpp
+// Utilisé par le système de génération pour générer l'en-tête précompilé. Notez qu'aucun(e)
+// pch.cpp n'est nécessaire et que pch.h est automatiquement inclus dans tous les fichiers cpp
 // qui font partie du projet.
 //
 
@@ -18,8 +18,8 @@
 #include <GLES/gl.h>
 
 #include <android/sensor.h>
-
 #include <android/log.h>
+
 #include "android_native_app_glue.h"
 
 #include <RenderLib/Scene.h>
