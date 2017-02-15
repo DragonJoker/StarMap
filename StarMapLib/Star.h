@@ -28,13 +28,32 @@ namespace starmap
 		*	La magnitude de l'étoile, permettant de la cacher, en fonction
 		*	du zoom.
 		*\param[in] position
-		*	La position en coordonnées sphériques.
+		*	La position en coordonnées polaires.
+		*	x => ascencion.
+		*	y => déclinaison.
 		*\param[in] colour
 		*	La couleur de l'étoile.
 		*/
 		Star( std::string const & name
 			, float magnitude
 			, gl::Vector2D const & position
+			, gl::RgbColour const & colour );
+		/**
+		*\brief
+		*	Constructeur.
+		*\param[in] name
+		*	Le nom de l'étoile.
+		*\param[in] magnitude
+		*	La magnitude de l'étoile, permettant de la cacher, en fonction
+		*	du zoom.
+		*\param[in] position
+		*	La position en coordonnées cartésiennes.
+		*\param[in] colour
+		*	La couleur de l'étoile.
+		*/
+		Star( std::string const & name
+			, float magnitude
+			, gl::Vector3D const & position
 			, gl::RgbColour const & colour );
 		/**
 		*\return

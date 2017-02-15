@@ -181,14 +181,11 @@ namespace starmap
 		*	Ajoute une étoile au conteneur de billboards approprié.
 		*\param[in] star
 		*	L'étoile à ajouter.
-		*\param[in] minMagnitude
-		*	La magnitude minimale parmis toutes les étoiles.
-		*\param[in] maxMagnitude
-		*	La magnitude maximale parmis toutes les étoiles.
+		*\param[in] range
+		*	L'intervalle des magnitudes.
 		*/
 		void doAddStar( Star const & star
-			, float minMagnitude
-			, float maxMagnitude );
+			, render::Range< float > const & range );
 		/**
 		*\brief
 		*	Ajoute une constellation à la polyligne.

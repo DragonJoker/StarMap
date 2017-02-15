@@ -68,8 +68,8 @@ Window::Window()
 
 	try
 	{
-		starmap::loadStarsFromXml( m_starmap
-			, utils::getFileTextContent( "stars.xml" ) );
+		starmap::loadStarsFromCsv( m_starmap
+			, utils::getFileTextContent( "stars.csv" ) );
 		starmap::loadConstellationsFromXml( m_starmap
 			, utils::getFileTextContent( "constellations.xml" ) );
 	}

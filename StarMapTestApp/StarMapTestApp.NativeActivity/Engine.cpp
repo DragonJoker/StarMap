@@ -3,6 +3,7 @@
 #include <AndroidUtils/AndroidApp.h>
 #include <AndroidUtils/FontLoader.h>
 
+#include <StarMapLib/CsvReader.h>
 #include <StarMapLib/XmlReader.h>
 
 //*****************************************************************************
@@ -17,8 +18,8 @@ Window::Window( utils::AndroidApp const & parent
 		, m_onScreenDoubleMove }
 	, m_starmap{ m_events }
 {
-	starmap::loadStarsFromXml( m_starmap
-		, m_parent.getFileTextContent( "stars.xml", true ) );
+	starmap::loadStarsFromCsv( m_starmap
+		, m_parent.getFileTextContent( "stars.csv", true ) );
 	starmap::loadConstellationsFromXml( m_starmap
 		, m_parent.getFileTextContent( "constellations.xml", true ) );
 }

@@ -86,10 +86,11 @@ namespace starmap
 		{
 			auto minMagnitude = m_stars.begin()->magnitude();
 			auto maxMagnitude = m_stars.rbegin()->magnitude();
+			m_window->scene().thresholdBounds( minMagnitude, maxMagnitude );
 
 			for ( auto & star : m_stars )
 			{
-				doAddStar( star, minMagnitude, maxMagnitude );
+				doAddStar( star, m_window->scene().thresholdBounds() );
 			}
 
 			for ( auto & constellation : m_constellations )
@@ -97,7 +98,7 @@ namespace starmap
 				doAddConstellation( constellation.second );
 			}
 
-			doInitialiseStarNames();
+			//doInitialiseStarNames();
 			doInitialiseConstellationNames();
 		}
 
@@ -323,12 +324,9 @@ namespace starmap
 	}
 
 	void StarMap::doAddStar( Star const & star
-		, float minMagnitude
-		, float maxMagnitude )
+		, render::Range< float > const & range )
 	{
-		auto range = maxMagnitude - minMagnitude;
-		auto percent = ( maxMagnitude - star.magnitude() ) / range;
-		auto scale = 2.0f * percent;
+		auto scale = 0.1f + 1.0f - range.percent( star.magnitude() );
 		auto & holder = doFindHolder( star.colour() );
 		holder.m_stars.push_back( &star );
 		holder.m_buffer->add( { star.magnitude()
