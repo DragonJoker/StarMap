@@ -276,7 +276,7 @@ namespace starmap
 		if ( it == std::end( m_holders ) )
 		{
 			m_holders.emplace_back( colour
-				, render::BillboardBuffer::create() );
+				, std::make_shared< render::BillboardBuffer >( true ) );
 			it = m_holders.begin() + m_holders.size() - 1;
 		}
 
@@ -326,7 +326,7 @@ namespace starmap
 	void StarMap::doAddStar( Star const & star
 		, render::Range< float > const & range )
 	{
-		auto scale = 0.1f + 1.0f - range.percent( star.magnitude() );
+		auto scale = 0.1f + range.invpercent( star.magnitude() );
 		auto & holder = doFindHolder( star.colour() );
 		holder.m_stars.push_back( &star );
 		holder.m_buffer->add( { star.magnitude()
@@ -382,7 +382,7 @@ namespace starmap
 		pickedMat->opacityMap( m_opacity );
 		pickedMat->ambient( PickBillboardColour );
 		pickedMat->diffuse( PickBillboardColour );
-		auto pickedBuffers = render::BillboardBuffer::create();
+		auto pickedBuffers = std::make_shared< render::BillboardBuffer >( false );
 		pickedBuffers->add( { -1000.0
 			, gl::Vector3D{ 0, 0, 0 }
 			, gl::Vector2D{ 1, 1 } } );

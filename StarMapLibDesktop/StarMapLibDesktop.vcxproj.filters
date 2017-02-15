@@ -81,4 +81,7 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="StarMapLib.natvis" />
+  </ItemGroup>
 </Project>

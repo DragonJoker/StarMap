@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+  <Type Name="Constellation">
+    <DisplayString>{{name={m_name} position={m_position}}}</DisplayString>
+    <Expand>
+      <Item Name="[name]">m_name</Item>
+      <Item Name="[position]">m_position</Item>
+      <Item Name="[letters]">m_letters</Item>
+      <ExpandedItem>m_links</ExpandedItem>
+    </Expand>
+  </Type>
+
+  <Type Name="Star">
+    <DisplayString>{{id={m_id} name={m_name} position={m_position}}}</DisplayString>
+    <Expand>
+      <Item Name="[id]">m_id</Item>
+      <Item Name="[name]">m_name</Item>
+      <Item Name="[magnitude]">m_magnitude</Item>
+      <Item Name="[position]">m_position</Item>
+      <Item Name="[colour]">m_colour</Item>
+    </Expand>
+  </Type>
+
+</AutoVisualizer>

@@ -160,6 +160,9 @@
     <ClCompile Include="..\StarMapLib\StarMapLibPrerequisites.cpp" />
     <ClCompile Include="..\StarMapLib\XmlReader.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="StarMapLib.natvis" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
