@@ -4,11 +4,11 @@ set( MAIN_PROJECT_NAME "StarMapLib" )
 
 # Used to look for external modules
 set( CMAKE_MODULE_PATH
-	${CMAKE_SOURCE_DIR}/RenderLib/CMake
-	${CMAKE_SOURCE_DIR}/RenderLib/CMake/Modules
-	${CMAKE_SOURCE_DIR}/RenderLib/CMake/Toolchains
+	${CMAKE_SOURCE_DIR}/CMake
+	${CMAKE_SOURCE_DIR}/CMake/Modules
+	${CMAKE_SOURCE_DIR}/CMake/Toolchains
 )
-set( CMAKE_TEMPLATES_DIR ${CMAKE_SOURCE_DIR}/RenderLib/CMake/Templates )
+set( CMAKE_TEMPLATES_DIR ${CMAKE_SOURCE_DIR}/CMake/Templates )
 
 project( ${MAIN_PROJECT_NAME} )
 
@@ -57,15 +57,16 @@ macro( source_add_forced_include _FILE ) #ARGN: _FILES
 	endif ()
 endmacro( source_add_forced_include )
 
-add_subdirectory( RenderLib/GlLib )
-add_subdirectory( RenderLib/RenderLib )
-add_subdirectory( RenderLib/FreeType )
+add_subdirectory( GlLib )
+add_subdirectory( RenderLib )
+add_subdirectory( FreeType )
 add_subdirectory( StarMapLib )
 
 if ( ANDROID )
-	add_subdirectory( RenderLib/AndroidUtils )
-	add_subdirectory( StarMapTestApp )
+	add_subdirectory( AndroidUtils )
 else ()
-	add_subdirectory( RenderLib/DesktopUtils )
-	add_subdirectory( StarMapLibDesktopTestApp )
+	add_subdirectory( DesktopUtils )
 endif ()
+
+add_subdirectory( RenderLibTestApp )
+add_subdirectory( StarMapTestApp )

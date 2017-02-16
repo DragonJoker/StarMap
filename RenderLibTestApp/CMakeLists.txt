@@ -1,0 +1,6 @@
+if ( ANDROID )
+	add_subdirectory( RenderLibTestApp.NativeActivity )
+	add_subdirectory( RenderLibTestApp )
+else ()
+	add_subdirectory( RenderLibDesktopTestApp )
+endif ()

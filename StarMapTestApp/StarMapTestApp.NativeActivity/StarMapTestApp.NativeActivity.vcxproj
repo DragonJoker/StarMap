@@ -144,7 +144,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++1y</CppLanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)RenderLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);m;GLESv3;EGL;StarMapLib;AndroidUtils;RenderLib;FreeType;GlLib;$(StlLibraryName)</LibraryDependencies>
@@ -157,7 +157,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++1y</CppLanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)RenderLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);m;GLESv3;EGL;StarMapLib;AndroidUtils;RenderLib;FreeType;GlLib;$(StlLibraryName)</LibraryDependencies>
@@ -170,7 +170,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++1y</CppLanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)RenderLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);m;GLESv3;EGL;StarMapLib;AndroidUtils;RenderLib;FreeType;GlLib;$(StlLibraryName)</LibraryDependencies>
@@ -183,7 +183,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++1y</CppLanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)RenderLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);m;GLESv3;EGL;StarMapLib;AndroidUtils;RenderLib;FreeType;GlLib;$(StlLibraryName)</LibraryDependencies>
@@ -196,7 +196,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++1y</CppLanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)RenderLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);m;GLESv3;EGL;StarMapLib;AndroidUtils;RenderLib;FreeType;GlLib;$(StlLibraryName)</LibraryDependencies>
@@ -209,7 +209,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++1y</CppLanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)RenderLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);m;GLESv3;EGL;StarMapLib;AndroidUtils;RenderLib;FreeType;GlLib;$(StlLibraryName)</LibraryDependencies>
@@ -222,7 +222,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++1y</CppLanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)RenderLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);m;GLESv3;EGL;StarMapLib;AndroidUtils;RenderLib;FreeType;GlLib;$(StlLibraryName)</LibraryDependencies>
@@ -235,7 +235,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
       <CppLanguageStandard>c++1y</CppLanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)RenderLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);m;GLESv3;EGL;StarMapLib;AndroidUtils;RenderLib;FreeType;GlLib;$(StlLibraryName)</LibraryDependencies>

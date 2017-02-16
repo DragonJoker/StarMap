@@ -5,7 +5,6 @@ file( GLOB_RECURSE ${PROJECT_NAME}_HDR_FILES *.h *.hh *.hpp *.inl *.inc )
 
 include_directories(
 	${CMAKE_SOURCE_DIR}
-	${CMAKE_SOURCE_DIR}/RenderLib
 	${CMAKE_CURRENT_SOURCE_DIR}
 )
 
