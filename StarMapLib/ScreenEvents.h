@@ -10,7 +10,7 @@
 
 #include "StarMapLibPrerequisites.h"
 
-#include <RenderLib/Signal.h>
+#include <RenderLib/RenderSignal.h>
 
 namespace starmap
 {

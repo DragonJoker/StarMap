@@ -14,40 +14,6 @@
 #include <StarMapLib/CsvReader.h>
 #include <StarMapLib/XmlReader.h>
 
-#include <GL/wglew.h>
-
-//*****************************************************************************
-
-namespace
-{
-#if !defined( NDEBUG )
-
-	static constexpr int GL_CONTEXT_CREATION_DEFAULT_FLAGS = WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB | WGL_CONTEXT_DEBUG_BIT_ARB;
-	static constexpr int GL_CONTEXT_CREATION_DEFAULT_MASK = WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB;
-
-#else
-
-	static constexpr int GL_CONTEXT_CREATION_DEFAULT_FLAGS = WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB;
-	static constexpr int GL_CONTEXT_CREATION_DEFAULT_MASK = WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB;
-
-#endif
-
-	constexpr double M_PI = 3.14159265358979323846;
-
-	std::string doGetExecutableDir()
-	{
-		std::string ret;
-		ret.resize( 1024 );
-		DWORD count{ 1023u };
-		count = ::GetModuleFileNameA( NULL, &ret[0], count );
-		ret.resize( count + 1 );
-		ret = ret.substr( 0, ret.find_last_of( "\\" ) );
-		return ret;
-	}
-}
-
-//*****************************************************************************
-
 Window::Window()
 	: MsWindow{}
 	, m_events{ m_onScreenTap
@@ -63,8 +29,6 @@ Window::Window()
 		, std::cerr );
 	m_clog = new render::LogStreambuf< utils::DebugLogStreambufTraits >( appName
 		, std::clog );
-
-	::SetCurrentDirectoryA( doGetExecutableDir().c_str() );
 
 	try
 	{
@@ -96,7 +60,7 @@ void Window::onDraw()
 
 void Window::onCreate()
 {
-	std::string dataPath{ doGetExecutableDir() + "\\arial.ttf" };
+	std::string dataPath{ "arial.ttf" };
 	m_starmap.initialise( size()
 		, utils::getFileBinaryContent( "halo.bmp" )
 		, utils::FontLoader{ dataPath } );

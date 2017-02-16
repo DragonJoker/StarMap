@@ -12,7 +12,7 @@
 
 #include <RenderLib/Debug.h>
 #include <RenderLib/RenderWindow.h>
-#include <RenderLib/Signal.h>
+#include <RenderLib/RenderSignal.h>
 
 namespace starmap
 {
