@@ -20,6 +20,29 @@ namespace render
 	/**
 	*\brief
 	*	Passe de picking, utilisant les FBO.
+	*\remarks
+	*	Les noeuds de rendu sont organisés comme suit:
+	*	\li Liste par type d'objet (billboard ou maillage).
+	*	\li		Liste des noeuds par type NodeType.
+	*
+	*	Pour les billboards, il y a un niveau supplémentaire:
+	*	\li			Liste des instances.
+	*
+	*	A partir de là, on packe les pixels de la manière suivante:
+	*	\li Type d'objet => 2 bits.
+	*	\li Type de noeud => 4 bits.
+	*
+	*	Pour les billboards on a ceci:
+	*	\li Index du billboard => 8 bits.
+	*	\li Index de l'instance => 18 bits.
+	*
+	*	Pour les maillages on a ceci:
+	*	\li Index du maillage => 26 bits.
+	*
+	*	L'index du billboard correspondant à sa couleur, cela signifie qu'il
+	*	ne peut y avoir que 256 couleurs différentes, pour les billboards.\n
+	*	Lors du chargement des étoiles, j'en définis 58, il en reste donc
+	*	198 à la discrétion de l'utilisateur.
 	*/
 	class Picking
 	{
@@ -135,6 +158,42 @@ namespace render
 		Picking::NodeType doPick( Pixel const & pixel
 			, RenderSubmeshArray const & objects
 			, RenderBillboardArray const & billboards )const;
+		/**
+		*\brief
+		*	Unpacke les données d'un pixel dans un gl::IVec4.
+		*\remarks
+		*	Utilise les informations listées dans la documentation de la
+		*	classe.
+		*\param[in] pixel
+		*	Le pixel packé.
+		*\return
+		*	Le données unpacked.
+		*/
+		static gl::IVec4 doUnpackPixel( Pixel pixel );
+		/**
+		*\brief
+		*	Unpacke les données d'un pixel de billboard dans un gl::IVec2.
+		*\remarks
+		*	Utilise les informations listées dans la documentation de la
+		*	classe.
+		*\param[in] pixel
+		*	Le pixel packé.
+		*\return
+		*	Le données unpacked (index de billboard, et index d'instance).
+		*/
+		static gl::IVec2 doUnpackBillboardPixel( Pixel pixel );
+		/**
+		*\brief
+		*	Unpacke les données d'un pixel dans un gl::IVec4.
+		*\remarks
+		*	Utilise les informations listées dans la documentation de la
+		*	classe.
+		*\param[in] pixel
+		*	Le pixel packé.
+		*\return
+		*	Le données unpacked (index de maillage).
+		*/
+		static gl::IVec2 doUnpackObjectPixel( Pixel pixel );
 
 	private:
 		//! Le renderer.

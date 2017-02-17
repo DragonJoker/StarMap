@@ -245,9 +245,9 @@ namespace utils
 		::RegisterClassExA( &wcex );
 	}
 
-	intptr_t MsWindow::processMessage( uint32_t message
+	longptr_t MsWindow::processMessage( uint32_t message
 		, size_t wParam
-		, intptr_t lParam )
+		, longptr_t lParam )
 	{
 		static utils::Clock::time_point time;
 		static constexpr std::chrono::milliseconds ClickTimeout{ 200 };
@@ -377,10 +377,10 @@ namespace utils
 		return 0;
 	}
 
-	intptr_t CALLBACK MsWindow::WndProc( HWND hWnd
+	longptr_t CALLBACK MsWindow::WndProc( HWND hWnd
 		, uint32_t message
 		, size_t wParam
-		, intptr_t lParam )
+		, longptr_t lParam )
 	{
 		auto window = doGetInstance( hWnd );
 

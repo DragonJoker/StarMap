@@ -523,6 +523,9 @@
     <ClInclude Include="Angle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Vectorisation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GlLibPrerequisites.cpp">
@@ -953,6 +956,9 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Quaternion.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Vectorisation.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

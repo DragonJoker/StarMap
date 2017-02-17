@@ -9,6 +9,7 @@
 #pragma once
 
 #include "CameraState.h"
+#include "Debug.h"
 #include "FontTexture.h"
 #include "OverlayRenderer.h"
 #include "RenderTarget.h"
@@ -50,8 +51,19 @@ namespace render
 		*	Constructeur.
 		*\param[in] dimensions
 		*	Les dimensions de la texture recevant le rendu.
+		*\param[in] debug
+		*	\p true pour activer les informations de débogage.
+		*\param[in] loader
+		*	Le loader de police.
 		*/
-		RenderWindow( gl::Size2D const & dimensions );
+		RenderWindow( gl::Size2D const & dimensions
+			, render::FontLoader & loader
+			, bool debug );
+		/**
+		*\brief
+		*	Démarre le dessin d'une image.
+		*/
+		void beginFrame();
 		/**
 		*\brief
 		*	Met à jour la scène.
@@ -64,13 +76,6 @@ namespace render
 		void updateOverlays();
 		/**
 		*\brief
-		*	Redimensionne le viewport.
-		*\param[in] size
-		*	Les dimensions du viewport.
-		*/
-		void resize( gl::Size2D const & size )noexcept;
-		/**
-		*\brief
 		*	Dessine la scène.
 		*\remarks
 		*	Le dessin se fait dans la cible de rendu, puis les effets éventuels
@@ -78,6 +83,18 @@ namespace render
 		*	tampon de la fenêtre.
 		*/
 		void draw()const noexcept;
+		/**
+		*\brief
+		*	Termine le dessin d'une image.
+		*/
+		void endFrame();
+		/**
+		*\brief
+		*	Redimensionne le viewport.
+		*\param[in] size
+		*	Les dimensions du viewport.
+		*/
+		void resize( gl::Size2D const & size )noexcept;
 		/**
 		*\return
 		*	La scène.
@@ -177,6 +194,8 @@ namespace render
 		Picking m_picking;
 		//! Dit si on doit exécuter le picking lors du dessin de la prochaine frame.
 		mutable bool m_pick{ false };
+		//! Les informations de débogage.
+		Debug m_debug;
 	};
 }
 

@@ -274,19 +274,11 @@ namespace render
 		}
 		/**
 		*\return
-		*	Le nombre de billboards affichés.
+		*	Les tampons de billboards.
 		*/
-		inline uint32_t billboardsCount()noexcept
+		inline BillboardList const & billboardsBuffers()const noexcept
 		{
-			return m_billboardsCount;
-		}
-		/**
-		*\return
-		*	Le nombre de tampons de billboards utilisés.
-		*/
-		inline uint32_t buffersCount()noexcept
-		{
-			return uint32_t( m_billboardsBuffers.size() );
+			return m_billboardsBuffers;
 		}
 
 	private:
@@ -295,6 +287,11 @@ namespace render
 		*	Gestion du signal de changement d'objet déplaçable.
 		*/
 		void onMovableChanged( Movable & movable );
+		/**
+		*\brief
+		*	Gestion du signal de changement de tampon de billboard.
+		*/
+		void onBillboardBufferChanged( BillboardBuffer & buffer );
 		/**
 		*\brief
 		*	Met à jour les billboards.
@@ -332,10 +329,10 @@ namespace render
 		std::vector< Movable * > m_changedMovables;
 		//! Les connections aux évènements de Movable changé.
 		std::map< Movable *, Connection< OnMovableChanged > > m_onMovableChanged;
-		//! Le nombre de billboards affichés.
-		uint32_t m_billboardsCount{ 0u };
-		//! Le nombre de tampons de billboards effectivement utilisés.
-		uint32_t m_billboardsBuffersCount{ 0u };
+		//! Les BillboardBuffer qui ont changé.
+		std::vector< BillboardBuffer * > m_changedBillboardBuffers;
+		//! Les connections aux évènements de BillboardBuffer changé.
+		std::map< BillboardBuffer *, Connection< OnBillboardBufferChanged > > m_onBillboardBufferChanged;
 		//! Dit si la caméra a changé entre 2 updates.
 		bool m_cameraChanged{ true };
 

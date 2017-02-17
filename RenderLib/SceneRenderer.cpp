@@ -394,9 +394,7 @@ namespace render
 					&& billboard->buffer().count() )
 				{
 					node.m_mtxModel->value( billboard->transform() );
-					node.m_dimensions->value( { 
-						billboard->dimensions()
-					} );
+					node.m_dimensions->value( { billboard->dimensions() } );
 					doBindMaterial( node, billboard->material() );
 					node.m_mtxUbo.bind( 0u );
 					node.m_matUbo.bind( 1u );

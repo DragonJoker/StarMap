@@ -97,6 +97,7 @@ namespace render
 	/**@{*/
 	using OnMovableChanged = Signal< std::function< void( Movable & ) > >;
 	using OnBillboardChanged = Signal< std::function< void( Billboard & ) > >;
+	using OnBillboardBufferChanged = Signal< std::function< void( BillboardBuffer & ) > >;
 	using OnPolyLineChanged = Signal< std::function< void( PolyLine & ) > >;
 	using OnObjectPicked = Signal< std::function< void( Object & ) > >;
 	using OnBillboardPicked = Signal< std::function< void( Billboard &, uint32_t ) > >;

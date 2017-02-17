@@ -1,5 +1,7 @@
 #include "Debug.h"
 
+#include "Billboard.h"
+#include "BillboardBuffer.h"
 #include "Scene.h"
 #include "TextOverlay.h"
 
@@ -16,13 +18,10 @@ namespace render
 		static std::string const BufferCount = "Debug_BufferCount";
 	}
 
-	Debug::Debug( bool enable )
-		: m_enabled{ enable }
-	{
-	}
-
-	void Debug::initialise( render::Scene & scene
+	Debug::Debug( bool enable
+		, render::Scene & scene
 		, render::FontLoader & loader )
+		: m_enabled{ enable }
 	{
 		if ( m_enabled )
 		{
@@ -56,7 +55,7 @@ namespace render
 		}
 	}
 
-	void Debug::cleanup()
+	Debug::~Debug()
 	{
 		if ( m_enabled )
 		{
@@ -84,22 +83,44 @@ namespace render
 	{
 		if ( m_enabled )
 		{
+			auto end = Clock::now();
+			auto duration = std::chrono::duration_cast< std::chrono::microseconds >( end - m_startTime );
+			std::stringstream stream;
+			stream << std::fixed << std::setprecision( 2 ) << duration.count() / 1000.0 << "ms";
+			m_time->caption( "Time: " + stream.str() );
+		}
+	}
+
+	void Debug::count( BillboardArray const & billboards
+		, BillboardList const & buffers )
+	{
+		if ( m_enabled )
+		{
 			{
-				auto end = Clock::now();
-				auto duration = std::chrono::duration_cast< std::chrono::microseconds >( end - m_startTime );
-				std::stringstream stream;
-				stream << std::fixed << std::setprecision( 2 ) << duration.count() / 1000.0 << "ms";
-				m_time->caption( "Time: " + stream.str() );
+				auto billboardsCount = 0u;
+
+				for ( auto & billboard : billboards )
+				{
+					billboardsCount += billboard->buffer().count();
+				}
+				{
+					std::stringstream stream;
+					stream << billboardsCount;
+					m_billboardCount->caption( "Billboards: " + stream.str() );
+				}
 			}
 			{
-				std::stringstream stream;
-				stream << m_scene->billboardsCount();
-				m_billboardCount->caption( "Billboards: " + stream.str() );
-			}
-			{
-				std::stringstream stream;
-				stream << m_scene->buffersCount();
-				m_buffersCount->caption( "Buffers: " + stream.str() );
+				auto buffersCount = 0u;
+
+				for ( auto & billboard : buffers )
+				{
+					buffersCount += billboard.second->count() ? 1 : 0;
+				}
+				{
+					std::stringstream stream;
+					stream << buffersCount;
+					m_buffersCount->caption( "Buffers: " + stream.str() );
+				}
 			}
 		}
 	}

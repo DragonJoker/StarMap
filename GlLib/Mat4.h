@@ -8,7 +8,7 @@
 #define ___GlLib_Mat4_HPP___
 #pragma once
 
-#include "Vec4.h"
+#include "Vectorisation.h"
 
 #include <array>
 

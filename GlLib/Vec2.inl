@@ -46,14 +46,6 @@ namespace gl
 	}
 
 	template< typename T >
-	inline Vec2T< T > & Vec2T< T >::operator-()noexcept
-	{
-		x = -x;
-		y = -y;
-		return *this;
-	}
-
-	template< typename T >
 	T & Vec2T< T >::operator[]( size_t index )noexcept
 	{
 		assert( index < 2 );
@@ -174,6 +166,16 @@ namespace gl
 		return lhs.x != rhs.x
 			|| lhs.y != rhs.y;
 	}
+	
+	template< typename T >
+	inline Vec2T< T > operator-( Vec2T< T > const & rhs )noexcept
+	{
+		return Vec2T< T >
+		{
+			-rhs.x,
+			-rhs.y
+		};
+	}
 
 	template< typename T, typename U >
 	inline Vec2T< T > operator+( Vec2T< T > const & lhs
@@ -237,17 +239,4 @@ namespace gl
 		result /= rhs;
 		return result;
 	}
-
-	template< typename R, typename T >
-	struct Caller< R, T, Vec2T< T > >
-	{
-		static Vec2T< T > call( R( *func )( T ), Vec2T< T > const & value )
-		{
-			return Vec2T< T >
-			{
-				func( value.x ),
-				func( value.y )
-			};
-		}
-	};
 }

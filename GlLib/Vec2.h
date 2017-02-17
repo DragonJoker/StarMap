@@ -10,14 +10,6 @@
 
 namespace gl
 {
-	template< typename R, typename T, typename V >
-	struct Caller;
-
-	template< typename R, typename T, typename V >
-	V call( R( *func )( T ), V const & value )
-	{
-		return Caller< R, T, V >::call( func, value );
-	}
 	/**
 	*\brief
 	*	Classe servant uniquement à construire des points et matrices sans
@@ -122,7 +114,6 @@ namespace gl
 		*\name Opérateurs arithmétiques membres.
 		*/
 		/**@{*/
-		inline Vec2T & operator-()noexcept;
 		template< typename U >
 		inline Vec2T & operator+=( Vec2T< U > const & rhs )noexcept;
 		template< typename U >
@@ -211,6 +202,8 @@ namespace gl
 	*\name Opérateurs arithmétiques.
 	*/
 	/**@{*/
+	template< typename T >
+	inline Vec2T< T > operator-( Vec2T< T > const & rhs )noexcept;
 	template< typename T, typename U >
 	inline Vec2T< T > operator+( Vec2T< T > const & lhs
 		, Vec2T< U > const & rhs )noexcept;

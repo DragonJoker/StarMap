@@ -42,10 +42,10 @@ namespace gl
 	}
 
 	template< typename T >
-	QuaternionT< T >::QuaternionT( Vec3T< T > const & euler )noexcept
+	QuaternionT< T >::QuaternionT( Vec3T< RadiansT< T > > const & euler )noexcept
 	{
-		Vec3T< T > c = call< T, T >( ::cos, euler * T{ 0.5 } );
-		Vec3T< T > s = call< T, T >( ::sin, euler * T{ 0.5 } );
+		Vec3T< T > c = call( gl::cos< T >, euler * T{ 0.5 } );
+		Vec3T< T > s = call( gl::sin< T >, euler * T{ 0.5 } );
 		
 		w = c.x * c.y * c.z + s.x * s.y * s.z;
 		x = s.x * c.y * c.z - c.x * s.y * s.z;
@@ -85,16 +85,6 @@ namespace gl
 	{
 		assert( index < 4 );
 		return data[index];
-	}
-
-	template< typename T >
-	inline QuaternionT< T > & QuaternionT< T >::operator-()noexcept
-	{
-		x = -x;
-		y = -y;
-		z = -z;
-		w = -w;
-		return *this;
 	}
 
 	template< typename T >

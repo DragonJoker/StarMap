@@ -46,7 +46,6 @@ namespace starmap
 		{
 			m_window->state().zoomVelocity( value );
 		} ) }
-		, m_debug{ true }
 	{
 		events.starMap( this );
 	}
@@ -69,12 +68,13 @@ namespace starmap
 		gl::OpenGL::initialise();
 
 		// Initialise the render window
-		m_window = std::make_unique< render::RenderWindow >( size );
+		m_window = std::make_unique< render::RenderWindow >( size
+			, loader
+			, true );
 		doLoadFontTextures( loader );
 		doLoadOpacityMap( opacityMap );
 
 		auto & scene = m_window->scene();
-		m_debug.initialise( scene, loader );
 
 		// Initialise the scene
 		scene.backgroundColour( gl::RgbaColour{ 0, 0, 0, 1 } );
@@ -140,7 +140,7 @@ namespace starmap
 
 	void StarMap::beginFrame()
 	{
-		m_debug.start();
+		m_window->beginFrame();
 	}
 
 	void StarMap::drawFrame()
@@ -155,7 +155,7 @@ namespace starmap
 
 	void StarMap::endFrame()
 	{
-		m_debug.end();
+		m_window->endFrame();
 	}
 
 	void StarMap::add( Star const & star )
@@ -254,10 +254,9 @@ namespace starmap
 			m_pickedStar = &star;
 			m_pickDescription->caption( star.name() );
 			doUpdatePickDescription();
-			m_pickBillboard->moveTo( billboard.position()
-				- gl::Vector3D{ 0, 0, 0.2 } );
+			m_pickBillboard->moveTo( billboard.position() - gl::Vector3D{ 0, 0, 0.2 } );
 			doUpdatePicked( static_cast< render::Movable const & >( billboard ) );
-			auto data = billboard.buffer()[index];
+			auto & data = billboard.buffer()[index];
 			auto scale = 0.1f + m_window->state().zoomBounds().percent( m_window->state().zoom() );
 			m_pickBillboard->buffer().at( 0u
 				, { -1000.0f, data.center, gl::Vector2D{ scale, scale } } );
@@ -447,11 +446,6 @@ namespace starmap
 			doUpdateOverlay( *m_pickDescription
 				, m_pickedStar->position()
 				, StarNameOffset );
-
-			auto scale = 0.1f + m_window->state().zoomBounds().percent( m_window->state().zoom() );
-			auto & data = m_pickBillboard->buffer()[0u];
-			m_pickBillboard->buffer().at( 0u
-				, { data.magnitude, data.center, gl::Vector2D{ scale, scale } } );
 		}
 	}
 

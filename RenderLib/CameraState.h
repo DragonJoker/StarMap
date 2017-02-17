@@ -75,7 +75,7 @@ namespace render
 		*\return
 		*	Les angles voulus pour l'orientation de la caméra.
 		*/
-		inline gl::Vector2D angle()const noexcept
+		inline gl::Vec2T< gl::Radians > angle()const noexcept
 		{
 			return{ m_angleX.value(), m_angleY.value() };
 		}

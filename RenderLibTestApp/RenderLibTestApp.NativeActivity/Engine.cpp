@@ -23,7 +23,6 @@ Window::Window( utils::AndroidApp const & parent
 	: utils::AndroidWindow{ parent
 		, window
 		, state }
-	, m_debug{ true }
 {
 }
 
@@ -34,19 +33,12 @@ Window::~Window()
 void Window::onCreate()
 {
 	// Initialise the render window
-	m_renderWindow = std::make_unique< render::RenderWindow >( m_size );
+	auto loader = doCreateFontLoader( "arial.ttf" );
+	m_renderWindow = std::make_unique< render::RenderWindow >( m_size
+		, *loader
+		, true );
 
 	auto & scene = m_renderWindow->scene();
-
-	{
-		auto loader = doCreateFontLoader( "arial.ttf" );
-
-		if ( loader )
-		{
-			m_debug.initialise( scene, *loader );
-		}
-	}
-
 	m_fontTexture = doCreateFontTexture( "arial.ttf"
 		, 32 );
 
@@ -201,12 +193,12 @@ void Window::onDestroy()
 
 void Window::onDraw()
 {
-	m_debug.start();
+	m_renderWindow->beginFrame();
 	m_renderWindow->update();
 	m_renderWindow->updateOverlays();
 	m_renderWindow->draw();
 	eglSwapBuffers( m_display, m_surface );
-	m_debug.end();
+	m_renderWindow->endFrame();
 }
 
 void Window::onSave( render::ByteArray & state )
@@ -291,7 +283,7 @@ void Window::doUpdatePicked( render::Object const & object )
 {
 	m_picked->moveTo( object.position() - gl::Vector3D{ 0, 0, object.boundaries().z + 0.2 } );
 	doUpdatePicked( static_cast< render::Movable const & >( object ) );
-	m_picked->dimensions( object.boundaries() );
+	m_picked->dimensions( gl::toVec2( object.boundaries() ) );
 	m_picked->buffer().at( 0u, { -1000.0f, gl::Vector3D{ 0, 0, 0 }, gl::Vector2D{ 1, 1 } } );
 }
 

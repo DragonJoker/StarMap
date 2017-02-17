@@ -84,12 +84,17 @@ namespace render
 
 		if ( count )
 		{
-			m_vbo->bind();
-			m_vbo->upload( 0u, count, m_visible.data() );
-			m_vbo->unbind();
+			upload();
 		}
 
 		m_count = count;
+	}
+
+	void BillboardBuffer::upload()const
+	{
+		m_vbo->bind();
+		m_vbo->upload( 0u, m_count, m_visible.data() );
+		m_vbo->unbind();
 	}
 
 	void BillboardBuffer::remove( uint32_t index )
@@ -126,30 +131,35 @@ namespace render
 	BillboardData const & BillboardBuffer::at( uint32_t index )const
 	{
 		assert( index < m_buffer.size() );
-		auto it = std::find_if( std::begin( m_buffer )
-			, std::end( m_buffer )
-			, [&index]( auto const & in )
-		{
-			return uint32_t( in[0].id ) == index;
-		} );
-		assert( it != std::end( m_buffer ) );
-		return ( *it )[0].data;
+		return m_buffer[index][0].data;
 	}
 
 	void BillboardBuffer::at( uint32_t index, BillboardData const & data )
 	{
 		assert( index < m_buffer.size() );
-		auto it = std::find_if( std::begin( m_buffer )
-			, std::end( m_buffer )
-			, [&index]( auto const & in )
-		{
-			return uint32_t( in[0].id ) == index;
-		} );
-		assert( it != std::end( m_buffer ) );
 
-		for ( auto & in : ( *it ) )
+		for ( auto & in : m_buffer[index] )
 		{
 			in.data = data;
+		}
+
+		auto it = std::find_if( std::begin( m_visible )
+			, std::end( m_visible )
+			, [index]( Quad const & quad )
+			{
+				return quad[0].id == index;
+			} );
+
+		if ( it != std::end( m_visible ) )
+		{
+			auto & quad = *it;
+
+			for ( auto & in : quad )
+			{
+				in.data = data;
+			}
+
+			onBillboardBufferChanged( *this );
 		}
 	}
 }

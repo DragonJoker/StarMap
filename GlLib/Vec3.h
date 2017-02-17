@@ -123,7 +123,6 @@ namespace gl
 		*\name Opérateurs arithmétiques membres.
 		*/
 		/**@{*/
-		inline Vec3T & operator-()noexcept;
 		template< typename U >
 		inline Vec3T & operator+=( Vec3T< U > const & rhs )noexcept;
 		template< typename U >
@@ -235,6 +234,8 @@ namespace gl
 	*\name Opérateurs arithmétiques.
 	*/
 	/**@{*/
+	template< typename T >
+	inline Vec3T< T > operator-( Vec3T< T > const & rhs )noexcept;
 	template< typename T, typename U >
 	inline Vec3T< T > operator+( Vec3T< T > const & lhs
 		, Vec3T< U > const & rhs )noexcept;

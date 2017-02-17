@@ -204,7 +204,7 @@ namespace utils
 			if ( main != ResultType::eNone
 				&& second != ResultType::eNone )
 			{
-				gl::Vector2D diff{ m_dpFactor * ( m_secondary.position() - m_main.position() ) };
+				gl::Vector2D diff{ ( m_secondary.position() - m_main.position() ) * m_dpFactor };
 				float distance{ gl::length( diff ) };
 
 				if ( main == ResultType::eMove

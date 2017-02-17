@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 2.8 )
 
-set( MAIN_PROJECT_NAME "StarMapLib" )
+set( MAIN_PROJECT_NAME "StarMap" )
 
 # Used to look for external modules
 set( CMAKE_MODULE_PATH

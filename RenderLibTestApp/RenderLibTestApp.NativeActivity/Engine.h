@@ -105,7 +105,6 @@ private:
 
 private:
 	render::RenderWindowPtr m_renderWindow;
-	render::Debug m_debug;
 
 	render::Connection< render::OnObjectPicked > m_onObjectPicked;
 	render::Connection< render::OnBillboardPicked > m_onBillboardPicked;

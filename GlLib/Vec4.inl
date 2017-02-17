@@ -119,13 +119,15 @@ namespace gl
 	}
 
 	template< typename T >
-	inline Vec4T< T > & Vec4T< T >::operator-()noexcept
+	inline Vec4T< T > operator-( Vec4T< T > const & rhs )noexcept
 	{
-		x = -x;
-		y = -y;
-		z = -z;
-		w = -w;
-		return *this;
+		return Vec4T< T >
+		{
+			-rhs.x,
+			-rhs.y,
+			-rhs.z,
+			-rhs.w
+		};
 	}
 
 	template< typename T >
@@ -333,19 +335,4 @@ namespace gl
 		result /= rhs;
 		return result;
 	}
-
-	template< typename R, typename T >
-	struct Caller< R, T, Vec4T< T > >
-	{
-		static Vec4T< T > call( R( *func )( T ), Vec4T< T > const & value )
-		{
-			return Vec4T< T >
-			{
-				func( value.x ),
-				func( value.y ),
-				func( value.z ),
-				func( value.w )
-			};
-		}
-	};
 }

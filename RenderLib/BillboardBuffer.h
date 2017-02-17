@@ -8,7 +8,7 @@
 #define ___RenderLib_BillboardBuffer_HPP___
 #pragma once
 
-#include "RenderLibPrerequisites.h"
+#include "RenderSignal.h"
 
 #include <array>
 
@@ -93,6 +93,11 @@ namespace render
 			, float scale );
 		/**
 		*\brief
+		*	Transfère les données du tampon en VRAM.
+		*/
+		void upload()const;
+		/**
+		*\brief
 		*	Retire un point de la liste.
 		*\param[in] index
 		*	L'index du point.
@@ -159,7 +164,11 @@ namespace render
 			return *m_vbo;
 		}
 
-	protected:
+	public:
+		//! La notification de tampon changé.
+		OnBillboardBufferChanged onBillboardBufferChanged;
+
+	private:
 		//! Le compte des objets visibles avant le culling.
 		uint32_t m_unculled{ 0u };
 		//! Le nombre de billboards à afficher (en fonction du seuil et du culling).

@@ -18,8 +18,6 @@ namespace render
 		template<>
 		struct NodeTraits< Object >
 		{
-			static auto constexpr mask = ObjectMask;
-
 			static inline void getNodeValue( RenderSubmeshVector::const_iterator it
 				, Object *& object )
 			{
@@ -30,8 +28,6 @@ namespace render
 		template<>
 		struct NodeTraits< Billboard >
 		{
-			static auto constexpr mask = BillboardMask;
-
 			static inline void getNodeValue( BillboardArray::const_iterator it
 				, Billboard *& billboard )
 			{
@@ -41,16 +37,14 @@ namespace render
 
 		template< typename MapT, typename NodeT >
 		inline void doPickFromList( MapT const & map
-			, Picking::Pixel const & index
-			, NodeT *& node )
+			, gl::IVec4 const & data
+			, NodeT *& result )
 		{
 			using Traits = NodeTraits< NodeT >;
-			uint8_t pipelineIndex{ uint8_t( index.r & ~Traits::mask ) };
-			uint16_t nodeIndex{ uint16_t( ( uint16_t( index.g ) << 8 )
-				+ uint16_t( index.b ) ) };
-			assert( map[pipelineIndex].size() > nodeIndex );
-			auto itNode = map[pipelineIndex].begin() + nodeIndex;
-			Traits::getNodeValue( itNode, node );
+			uint8_t node( data.y );
+			uint32_t index( data.z );
+			assert( map[node].size() > index );
+			Traits::getNodeValue( map[node].begin() + index, result );
 		}
 
 		static int constexpr PickingWidth = 50;
@@ -150,24 +144,71 @@ namespace render
 
 		if ( pixel.r > 0 || pixel.g > 0 || pixel.b > 0 )
 		{
-			if ( uint32_t( pixel.r ) & ObjectMask )
+			auto data = doUnpackPixel( pixel );
+
+			if ( data.x == int( ObjectType::eObject ) )
 			{
 				Object * object{ nullptr };
 				doPickFromList( objects
-					, pixel
+					, data
 					, object );
 				onObjectPicked( *object );
 			}
-			else if ( uint32_t( pixel.r ) & BillboardMask )
+			else if ( data.x == int( ObjectType::eBillboard ) )
 			{
 				Billboard * billboard{ nullptr };
 				doPickFromList( billboards
-					, pixel
+					, data
 					, billboard );
-				onBillboardPicked( *billboard, uint32_t( pixel.a ) );
+				onBillboardPicked( *billboard, uint32_t( data.w ) );
 			}
 		}
 
 		return ret;
+	}
+
+	gl::IVec4 Picking::doUnpackPixel( Pixel pixel )
+	{
+		static constexpr uint8_t ObjectTypeMask{ ObjectMask | BillboardMask };
+		static constexpr uint8_t NodeTypeMask{ 0x3F };
+		static constexpr uint8_t NodeTypeOffset{ 0x02 };
+		auto objectType = ( pixel.r >> 2 ) & ObjectTypeMask;
+		auto nodeType = ( pixel.r & NodeTypeMask ) >> NodeTypeOffset;
+		pixel.r &= 0x03;
+
+		switch ( objectType )
+		{
+		case ObjectMask:
+			objectType = int( ObjectType::eObject );
+			return gl::IVec4{ objectType, nodeType, doUnpackObjectPixel( pixel ) };
+
+		case BillboardMask:
+			objectType = int( ObjectType::eBillboard );
+			return gl::IVec4{ objectType, nodeType, doUnpackBillboardPixel( pixel ) };
+
+		default:
+			assert( false && "Unsupported object type" );
+			return gl::IVec4{};
+			break;
+		}
+	}
+
+	gl::IVec2 Picking::doUnpackBillboardPixel( Pixel pixel )
+	{
+		auto index = ( uint32_t( pixel.r ) << 6 )
+			| ( uint32_t( pixel.g & 0xFC ) >> 2 );
+		auto instance = ( uint32_t( pixel.g & 0x03 ) << 16 )
+			| ( uint32_t( pixel.b ) << 8 )
+			| ( uint32_t( pixel.a ) );
+		return gl::IVec2{ index, instance };
+	}
+
+	gl::IVec2 Picking::doUnpackObjectPixel( Pixel pixel )
+	{
+		auto index = ( uint32_t( pixel.r ) << 24 )
+			| ( uint32_t( pixel.g ) << 16 )
+			| ( uint32_t( pixel.b ) << 8 )
+			| ( uint32_t( pixel.a ) );
+		return gl::IVec2{ index, 0 };
 	}
 }

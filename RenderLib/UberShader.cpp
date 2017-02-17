@@ -520,7 +520,38 @@ void main()
 )"
 			};
 
-			static std::string const PickingShaderBegin
+			static std::string const PickingPackPixelES2
+			{
+				R"(
+	int discarded = int( floor( nodeIndex / 65536.0 ) );            // ( nodeIndex & 0xFFFF0000 ) >> 16;
+	discarded = discarded * 65536;                                  // ( nodeIndex & 0xFFFF0000 )
+	int hiNode = int( floor( ( nodeIndex - discarded ) / 256.0 ) ); // ( nodeIndex & 0x0000FF00 ) >> 8;
+	int loNode = nodeIndex - discarded - ( hiNode * 256 );          // ( nodeIndex & 0x000000FF );
+	pxl_fragColour.xyz = vec3( float( drawIndex ) / 255.0
+		, float( hiNode ) / 255.0
+		, float( loNode ) / 255.0 );)"
+			};
+
+			static std::string const PickingPackPixelES3
+			{
+				R"(
+vec4 packPixel( int drawIndex, int nodeIndex, int instIndex )
+{
+	int hiR = ( drawIndex & 0x0000003F ) << 2;
+	int loR = ( nodeIndex & 0x000000C0 ) >> 6;
+	int hiG = ( nodeIndex & 0x0000003F ) << 2;
+	int loG = ( instIndex & 0x00030000 ) >> 16;
+	int hlB = ( instIndex & 0x0000FF00 ) >> 8;
+	int hlA = ( instIndex & 0x000000FF ) >> 0;
+	return vec4( float( hiR | loR ) / 255.0
+		, float( hiG | loG ) / 255.0
+		, float( hlB ) / 255.0
+		, float( hlA ) / 255.0 );
+}
+)"
+			};
+
+			static std::string const PickingShader
 			{
 				R"(
 [varying] float vtx_instance;
@@ -534,46 +565,18 @@ uniform sampler2D mapOpacity;
 
 void main()
 {
-	vec4 pxl_fragColour = vec4( 0.0, 0.0, 0.0, 1.0 );
 #ifdef TRANSPARENT
+	float alpha = 1.0;
 #	ifdef OPACITY_MAP
-	pxl_fragColour.a = [texture2D]( mapOpacity, vtx_texture ).r;
+	alpha = [texture2D]( mapOpacity, vtx_texture ).r;
 #	endif
-	if ( pxl_fragColour.a < 0.5 )
+	if ( alpha < 0.5 )
 	{
 		discard;
 	}
-	pxl_fragColour.a = 1.0;
 #endif
-)"
-			};
-
-			static std::string const PickingShaderES2
-			{
-				R"(
-	int discarded = int( floor( nodeIndex / 65536.0 ) );            // ( nodeIndex & 0xFFFF0000 ) >> 16;
-	discarded = discarded * 65536;                                  // ( nodeIndex & 0xFFFF0000 )
-	int hiNode = int( floor( ( nodeIndex - discarded ) / 256.0 ) ); // ( nodeIndex & 0x0000FF00 ) >> 8;
-	int loNode = nodeIndex - discarded - ( hiNode * 256 );          // ( nodeIndex & 0x000000FF );
-	pxl_fragColour.xyz = vec3( float( drawIndex ) / 255.0
-		, float( hiNode ) / 255.0
-		, float( loNode ) / 255.0 );)"
-			};
-
-			static std::string const PickingShaderES3
-			{
-				R"(
-	int hiNode = ( nodeIndex & 0x0000FF00 ) >> 8;
-	int loNode = ( nodeIndex & 0x000000FF ) >> 0;
-	pxl_fragColour.xyz = vec3( float( drawIndex ) / 255.0
-		, float( hiNode ) / 255.0
-		, float( loNode ) / 255.0 );)"
-			};
-
-			static std::string const PickingShaderEnd
-			{
-				R"(
-	[gl_FragColor] = vec4( pxl_fragColour.xyz, vtx_instance / 255.0 );
+	[gl_FragColor] = packPixel( drawIndex, nodeIndex, int( vtx_instance + 0.1 ) );
+	//[gl_FragColor] = vec4( vtx_instance, 0.0, 0.0, 1.0 );
 }
 )"
 			};
@@ -768,16 +771,15 @@ void main()
 					break;
 
 				case RenderType::ePicking:
-					ret += PickingShaderBegin;
 					if ( gl::OpenGL::checkSupport( gl::FeatureLevel::eGLES3 ) )
 					{
-						ret += PickingShaderES3;
+						ret += PickingPackPixelES3;
 					}
 					else
 					{
-						ret += PickingShaderES2;
+						ret += PickingPackPixelES2;
 					}
-					ret += PickingShaderEnd;
+					ret += PickingShader;
 					break;
 
 				default:

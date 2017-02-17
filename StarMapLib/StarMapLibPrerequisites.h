@@ -42,7 +42,7 @@ namespace starmap
 
 	/**
 	*\brief
-	*	Le type des éléments supportés pour les filtres.
+	*	Le type des ï¿½lï¿½ments supportï¿½s pour les filtres.
 	*/
 	enum class ElementType
 	{
@@ -51,6 +51,15 @@ namespace starmap
 		//! Constellations.
 		eConstellation,
 	};
+	/**
+	*\brief
+	*	Convertit un index de couleur B-V en couleur RVB
+	*\param[in] bv
+	*	L'index de la couleur.
+	*\return
+	*	La couleur correspondante.
+	*/
+	gl::RgbColour bvToRgb( float bv );
 }
 
 #endif

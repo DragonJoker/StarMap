@@ -24,11 +24,9 @@
 namespace render
 {
 	//! Le masque utilisé pour définir un objet.
-	static uint32_t constexpr ObjectMask = 0x00000020;
+	static uint8_t constexpr ObjectMask = 0x10;
 	//! Le masque utilisé pour définir un billboard.
-	static uint32_t constexpr BillboardMask = 0x00000040;
-	//! Le masque utilisé pour définir une ligne.
-	static uint32_t constexpr LineMask = 0x00000080;
+	static uint8_t constexpr BillboardMask = 0x20;
 	/**
 	*\brief
 	*	Classe stockant les noeuds de rendu utilisés pour le dessin du picking.
@@ -236,8 +234,6 @@ namespace render
 		BillboardNodeArray m_billboardNodes;
 		//! Le pipeline de rendu des objets opaques (ainsi que les objets avec alpha testing).
 		gl::Pipeline m_pipelineOpaque;
-		//! Le pipeline de rendu des objets avec alpha blending.
-		gl::Pipeline m_pipelineAlphaBlend;
 		//! L'intervalle d'échelle pour les billboards.
 		Range< float > m_billboardScale{ makeRange( 1.0f, 20.0f ) };
 		//! L'intervalle d'échelle pour les objets complexes.

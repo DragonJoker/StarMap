@@ -29,7 +29,9 @@ namespace render
 		}
 	}
 
-	RenderWindow::RenderWindow( gl::Size2D const & dimensions )
+	RenderWindow::RenderWindow( gl::Size2D const & dimensions
+		, render::FontLoader & loader
+		, bool debug )
 		: m_pipeline{ true, false, false, false }
 		, m_target{ dimensions, gl::PixelFormat::eR8G8B8 }
 		, m_scene{ dimensions }
@@ -55,13 +57,19 @@ namespace render
 		, m_viewport{ dimensions }
 		, m_overlayRenderer{ std::make_unique< OverlayRenderer >() }
 		, m_picking{ dimensions }
+		, m_debug{ debug, m_scene, loader }
 	{
+	}
+
+	void RenderWindow::beginFrame()
+	{
+		m_debug.start();
 	}
 
 	void RenderWindow::update()
 	{
 		state().update();
-		m_scene.camera().reorient( gl::Quaternion{ gl::Vector3D{ state().angle(), 0.0f } } );
+		m_scene.camera().reorient( gl::Quaternion{ gl::Vec3T< gl::Radians >{ state().angle(), 0.0_radians } } );
 		m_scene.camera().fovY( state().zoom() );
 		m_scene.update();
 	}
@@ -69,13 +77,6 @@ namespace render
 	void RenderWindow::updateOverlays()
 	{
 		m_scene.updateOverlays();
-	}
-
-	void RenderWindow::resize( gl::Size2D const & size )noexcept
-	{
-		m_size = size;
-		m_viewport.resize( m_size );
-		m_scene.resize( m_size );
 	}
 
 	void RenderWindow::draw()const noexcept
@@ -119,5 +120,19 @@ namespace render
 		m_overlayRenderer->beginRender( m_size );
 		m_overlayRenderer->draw( m_scene.overlays() );
 		m_overlayRenderer->endRender();
+	}
+
+	void RenderWindow::endFrame()
+	{
+		m_debug.count( m_scene.billboards()
+			, m_scene.billboardsBuffers() );
+		m_debug.end();
+	}
+
+	void RenderWindow::resize( gl::Size2D const & size )noexcept
+	{
+		m_size = size;
+		m_viewport.resize( m_size );
+		m_scene.resize( m_size );
 	}
 }

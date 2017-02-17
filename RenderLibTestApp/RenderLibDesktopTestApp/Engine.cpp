@@ -17,7 +17,6 @@
 
 Engine::Engine()
 	: MsWindow{}
-	, m_debug{ true }
 {
 	std::string const appName = "RenderLibTestApp";
 	m_cout = new render::LogStreambuf< utils::InfoLogStreambufTraits >( appName
@@ -39,12 +38,12 @@ void Engine::onDraw()
 {
 	if ( m_window )
 	{
-		m_debug.start();
+		m_window->beginFrame();
 		m_window->update();
 		m_window->updateOverlays();
 		m_window->draw();
 		doSwapBuffers();
-		m_debug.end();
+		m_window->endFrame();
 	}
 }
 
@@ -138,29 +137,30 @@ void Engine::doInitialise3DElements()
 	}
 
 	// Initialise the render window
+	utils::FontLoader loader{ "arial.ttf" };
 	m_window = std::make_unique< render::RenderWindow >( gl::Size2D{ width
-		, height } );
+			, height }
+		, loader
+		, true );
 	m_window->viewport().fovY( gl::Angle{ 45.0_degrees } );
 
 	// Initialise the scene
 	auto & scene = m_window->scene();
-	utils::FontLoader loader{ "arial.ttf" };
-	m_debug.initialise( scene, loader );
 	scene.backgroundColour( gl::RgbaColour{ 0.5, 0.5, 0.5, 1.0 } );
 
 	// Populate the scene
-	std::string content = utils::getFileTextContent( "tex_cube.obj" );
+	//std::string content = utils::getFileTextContent( "tex_cube.obj" );
 
-	if ( !content.empty() )
-	{
-		render::ObjectPtr object = utils::loadObjFile( "Cube"
-			, content
-			, scene.materials()
-			, scene.textures()
-			, scene.meshes() );
-		object->moveTo( gl::Vector3D{ 0.0, 0.0, 52.0 } );
-		scene.add( object );
-	}
+	//if ( !content.empty() )
+	//{
+	//	render::ObjectPtr object = utils::loadObjFile( "Cube"
+	//		, content
+	//		, scene.materials()
+	//		, scene.textures()
+	//		, scene.meshes() );
+	//	object->moveTo( gl::Vector3D{ 0.0, 0.0, 52.0 } );
+	//	scene.add( object );
+	//}
 
 	auto texture = scene.textures().findElement( "texture.bmp" );
 
@@ -192,52 +192,52 @@ void Engine::doInitialise3DElements()
 	m_picked->show( false );
 	scene.add( m_picked );
 
-	auto billboardMat = scene.materials().addElement( "billboard" );
-	billboardMat->diffuseMap( texture );
-	billboardMat->opacityMap( opacity );
-	billboardMat->ambient( gl::RgbColour{ 1.0, 0.0, 0.5 } );
-	billboardMat->diffuse( gl::RgbColour{ 1.0, 0.0, 0.5 } );
-	billboardMat->emissive( gl::RgbColour{ 1.0, 0.0, 0.5 } );
-	auto billboardBuffers = std::make_shared< render::BillboardBuffer >( false );
-	billboardBuffers->add( { -100.0f, gl::Vector3D{ 1, 0, 0 }, gl::Vector2D{ 1, 1 } } );
-	billboardBuffers->add( { -100.0f, gl::Vector3D{ 0, 1, 0 }, gl::Vector2D{ 1, 0.5 } } );
-	billboardBuffers->add( { -100.0f, gl::Vector3D{ -1, 0, 0 }, gl::Vector2D{ 0.5, 1 } } );
-	billboardBuffers->add( { -100.0f, gl::Vector3D{ 0, -1, 0 }, gl::Vector2D{ 1.5, 1.5 } } );
-	scene.addBillboardBuffer( "billboard", billboardBuffers );
-	auto billboard = std::make_shared< render::Billboard >( "billboard", *billboardBuffers );
-	billboard->dimensions( gl::Size2D{ 1, 1 } );
-	billboard->moveTo( gl::Vector3D{ 0, 0, 50 } );
-	billboard->scale( gl::Vector3D{ 1.5, 1.5, 1.5 } );
-	billboard->material( billboardMat );
-	scene.add( billboard );
+	//auto billboardMat = scene.materials().addElement( "billboard" );
+	//billboardMat->diffuseMap( texture );
+	//billboardMat->opacityMap( opacity );
+	//billboardMat->ambient( gl::RgbColour{ 1.0, 0.0, 0.5 } );
+	//billboardMat->diffuse( gl::RgbColour{ 1.0, 0.0, 0.5 } );
+	//billboardMat->emissive( gl::RgbColour{ 1.0, 0.0, 0.5 } );
+	//auto billboardBuffers = std::make_shared< render::BillboardBuffer >( false );
+	//billboardBuffers->add( { -100.0f, gl::Vector3D{ 1, 0, 0 }, gl::Vector2D{ 1, 1 } } );
+	//billboardBuffers->add( { -100.0f, gl::Vector3D{ 0, 1, 0 }, gl::Vector2D{ 1, 0.5 } } );
+	//billboardBuffers->add( { -100.0f, gl::Vector3D{ -1, 0, 0 }, gl::Vector2D{ 0.5, 1 } } );
+	//billboardBuffers->add( { -100.0f, gl::Vector3D{ 0, -1, 0 }, gl::Vector2D{ 1.5, 1.5 } } );
+	//scene.addBillboardBuffer( "billboard", billboardBuffers );
+	//auto billboard = std::make_shared< render::Billboard >( "billboard", *billboardBuffers );
+	//billboard->dimensions( gl::Size2D{ 1, 1 } );
+	//billboard->moveTo( gl::Vector3D{ 0, 0, 50 } );
+	//billboard->scale( gl::Vector3D{ 1.5, 1.5, 1.5 } );
+	//billboard->material( billboardMat );
+	//scene.add( billboard );
 
-	auto starsMat = scene.materials().addElement( "stars" );
-	starsMat->opacityMap( opacity );
-	starsMat->ambient( gl::RgbColour{ 1.0, 1.0, 0.5 } );
-	starsMat->diffuse( gl::RgbColour{ 1.0, 1.0, 0.5 } );
-	starsMat->emissive( gl::RgbColour{ 1.0, 1.0, 0.5 } );
-	starsMat->alphaTest( true );
-	auto halosMat = scene.materials().addElement( "halos" );
-	halosMat->opacityMap( opacity );
-	halosMat->ambient( gl::RgbColour{ 1.0, 1.0, 0.5 } );
-	halosMat->diffuse( gl::RgbColour{ 1.0, 1.0, 0.5 } );
-	halosMat->emissive( gl::RgbColour{ 1.0, 1.0, 0.5 } );
-	auto starsBuffers = std::make_shared< render::BillboardBuffer >( false );
-	starsBuffers->add( { 50.0f, gl::Vector3D{ -1, 1, 0 }, gl::Vector2D{ 1, 1 } } );
-	starsBuffers->add( { 50.0f, gl::Vector3D{ 1, 1, 0 }, gl::Vector2D{ 1, 0.5 } } );
-	starsBuffers->add( { 50.0f, gl::Vector3D{ 1, -1, 0 }, gl::Vector2D{ 0.5, 1 } } );
-	starsBuffers->add( { 50.0f, gl::Vector3D{ -1, -1, 0 }, gl::Vector2D{ 1.5, 1.5 } } );
-	scene.addBillboardBuffer( "stars", starsBuffers );
-	auto stars = std::make_shared< render::Billboard >( "stars", *starsBuffers );
-	stars->dimensions( gl::Size2D{ 1, 1 } );
-	stars->moveTo( gl::Vector3D{ 0, 0, 50 } );
-	stars->material( starsMat );
-	scene.add( stars );
-	auto halos = std::make_shared< render::Billboard >( "halos", *starsBuffers );
-	halos->dimensions( gl::Size2D{ 2, 2 } );
-	halos->moveTo( gl::Vector3D{ 0, 0, 50 } );
-	halos->material( halosMat );
-	scene.add( halos );
+	//auto starsMat = scene.materials().addElement( "stars" );
+	//starsMat->opacityMap( opacity );
+	//starsMat->ambient( gl::RgbColour{ 1.0, 1.0, 0.5 } );
+	//starsMat->diffuse( gl::RgbColour{ 1.0, 1.0, 0.5 } );
+	//starsMat->emissive( gl::RgbColour{ 1.0, 1.0, 0.5 } );
+	//starsMat->alphaTest( true );
+	//auto halosMat = scene.materials().addElement( "halos" );
+	//halosMat->opacityMap( opacity );
+	//halosMat->ambient( gl::RgbColour{ 1.0, 1.0, 0.5 } );
+	//halosMat->diffuse( gl::RgbColour{ 1.0, 1.0, 0.5 } );
+	//halosMat->emissive( gl::RgbColour{ 1.0, 1.0, 0.5 } );
+	//auto starsBuffers = std::make_shared< render::BillboardBuffer >( false );
+	//starsBuffers->add( { 50.0f, gl::Vector3D{ -1, 1, 0 }, gl::Vector2D{ 1, 1 } } );
+	//starsBuffers->add( { 50.0f, gl::Vector3D{ 1, 1, 0 }, gl::Vector2D{ 1, 0.5 } } );
+	//starsBuffers->add( { 50.0f, gl::Vector3D{ 1, -1, 0 }, gl::Vector2D{ 0.5, 1 } } );
+	//starsBuffers->add( { 50.0f, gl::Vector3D{ -1, -1, 0 }, gl::Vector2D{ 1.5, 1.5 } } );
+	//scene.addBillboardBuffer( "stars", starsBuffers );
+	//auto stars = std::make_shared< render::Billboard >( "stars", *starsBuffers );
+	//stars->dimensions( gl::Size2D{ 1, 1 } );
+	//stars->moveTo( gl::Vector3D{ 0, 0, 50 } );
+	//stars->material( starsMat );
+	//scene.add( stars );
+	//auto halos = std::make_shared< render::Billboard >( "halos", *starsBuffers );
+	//halos->dimensions( gl::Size2D{ 2, 2 } );
+	//halos->moveTo( gl::Vector3D{ 0, 0, 50 } );
+	//halos->material( halosMat );
+	//scene.add( halos );
 
 	auto linesMat = scene.materials().addElement( "lines" );
 	linesMat->ambient( gl::RgbColour{ 1.0, 1.0, 0.5 } );
@@ -245,9 +245,9 @@ void Engine::doInitialise3DElements()
 	linesMat->emissive( gl::RgbColour{ 1.0, 1.0, 0.5 } );
 	auto lines = std::make_shared< render::PolyLine >( "lines" );
 	lines->add( { gl::Vector3D{ -1, 1, 0 }, gl::Vector3D{ 1, 1, 0 } } );
-	lines->add( { gl::Vector3D{ 1, 1, 0 }, gl::Vector3D{ 1, -1, 0 } } );
-	lines->add( { gl::Vector3D{ 1, -1, 0 }, gl::Vector3D{ -1, -1, 0 } } );
-	lines->add( { gl::Vector3D{ -1, -1, 0 }, gl::Vector3D{ -1, 1, 0 } } );
+	//lines->add( { gl::Vector3D{ 1, 1, 0 }, gl::Vector3D{ 1, -1, 0 } } );
+	//lines->add( { gl::Vector3D{ 1, -1, 0 }, gl::Vector3D{ -1, -1, 0 } } );
+	//lines->add( { gl::Vector3D{ -1, -1, 0 }, gl::Vector3D{ -1, 1, 0 } } );
 	lines->moveTo( gl::Vector3D{ 0, 0, 50 } );
 	lines->material( linesMat );
 	scene.add( lines );
@@ -328,6 +328,8 @@ void Engine::doUpdatePicked( render::Billboard const & billboard
 		doUpdatePicked( static_cast< render::Movable const & >( billboard ) );
 		m_picked->dimensions( billboard.dimensions() );
 		auto data = billboard.buffer()[index];
-		m_picked->buffer().at( 0u, { -1000.0f, data.center, data.scale } );
+		auto scale = 0.1f + m_window->state().zoomBounds().percent( m_window->state().zoom() );
+		m_picked->buffer().at( 0u
+			, { -1000.0f, data.center, gl::Vector2D{ scale, scale } } );
 	}
 }

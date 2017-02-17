@@ -32,6 +32,22 @@ namespace render
 			objects.clear();
 		}
 
+		template< typename ObjectType >
+		void doUpload( std::vector< ObjectType * > & objects )
+		{
+			auto end = std::unique( objects.begin()
+				, objects.end() );
+			auto it = objects.begin();
+
+			while ( it != end )
+			{
+				( *it )->upload();
+				++it;
+			}
+
+			objects.clear();
+		}
+
 		struct BillboardAllocator
 		{
 			BillboardBufferPtr operator()()
@@ -69,6 +85,7 @@ namespace render
 	{
 		m_cameraChanged |= m_camera.update();
 		doUpdate( m_changedMovables );
+		doUpload( m_changedBillboardBuffers );
 		doUpdateBillboards();
 		m_cameraChanged = false;
 	}
@@ -148,11 +165,20 @@ namespace render
 	{
 		m_billboardsBuffers.addElement( name, buffer );
 		m_newBillboardBuffers.push_back( buffer );
+		m_onBillboardBufferChanged[buffer.get()] = buffer->onBillboardBufferChanged.connect
+			( std::bind( &Scene::onBillboardBufferChanged
+				, this
+				, std::placeholders::_1 ) );
 	}
 
 	void Scene::onMovableChanged( Movable & movable )
 	{
 		m_changedMovables.push_back( &movable );
+	}
+
+	void Scene::onBillboardBufferChanged( BillboardBuffer & buffer )
+	{
+		m_changedBillboardBuffers.push_back( &buffer );
 	}
 
 	void Scene::doUpdateBillboards()
@@ -197,21 +223,6 @@ namespace render
 					, billboard->position()
 					, 2.0f - 2.0f * percent );
 			}
-		}
-
-		// Count the results.
-		m_billboardsCount = 0u;
-
-		for ( auto & billboard : billboards() )
-		{
-			m_billboardsCount += billboard->buffer().count();
-		}
-
-		m_billboardsBuffersCount = 0u;
-
-		for ( auto & billboard : m_billboardsBuffers )
-		{
-			m_billboardsBuffersCount += billboard.second->count() ? 1 : 0;
 		}
 
 		m_newBillboardBuffers.clear();

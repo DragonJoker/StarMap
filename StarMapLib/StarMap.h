@@ -289,8 +289,6 @@ namespace starmap
 		render::PolyLinePtr m_lines;
 		//! La fenêtre où s'effectue le rendu.
 		render::RenderWindowPtr m_window;
-		//! Les informations de débogage.
-		render::Debug m_debug;
 		//! Les étoiles.
 		StarSet m_stars;
 		//! Les constellations.

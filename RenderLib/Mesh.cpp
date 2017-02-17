@@ -48,7 +48,7 @@ namespace render
 			max.z = std::max( max.z, position.z );
 		}
 
-		m_boundaries = gl::call< float >( std::abs, max - min );
+		m_boundaries = gl::call< float, float >( std::abs, max - min );
 	}
 
 	void Mesh::addSubmesh( UInt16Array const & idx )

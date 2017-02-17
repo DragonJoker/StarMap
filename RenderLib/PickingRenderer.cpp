@@ -99,7 +99,7 @@ namespace render
 		, m_mtxView{ &m_mtxUbo.createUniform< gl::Matrix4x4 >( "mtxView" ) }
 		, m_mtxModel{ &m_mtxUbo.createUniform< gl::Matrix4x4 >( "mtxModel" ) }
 		, m_mapOpacity{ gl::makeUniform< int >( "mapOpacity", *m_program ) }
-		, m_pickUbo{ "Picking", 3u, *m_program }
+		, m_pickUbo{ "Picking", 1u, *m_program }
 		, m_drawIndex{ &m_pickUbo.createUniform< int >( "drawIndex" ) }
 		, m_nodeIndex{ &m_pickUbo.createUniform< int >( "nodeIndex" ) }
 	{
@@ -144,8 +144,7 @@ namespace render
 	//*************************************************************************
 
 	PickingRenderer::PickingRenderer()
-		: m_pipelineOpaque{ true, true, true, false }
-		, m_pipelineAlphaBlend{ false, true, false, true }
+		: m_pipelineOpaque{ false, true, true, false }
 	{
 	}
 
@@ -290,8 +289,6 @@ namespace render
 			, NodeType( nodeType )
 			, *m_billboardNodes[nodeType]
 			, billboards[nodeType] );
-		nodeType = size_t( type )
-			+ size_t( TransparentNodeType::eNoTex );
 	}
 
 	void PickingRenderer::doRenderObjects( Camera const & camera
@@ -308,8 +305,7 @@ namespace render
 			node.m_mtxProjection->value( projection );
 			node.m_mtxView->value( view );
 			node.m_scale->value( m_objectScale.value( zoomPercent ) );
-			node.m_drawIndex->value( ObjectMask
-				+ int( type ) );
+			node.m_drawIndex->value( ObjectMask | int( type ) );
 			uint32_t id{ 0u };
 
 			for ( auto & object : objects )
@@ -321,7 +317,7 @@ namespace render
 					node.m_nodeIndex->value( id++ );
 					doBindMaterial( node, *object.m_material );
 					node.m_mtxUbo.bind( 0u );
-					node.m_pickUbo.bind( 3u );
+					node.m_pickUbo.bind( 1u );
 					node.m_scale->bind();
 					object.m_submesh->bind( node.m_position.get()
 						, node.m_normal.get()
@@ -355,7 +351,7 @@ namespace render
 			node.m_mtxView->value( view );
 			node.m_camera->value( position );
 			node.m_dimensions->value( { scale, scale } );
-			node.m_drawIndex->value( BillboardMask + int( type ) );
+			node.m_drawIndex->value( BillboardMask | int( type ) );
 			uint32_t id{ 0u };
 
 			for ( auto & billboard : billboards )
@@ -367,14 +363,15 @@ namespace render
 					node.m_nodeIndex->value( id++ );
 					doBindMaterial( node, billboard->material() );
 					node.m_mtxUbo.bind( 0u );
+					node.m_pickUbo.bind( 1u );
 					node.m_billboardUbo.bind( 2u );
-					node.m_pickUbo.bind( 3u );
 					billboard->buffer().vbo().bind();
 					node.m_position->bind();
 					node.m_scale->bind();
 					node.m_texture->bind();
 					node.m_id->bind();
-					glDrawArrays( GL_TRIANGLES
+					glCheckError( glDrawArrays
+						, GL_TRIANGLES
 						, 0
 						, billboard->buffer().count() * 6 );
 					node.m_id->unbind();

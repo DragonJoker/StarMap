@@ -3,7 +3,6 @@
 #include <DesktopUtils/MsWindow.h>
 
 #include <RenderLib/CameraState.h>
-#include <RenderLib/Debug.h>
 #include <RenderLib/FontTexture.h>
 #include <RenderLib/RenderWindow.h>
 #include <RenderLib/Scene.h>
@@ -122,7 +121,6 @@ private:
 	std::streambuf * m_clog;
 
 	render::RenderWindowPtr m_window;
-	render::Debug m_debug;
 
 	gl::IVec2 m_mouse;
 

@@ -24,25 +24,25 @@ namespace render
 		/**
 		*\brief
 		*	Constructeur.
+		*\remarks
+		*	Enregistre les incrustations dans la scène donnée.
 		*\param[in] enable
 		*	Si \p false, désactive les incrustations.
-		*/
-		Debug( bool enable );
-		/**
-		*\brief
-		*	Enregistre les incrustations dans la scène donnée.
 		*\param[in,out] scene
 		*	La scène.
 		*\param[in] loader
 		*	Le loader de police.
 		*/
-		void initialise( render::Scene & scene
+		Debug( bool enable
+			, render::Scene & scene
 			, render::FontLoader & loader );
 		/**
 		*\brief
+		*	Destructeur.
+		*\remarks
 		*	Enlève les incrustations de la scène.
 		*/
-		void cleanup();
+		~Debug();
 		/**
 		*\brief
 		*	Enregistre le temps de début.
@@ -53,6 +53,16 @@ namespace render
 		*	Affiche la différence de temps.
 		*/
 		void end();
+		/**
+		*\brief
+		*	Met à jour les comptes des billboards et des tampons.
+		*\param[in] billboards
+		*	Les billboards.
+		*\param[in] buffers
+		*	Les tampons.
+		*/
+		void count( BillboardArray const & billboards
+			, BillboardList const & buffers );
 
 	private:
 		using Clock = std::chrono::high_resolution_clock;

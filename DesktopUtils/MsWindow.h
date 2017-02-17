@@ -19,6 +19,12 @@ typedef struct HDC__ *HDC;
 struct HGLRC__;
 typedef struct HGLRC__ *HGLRC;
 
+#if defined( _WIN64 )
+typedef int64_t longptr_t;
+#else
+typedef long longptr_t;
+#endif
+
 namespace utils
 {
 	class MsWindow
@@ -107,13 +113,13 @@ namespace utils
 			, std::string const & className
 			, int iconResourceID
 			, int smallIconResourceID );
-		intptr_t processMessage( uint32_t message
+		longptr_t processMessage( uint32_t message
 			, size_t wParam
-			, intptr_t lParam );
-		static intptr_t CALLBACK WndProc( HWND hWnd
+			, longptr_t lParam );
+		static longptr_t CALLBACK WndProc( HWND hWnd
 			, uint32_t message
 			, size_t wParam
-			, intptr_t lParam );
+			, longptr_t lParam );
 		static void doRegisterInstance( MsWindow * window );
 		static void doUnregisterInstance( MsWindow * window );
 		static MsWindow * doGetInstance( HWND hWnd );

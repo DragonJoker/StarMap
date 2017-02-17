@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Mat4.h"
+#include "Angle.h"
 
 namespace gl
 {
@@ -43,7 +44,7 @@ namespace gl
 		*\param[in] euler
 		*	Les angles.
 		*/
-		QuaternionT( Vec3T< T > const & euler )noexcept;
+		QuaternionT( Vec3T< RadiansT< T > > const & euler )noexcept;
 		/**
 		*\brief
 		*	Constructeur par copie.
@@ -114,7 +115,6 @@ namespace gl
 		*\name Opérateurs arithmétiques membres.
 		*/
 		/**@{*/
-		inline QuaternionT & operator-()noexcept;
 		template< typename U >
 		inline QuaternionT & operator+=( QuaternionT< U > const & rhs )noexcept;
 		template< typename U >
