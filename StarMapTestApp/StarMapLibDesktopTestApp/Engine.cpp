@@ -32,8 +32,8 @@ Window::Window()
 
 	try
 	{
-		starmap::loadStarsFromCsv( m_starmap
-			, utils::getFileTextContent( "stars.csv" ) );
+		starmap::loadStarsFromXml( m_starmap
+			, utils::getFileTextContent( "stars.xml" ) );
 		starmap::loadConstellationsFromXml( m_starmap
 			, utils::getFileTextContent( "constellations.xml" ) );
 	}

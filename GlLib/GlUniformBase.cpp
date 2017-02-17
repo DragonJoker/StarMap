@@ -23,34 +23,64 @@ namespace gl
 		m_size = uint32_t( size );
 	}
 
-	void * UniformBase::doGetPointer( int & value )const noexcept
+	int * UniformBase::doGetPointer( int & value )noexcept
 	{
 		return &value;
 	}
 
-	void * UniformBase::doGetPointer( float & value )const noexcept
+	float * UniformBase::doGetPointer( float & value )noexcept
 	{
 		return &value;
 	}
 
-	void * UniformBase::doGetPointer( Vector2D & value )const noexcept
+	float * UniformBase::doGetPointer( Vector2D & value )noexcept
 	{
-		return glm::value_ptr( value );
+		return &value.x;
 	}
 
-	void * UniformBase::doGetPointer( Vector3D & value )const noexcept
+	float * UniformBase::doGetPointer( Vector3D & value )noexcept
 	{
-		return glm::value_ptr( value );
+		return &value.x;
 	}
 
-	void * UniformBase::doGetPointer( Vector4D & value )const noexcept
+	float * UniformBase::doGetPointer( Vector4D & value )noexcept
 	{
-		return glm::value_ptr( value );
+		return &value.x;
 	}
 
-	void * UniformBase::doGetPointer( Matrix4x4 & value )const noexcept
+	float * UniformBase::doGetPointer( Matrix4x4 & value )noexcept
 	{
-		return glm::value_ptr( value );
+		return &value[0].x;
+	}
+
+	int const * UniformBase::doGetPointer( int const & value )noexcept
+	{
+		return &value;
+	}
+
+	float const * UniformBase::doGetPointer( float const & value )noexcept
+	{
+		return &value;
+	}
+
+	float const * UniformBase::doGetPointer( Vector2D const & value )noexcept
+	{
+		return &value.x;
+	}
+
+	float const * UniformBase::doGetPointer( Vector3D const & value )noexcept
+	{
+		return &value.x;
+	}
+
+	float const * UniformBase::doGetPointer( Vector4D const & value )noexcept
+	{
+		return &value.x;
+	}
+
+	float const * UniformBase::doGetPointer( Matrix4x4 const & value )noexcept
+	{
+		return &value[0].x;
 	}
 
 	void UniformBase::doSetValue( int const & value )const noexcept
@@ -72,7 +102,7 @@ namespace gl
 		glCheckError( glUniform2fv
 			, m_location
 			, 1
-			, glm::value_ptr( value ) );
+			, doGetPointer( value ) );
 	}
 
 	void UniformBase::doSetValue( Vector3D const & value )const noexcept
@@ -80,7 +110,7 @@ namespace gl
 		glCheckError( glUniform3fv
 			, m_location
 			, 1
-			, glm::value_ptr( value ) );
+			, doGetPointer( value ) );
 	}
 
 	void UniformBase::doSetValue( Vector4D const & value )const noexcept
@@ -88,7 +118,7 @@ namespace gl
 		glCheckError( glUniform4fv
 			, m_location
 			, 1
-			, glm::value_ptr( value ) );
+			, doGetPointer( value ) );
 	}
 
 	void UniformBase::doSetValue( Matrix4x4 const & value )const noexcept
@@ -97,7 +127,7 @@ namespace gl
 			, m_location
 			, 1
 			, GL_FALSE
-			, glm::value_ptr( value ) );
+			, doGetPointer( value ) );
 	}
 
 	void UniformBase::doSetValues( int const * values
@@ -124,7 +154,7 @@ namespace gl
 		glCheckError( glUniform2fv
 			, m_location
 			, count
-			, glm::value_ptr( values[0] ) );
+			, doGetPointer( values[0] ) );
 	}
 
 	void UniformBase::doSetValues( Vector3D const * values
@@ -133,7 +163,7 @@ namespace gl
 		glCheckError( glUniform3fv
 			, m_location
 			, count
-			, glm::value_ptr( values[0] ) );
+			, doGetPointer( values[0] ) );
 	}
 
 	void UniformBase::doSetValues( Vector4D const * values
@@ -142,7 +172,7 @@ namespace gl
 		glCheckError( glUniform4fv
 			, m_location
 			, count
-			, glm::value_ptr( values[0] ) );
+			, doGetPointer( values[0] ) );
 	}
 
 	void UniformBase::doSetValues( Matrix4x4 const * values
@@ -152,6 +182,6 @@ namespace gl
 			, m_location
 			, count
 			, GL_FALSE
-			, glm::value_ptr( values[0] ) );
+			, doGetPointer( values[0] ) );
 	}
 }

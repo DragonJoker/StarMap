@@ -3,13 +3,16 @@
 #include <iomanip>
 #include <algorithm>
 
-#if !defined( DESKTOP )
-#	include <GLES3/gl3.h>
-#endif
-
-#if defined( __ANDROID__ )
+#if defined( PLATFORM_ANDROID )
 #	include <EGL/egl.h>
-#elif defined( DESKTOP )
+#	include <GLES3/gl3.h>
+#elif defined( PLATFORM_IPHONE ) || defined( PLATFORM_IPHONE_SIMULATOR )
+#	include <OpenGLES/gltypes.h>
+#	include <OpenGLES/EAGL.h>
+#	include <OpenGLES/EAGLDrawable.h>
+#	include <OpenGLES/ES3/gl.h>
+#	include <OpenGLES/ES3/glext.h>
+#elif defined( PLATFORM_WINDOWS )
 #	ifndef GLEW_STATIC
 #		define GLEW_STATIC
 #	endif

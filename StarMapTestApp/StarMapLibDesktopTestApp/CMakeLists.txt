@@ -29,6 +29,6 @@ add_dependencies( ${PROJECT_NAME}
 	DesktopUtils
 	StarMapLib
 )
-file( GLOB ASSETS ${CMAKE_SOURCE_DIR}/StarMapTestApp/assets/*.* )
+file( GLOB ASSETS ${CMAKE_CURRENT_SOURCE_DIR}/../StarMapTestApp/assets/*.* )
 
 copy_target_files( ${PROJECT_NAME} "" ${ASSETS} )

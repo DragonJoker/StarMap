@@ -502,6 +502,21 @@
     <ClInclude Include="GlUniformBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Mat4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GlLibPrerequisites.cpp">
@@ -914,6 +929,21 @@
       <Filter>Header Files\glm\detail</Filter>
     </None>
     <None Include="GlUniformBuffer.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Mat4.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Vec2.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Vec3.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Vec4.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Transform.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

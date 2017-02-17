@@ -224,6 +224,43 @@
       <Link StarA="Eta" StarB="Gamma"/>
     </LinkList>
   </Constellation>
+  <Constellation Name="Ursa Major">
+    <StarList>
+      <Star Letter="Alpha" Name="Dubhe"/>
+      <Star Letter="Beta" Name="Merak"/>
+      <Star Letter="Gamma" Name="Phad"/>
+      <Star Letter="Delta" Name="Megrez"/>
+      <Star Letter="Epsilon" Name="Alioth"/>
+      <Star Letter="Zeta" Name="Mizar"/>
+      <Star Letter="Eta" Name="Alkaid"/>
+      <Star Letter="Theta" Name=""/>
+      <Star Letter="Iota" Name=""/>
+      <Star Letter="Kappa" Name=""/>
+      <Star Letter="Lambda" Name=""/>
+      <Star Letter="Mu" Name=""/>
+      <Star Letter="Nu" Name=""/>
+      <Star Letter="Ksi" Name=""/>
+      <Star Letter="Omicron" Name=""/>
+      <Star Letter="Pi" Name=""/>
+      <Star Letter="Rho" Name=""/>
+      <Star Letter="Sigma" Name=""/>
+      <Star Letter="Tau" Name=""/>
+      <Star Letter="Upsilon" Name=""/>
+      <Star Letter="Phi" Name=""/>
+      <Star Letter="Chi" Name=""/>
+      <Star Letter="Psi" Name=""/>
+      <Star Letter="Omega" Name=""/>
+    </StarList>
+    <LinkList>
+      <Link StarA="Eta" StarB="Zeta"/>
+      <Link StarA="Zeta" StarB="Epsilon"/>
+      <Link StarA="Epsilon" StarB="Delta"/>
+      <Link StarA="Delta" StarB="Gamma"/>
+      <Link StarA="Delta" StarB="Alpha"/>
+      <Link StarA="Gamma" StarB="Beta"/>
+      <Link StarA="Alpha" StarB="Beta"/>
+    </LinkList>
+  </Constellation>
   <Constellation Name="Ara">
     <StarList>
       <Star Letter="Alpha" Name="Choo"/>

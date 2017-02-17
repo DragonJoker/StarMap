@@ -27,7 +27,39 @@
 #include "glm/glm.hpp"
 #include "glm/gtx/quaternion.hpp"
 
+#include "Vec2.h"
+#include "Vec3.h"
+#include "Vec4.h"
+#include "Mat4.h"
+
 #include "GlDebug.h"
+
+#if defined( __ANDROID__ )
+#	define PLATFORM_ANDROID
+#elif defined( __APPLE__ )
+#	define PLATFORM_APPLE
+#	if TARGET_IPHONE_SIMULATOR
+#		define PLATFORM_IPHONE_SIMULATOR
+#	elif TARGET_OS_IPHONE
+#		define PLATFORM_IPHONE
+#	elif TARGET_OS_MAC
+#		define PLATFORM_DESKTOP
+#		define PLATFORM_MAC
+#	else
+#		error "Unknown Apple platform"
+#	endif
+#elif defined( DESKTOP )
+#	define PLATFORM_DESKTOP
+#	if defined( _WIN32 )
+#		define PLATFORM_WINDOWS
+#	elif defined( __linux__ )
+#		define PLATORM_LINUX
+#	elif defined( __APPLE__ )
+#		define PLATFORM_MAC
+#	else
+#		error "Please implement for this platform."
+#	endif
+#endif
 
 #define GlLib_UseUBO 1
 
@@ -59,55 +91,53 @@
 #	define GL_INVALID_INDEX 0xFFFFFFFF
 #endif
 
-#if defined ( __ANDROID__ )
+#if !defined( PLATFORM_DESKTOP )
 #	if !defined( NDEBUG )
-#	define glConcat1( a )\
-	#a
-#	define glConcat2( a, b )\
-	glConcat1( a ) ", " glConcat1( b )
-#	define glConcat3( a, b, c )\
-	glConcat2( a , glConcat2( b , c ) )
-#	define glConcat4( a, b, c, d )\
-	glConcat2( a , glConcat3( b, c, d ) )
-#	define glConcat5( a, b, c, d, e )\
-	glConcat2( a , glConcat4( b, c, d, e ) )
-#	define glConcat6( a, b, c, d, e, f )\
-	glConcat2( a , glConcat5( b, c, d, e, f ) )
-#	define glConcat7( a, b, c, d, e, f, g )\
-	glConcat2( a , glConcat6( b, c, d, e, f, g ) )
-#	define glConcat8( a, b, c, d, e, f, g, h )\
-	glConcat2( a , glConcat7( b, c, d, e, f, g, h ) )
-#	define glConcat9( a, b, c, d, e, f, g, h, i )\
-	glConcat2( a , glConcat8( b, c, d, e, f, g, h, i ) )
-#	define glConcat10( a, b, c, d, e, f, g, h, i, j )\
-	glConcat2( a , glConcat9( b, c, d, e, f, g, h, i, j ) )
-#	define glConcat11( a, b, c, d, e, f, g, h, i, j, k )\
-	glConcat2( a , glConcat10( b, c, d, e, f, g, h, i, j, k ) )
-#	define glConcat12( a, b, c, d, e, f, g, h, i, j, k, l )\
-	glConcat2( a , glConcat11( b, c, d, e, f, g, h, i, j, k, l ) )
-#	define glConcat13( a, b, c, d, e, f, g, h, i, j, k, l, m )\
-	glConcat2( a , glConcat12( b, c, d, e, f, g, h, i, j, k, l, m ) )
-#	define glConcat14( a, b, c, d, e, f, g, h, i, j, k, l, m, n )\
-	glConcat2( a , glConcat13( b, c, d, e, f, g, h, i, j, k, l, m, n ) )
-#	define glConcat15( a, b, c, d, e, f, g, h, i, j, k, l, m, n, o )\
-	glConcat2( a , glConcat14( b, c, d, e, f, g, h, i, j, k, l, m, n ) )
-#	define glNumArgs2( X, X20, X19, X18, X17, X16, X15, X14, X13, X12, X11, X10, X9, X8, X7, X6, X5, X4, X3, X2, X1, N, ... )\
-	N
-#	define glNumArgs( ... )\
-	glNumArgs2( 0, __VA_ARGS__, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 )
-#	define glConcatN3( N, ... )\
-	glConcat ## N( __VA_ARGS__ )
-#	define glConcatN2( N, ... )\
-	glConcatN3( N, __VA_ARGS__ )
-#	define glConcatN( ... )\
-	glConcatN2( glNumArgs( __VA_ARGS__ ), __VA_ARGS__ )
-#	define glCheckError( function, ... )\
-	function( __VA_ARGS__ );gl::Debug::checkError( __FILE__, __LINE__, #function "(" glConcatN( __VA_ARGS__ ) ")" )
-#else
-#	define glCheckError( function, ... ) function( __VA_ARGS__ )
-#endif
-#elif defined( DESKTOP )
-#	define glCheckError( function, ... ) function( __VA_ARGS__ )
+#		define glConcat1( a )\
+		#a
+#		define glConcat2( a, b )\
+		glConcat1( a ) ", " glConcat1( b )
+#		define glConcat3( a, b, c )\
+		glConcat2( a , glConcat2( b , c ) )
+#		define glConcat4( a, b, c, d )\
+		glConcat2( a , glConcat3( b, c, d ) )
+#		define glConcat5( a, b, c, d, e )\
+		glConcat2( a , glConcat4( b, c, d, e ) )
+#		define glConcat6( a, b, c, d, e, f )\
+		glConcat2( a , glConcat5( b, c, d, e, f ) )
+#		define glConcat7( a, b, c, d, e, f, g )\
+		glConcat2( a , glConcat6( b, c, d, e, f, g ) )
+#		define glConcat8( a, b, c, d, e, f, g, h )\
+		glConcat2( a , glConcat7( b, c, d, e, f, g, h ) )
+#		define glConcat9( a, b, c, d, e, f, g, h, i )\
+		glConcat2( a , glConcat8( b, c, d, e, f, g, h, i ) )
+#		define glConcat10( a, b, c, d, e, f, g, h, i, j )\
+		glConcat2( a , glConcat9( b, c, d, e, f, g, h, i, j ) )
+#		define glConcat11( a, b, c, d, e, f, g, h, i, j, k )\
+		glConcat2( a , glConcat10( b, c, d, e, f, g, h, i, j, k ) )
+#		define glConcat12( a, b, c, d, e, f, g, h, i, j, k, l )\
+		glConcat2( a , glConcat11( b, c, d, e, f, g, h, i, j, k, l ) )
+#		define glConcat13( a, b, c, d, e, f, g, h, i, j, k, l, m )\
+		glConcat2( a , glConcat12( b, c, d, e, f, g, h, i, j, k, l, m ) )
+#		define glConcat14( a, b, c, d, e, f, g, h, i, j, k, l, m, n )\
+		glConcat2( a , glConcat13( b, c, d, e, f, g, h, i, j, k, l, m, n ) )
+#		define glConcat15( a, b, c, d, e, f, g, h, i, j, k, l, m, n, o )\
+		glConcat2( a , glConcat14( b, c, d, e, f, g, h, i, j, k, l, m, n ) )
+#		define glNumArgs2( X, X20, X19, X18, X17, X16, X15, X14, X13, X12, X11, X10, X9, X8, X7, X6, X5, X4, X3, X2, X1, N, ... )\
+		N
+#		define glNumArgs( ... )\
+		glNumArgs2( 0, __VA_ARGS__, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 )
+#		define glConcatN3( N, ... )\
+		glConcat ## N( __VA_ARGS__ )
+#		define glConcatN2( N, ... )\
+		glConcatN3( N, __VA_ARGS__ )
+#		define glConcatN( ... )\
+		glConcatN2( glNumArgs( __VA_ARGS__ ), __VA_ARGS__ )
+#		define glCheckError( function, ... )\
+		function( __VA_ARGS__ );gl::Debug::checkError( __FILE__, __LINE__, #function "(" glConcatN( __VA_ARGS__ ) ")" )
+#	else
+#		define glCheckError( function, ... ) function( __VA_ARGS__ )
+#	endif
 #else
 #	define glCheckError( function, ... ) function( __VA_ARGS__ )
 #endif
@@ -118,13 +148,18 @@ namespace gl
 	*\name Remplacement des noms de glm.
 	*/
 	/**@{*/
-	using Vector2D = glm::vec2;
-	using Vector3D = glm::vec3;
-	using Vector4D = glm::vec4;
+	using Vec2 = Vec2T< float >;
+	using Vec3 = Vec3T< float >;
+	using Vec4 = Vec4T< float >;
+	using Mat4 = Mat4T< float >;
+	using IVec2 = Vec2T< int >;
+	using IVec3 = Vec3T< int >;
+	using IVec4 = Vec4T< int >;
+	using Vector2D = Vec2;
+	using Vector3D = Vec3;
+	using Vector4D = Vec4;
 	using Quaternion = glm::quat;
-	using Matrix2x2 = glm::mat2;
-	using Matrix3x3 = glm::mat3;
-	using Matrix4x4 = glm::mat4;
+	using Matrix4x4 = Mat4;
 	/**@}*/
 	/**
 	*\name Typedefs généralistes.

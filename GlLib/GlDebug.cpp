@@ -1,23 +1,33 @@
 #include "GlDebug.h"
 
+#include "GlLibPrerequisites.h"
+
 #include <iomanip>
 #include <algorithm>
 
-#if defined( __ANDROID__ )
-#	include <EGL/egl.h>
-#elif defined( DESKTOP )
-#	include <Windows.h>
+#if defined( PLATFORM_DESKTOP )
+#	if defined( PLATFORM_WINDOWS )
+#		include <Windows.h>
+#	elif defined( PLATFORM_LINUX )
+#		include <X11/Xlib.h>
+#		include <GL/glx.h>
+#	elif defined( PLATFORM_APPLE )
+#		include <mach-o/dyld.h>
+#	else
+#		error "Please implement for this platform."
+#	endif
 #endif
 
 #ifndef GL_INVALID_FRAMEBUFFER_OPERATION
 #	define GL_INVALID_FRAMEBUFFER_OPERATION 0x506
 #endif
 
-#define MAKE_GL_EXTENSION( x )	static const std::string x = "GL_"#x
-
 namespace gl
 {
 	//*************************************************************************
+
+#if defined( PLATFORM_DESKTOP )
+#	define MAKE_GL_EXTENSION( x )	static const std::string x = "GL_"#x
 
 	namespace
 	{
@@ -61,15 +71,24 @@ namespace gl
 		template< typename Func >
 		bool getFunction( std::string const & name, Func & func )
 		{
-#if defined( _WIN32 )
+#if defined( PLATFORM_WINDOWS )
 			func = reinterpret_cast< Func >( wglGetProcAddress
 				( name.c_str() ) );
-#elif defined( __ANDROID__ )
-			func = reinterpret_cast< Func >( eglGetProcAddress
-				( name.c_str() ) );
-#else
+#elif defined( PLATFORM_LINUX )
 			func = reinterpret_cast< Func >( glXGetProcAddressARB
 				( reinterpret_cast< GLubyte const * >( name.c_str() ) ) );
+#elif defined( PLATFORM_APPLE )
+			auto const symbolName = "_" + name;
+			NSSymbol symbol = nullptr;
+
+			if ( NSIsSymbolNameDefined( symbolName.c_str() ) )
+			{
+				symbol = NSLookupAndBindSymbol( symbolName.c_str() );
+			}
+
+			func = reinterpret_cast< Func >( NSAddressOfSymbol( symbol ) );
+#else
+#	error "Please implement for this platform."
 #endif
 			return func != nullptr;
 		}
@@ -104,7 +123,7 @@ namespace gl
 			}
 		}
 	}
-
+#endif
 	//*************************************************************************
 
 	bool Debug::m_hasExtension = false;
@@ -119,6 +138,7 @@ namespace gl
 
 	void Debug::initialise()
 	{
+#if defined( PLATFORM_DESKTOP )
 		using PfnGlDebugProc = void( CALLBACK * )( uint32_t
 			, uint32_t
 			, uint32_t
@@ -185,6 +205,7 @@ namespace gl
 		filterMessage( 0x00020072 );
 		// TODO: Investigate on why I get this noisy message.
 		filterMessage( 0x00020096 );
+#endif
 	}
 
 	bool Debug::checkError( std::string const & file

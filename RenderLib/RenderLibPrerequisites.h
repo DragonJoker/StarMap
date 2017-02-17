@@ -1,4 +1,4 @@
-﻿/**
+/**
 *\file
 *	RenderLibPrerequisites.h
 *\author
@@ -240,21 +240,6 @@ namespace render
 	inline std::ostream & operator<<( std::ostream & stream, gl::Quaternion const & value )
 	{
 		stream << value.x << ", " << value.y << ", " << value.z << ", " << value.w;
-		return stream;
-	}
-
-	inline std::ostream & operator<<( std::ostream & stream, gl::Matrix2x2 const & value )
-	{
-		stream << value[0].x << ", " << value[0].y << "\n";
-		stream << value[1].x << ", " << value[1].y << "\n";
-		return stream;
-	}
-
-	inline std::ostream & operator<<( std::ostream & stream, gl::Matrix3x3 const & value )
-	{
-		stream << value[0].x << ", " << value[0].y << ", " << value[0].z << "\n";
-		stream << value[1].x << ", " << value[1].y << ", " << value[1].z << "\n";
-		stream << value[2].x << ", " << value[2].y << ", " << value[2].z << "\n";
 		return stream;
 	}
 

@@ -153,7 +153,7 @@ namespace gl
 		*\return
 		*	Le pointeur.
 		*/
-		void * doGetPointer( int & value )const noexcept;
+		static int * doGetPointer( int & value )noexcept;
 		/**
 		*\brief
 		*	Récupère le pointeur de la valeur float donnée.
@@ -162,7 +162,7 @@ namespace gl
 		*\return
 		*	Le pointeur.
 		*/
-		void * doGetPointer( float & value )const noexcept;
+		static float * doGetPointer( float & value )noexcept;
 		/**
 		*\brief
 		*	Récupère le pointeur de la valeur Vector2D donnée.
@@ -171,7 +171,7 @@ namespace gl
 		*\return
 		*	Le pointeur.
 		*/
-		void * doGetPointer( Vector2D & value )const noexcept;
+		static float * doGetPointer( Vector2D & value )noexcept;
 		/**
 		*\brief
 		*	Récupère le pointeur de la valeur Vector3D donnée.
@@ -180,7 +180,7 @@ namespace gl
 		*\return
 		*	Le pointeur.
 		*/
-		void * doGetPointer( Vector3D & value )const noexcept;
+		static float * doGetPointer( Vector3D & value )noexcept;
 		/**
 		*\brief
 		*	Récupère le pointeur de la valeur Vector4D donnée.
@@ -189,7 +189,7 @@ namespace gl
 		*\return
 		*	Le pointeur.
 		*/
-		void * doGetPointer( Vector4D & value )const noexcept;
+		static float * doGetPointer( Vector4D & value )noexcept;
 		/**
 		*\brief
 		*	Récupère le pointeur de la valeur Matrix4x4 donnée.
@@ -198,7 +198,61 @@ namespace gl
 		*\return
 		*	Le pointeur.
 		*/
-		void * doGetPointer( Matrix4x4 & value )const noexcept;
+		static float * doGetPointer( Matrix4x4 & value )noexcept;
+		/**
+		*\brief
+		*	Récupère le pointeur de la valeur int donnée.
+		*\param[in] value
+		*	La valeur.
+		*\return
+		*	Le pointeur.
+		*/
+		static int const * doGetPointer( int const & value )noexcept;
+		/**
+		*\brief
+		*	Récupère le pointeur de la valeur float donnée.
+		*\param[in] value
+		*	La valeur.
+		*\return
+		*	Le pointeur.
+		*/
+		static float const * doGetPointer( float const & value )noexcept;
+		/**
+		*\brief
+		*	Récupère le pointeur de la valeur Vector2D donnée.
+		*\param[in] value
+		*	La valeur.
+		*\return
+		*	Le pointeur.
+		*/
+		static float const * doGetPointer( Vector2D const & value )noexcept;
+		/**
+		*\brief
+		*	Récupère le pointeur de la valeur Vector3D donnée.
+		*\param[in] value
+		*	La valeur.
+		*\return
+		*	Le pointeur.
+		*/
+		static float const * doGetPointer( Vector3D const & value )noexcept;
+		/**
+		*\brief
+		*	Récupère le pointeur de la valeur Vector4D donnée.
+		*\param[in] value
+		*	La valeur.
+		*\return
+		*	Le pointeur.
+		*/
+		static float const * doGetPointer( Vector4D const & value )noexcept;
+		/**
+		*\brief
+		*	Récupère le pointeur de la valeur Matrix4x4 donnée.
+		*\param[in] value
+		*	La valeur.
+		*\return
+		*	Le pointeur.
+		*/
+		static float const * doGetPointer( Matrix4x4 const & value )noexcept;
 		/**
 		*\brief
 		*	Définit la valeur int de la variable uniforme.
