@@ -1,6 +1,10 @@
 #include "Camera.h"
 
+#include <GlLib/Transform.h>
+
 #include <GlLib/glm/gtc/matrix_transform.hpp>
+#include <GlLib/glm/gtc/quaternion.hpp>
+#include <GlLib/glm/gtx/quaternion.hpp>
 
 namespace render
 {
@@ -19,10 +23,10 @@ namespace render
 			gl::Vector3D right{ 1, 0, 0 };
 			gl::Vector3D front{ 0, 0, 1 };
 			gl::Vector3D up{ 0, 1, 0 };
-			right = glm::rotate( m_orientation, right );
-			front = glm::rotate( m_orientation, front );
-			up = glm::rotate( m_orientation, up );
-			m_transform = glm::lookAt( m_position
+			right = gl::rotate( m_orientation, right );
+			front = gl::rotate( m_orientation, front );
+			up = gl::rotate( m_orientation, up );
+			m_transform = gl::lookAt( m_position
 				, m_position + front
 				, up );
 			m_frustum.update( m_position, right, up, front );

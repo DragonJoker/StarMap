@@ -8,7 +8,7 @@
 #include <RenderLib/Object.h>
 #include <RenderLib/PolyLine.h>
 
-#include <GlLib/glm/gtc/matrix_transform.hpp>
+#include <GlLib/Transform.h>
 
 namespace starmap
 {
@@ -238,7 +238,7 @@ namespace starmap
 		m_pickBillboard->moveTo( object.position()
 			- gl::Vector3D{ 0, 0, object.boundaries().z + 0.2 } );
 		doUpdatePicked( static_cast< render::Movable const & >( object ) );
-		m_pickBillboard->dimensions( object.boundaries() * 2.0f );
+		m_pickBillboard->dimensions( gl::Size2D{ gl::toVec2( object.boundaries() * 2.0f ) } );
 		m_pickBillboard->buffer().at( 0u
 			, { -1000.0f, gl::Vector3D{ 0, 0, 0 }, gl::Vector2D{ 1, 1 } } );
 	}
@@ -404,9 +404,9 @@ namespace starmap
 	{
 		auto & scene = m_window->scene();
 		render::MaterialPtr linesMat = scene.materials().addElement( "lines" );
-		linesMat->ambient( ConstellationColour );
-		linesMat->diffuse( ConstellationColour );
-		linesMat->emissive( ConstellationColour );
+		linesMat->ambient( gl::toVec3( ConstellationColour ) );
+		linesMat->diffuse( gl::toVec3( ConstellationColour ) );
+		linesMat->emissive( gl::toVec3( ConstellationColour ) );
 
 		m_lines = std::make_shared< render::PolyLine >( "lines", 0.06f, 1.0f );
 		m_lines->material( linesMat );
@@ -490,7 +490,7 @@ namespace starmap
 		auto const & viewport = camera.viewport();
 		auto const & projection = camera.projection();
 		auto const & view = camera.view();
-		auto projected = glm::project( position
+		auto projected = gl::project( position
 			, view
 			, projection
 			, gl::Vector4D{ 0, 0, viewport.size().x, viewport.size().y } );

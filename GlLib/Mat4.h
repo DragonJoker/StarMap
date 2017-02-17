@@ -133,6 +133,17 @@ namespace gl
 		};
 	};
 	/**
+	*\name Opérateurs logiques.
+	*/
+	/**@{*/
+	template< typename T >
+	inline bool operator==( Mat4T< T > const & lhs
+		, Mat4T< T > const & rhs )noexcept;
+	template< typename T >
+	inline bool operator!=( Mat4T< T > const & lhs
+		, Mat4T< T > const & rhs )noexcept;
+	/**@}*/
+	/**
 	*\name Opérateurs arithmétiques.
 	*/
 	/**@{*/
@@ -158,7 +169,7 @@ namespace gl
 	inline Mat4T< T > operator/( Mat4T< T > const & lhs
 		, U const & rhs )noexcept;
 	template< typename T >
-	inline Mat4T< T > operator*( Mat4T< T > const & lhs
+	inline Vec4T< T > operator*( Mat4T< T > const & lhs
 		, Vec4T< T > const & rhs )noexcept;
 	/**@}*/
 }

@@ -8,7 +8,7 @@
 #define ___DesktopUtils_CameraState_HPP___
 #pragma once
 
-#include "Angle.h"
+#include <GlLib/Angle.h>
 #include "RangedValue.h"
 
 namespace render
@@ -37,8 +37,8 @@ namespace render
 		*\param[in] fovyMin, fovyMax
 		*	Les bornes.
 		*/
-		inline void zoomBounds( Angle const & fovyMin
-			, Angle const & fovyMax )noexcept
+		inline void zoomBounds( gl::Angle const & fovyMin
+			, gl::Angle const & fovyMax )noexcept
 		{
 			m_fovy.updateRange( makeRange( fovyMin, fovyMax ) );
 		}
@@ -46,7 +46,7 @@ namespace render
 		*\return
 		*	Les bornes du zoom.
 		*/
-		inline Range< Angle > const & zoomBounds()const noexcept
+		inline Range< gl::Angle > const & zoomBounds()const noexcept
 		{
 			return m_fovy.range();
 		}
@@ -58,8 +58,8 @@ namespace render
 		*/
 		inline void velocity( gl::Vector2D const & value )noexcept
 		{
-			m_velocityX = Degrees{ value.x };
-			m_velocityY = Degrees{ value.y };
+			m_velocityX = gl::Degrees{ value.x };
+			m_velocityY = gl::Degrees{ value.y };
 		}
 		/**
 		*\brief
@@ -69,7 +69,7 @@ namespace render
 		*/
 		inline void zoomVelocity( float value )noexcept
 		{
-			m_zoomVelocity = Degrees{ value };
+			m_zoomVelocity = gl::Degrees{ value };
 		}
 		/**
 		*\return
@@ -83,59 +83,59 @@ namespace render
 		*\return
 		*	La valeur du zoom.
 		*/
-		inline Angle const & zoom()const noexcept
+		inline gl::Angle const & zoom()const noexcept
 		{
 			return m_fovy.value();
 		}
 
 	private:
 		//! L'intervalle d'angles de rotation.
-		Range< Radians > m_angleRange
+		Range< gl::Radians > m_angleRange
 		{
-			Radians{ float( -Pi ) / 6.0f },
-			Radians{ float( Pi ) / 6.0f }
+			gl::Radians{ float( -gl::Pi ) / 6.0f },
+			gl::Radians{ float( gl::Pi ) / 6.0f }
 		};
 		//! La rotation sur l'axe X.
-		RangedValue< Radians > m_angleX
+		RangedValue< gl::Radians > m_angleX
 		{
 			0.0_radians,
 			m_angleRange
 		};
 		//! La rotation sur l'axe Y.
-		RangedValue< Radians > m_angleY
+		RangedValue< gl::Radians > m_angleY
 		{
 			0.0_radians,
 			m_angleRange
 		};
 		//! L'intervalle de vitesse de rotation.
-		Range< Degrees > m_velocityRange
+		Range< gl::Degrees > m_velocityRange
 		{
 			-5.0_degrees,
 			5.0_degrees
 		};
 		//! La vitesse de rotation sur l'axe X.
-		RangedValue< Degrees > m_velocityX
+		RangedValue< gl::Degrees > m_velocityX
 		{
 			0.0_degrees,
 			m_velocityRange
 		};
 		//! La vitesse de rotation sur l'axe Y.
-		RangedValue< Degrees > m_velocityY
+		RangedValue< gl::Degrees > m_velocityY
 		{
 			0.0_degrees,
 			m_velocityRange
 		};
 		//! La vitesse de zoom.
-		RangedValue< Degrees > m_zoomVelocity
+		RangedValue< gl::Degrees > m_zoomVelocity
 		{
 			0.0_degrees,
 			makeRange( -2.0_degrees, 2.0_degrees )
 		};
 		//! Le FovY utilisé pour le zoom, borné dans son intervalle.
-		RangedValue< Angle > m_fovy
+		RangedValue< gl::Angle > m_fovy
 		{
-			Angle{ 45.0_degrees },
-			makeRange( Angle{ 0.1_degrees }, Angle{ 90.0_degrees } )
+			gl::Angle{ 45.0_degrees },
+			makeRange(gl::Angle{ 0.1_degrees }, gl::Angle{ 90.0_degrees } )
 		};
 	};
 }

@@ -27,6 +27,30 @@ namespace gl
 	}
 
 	template< typename T >
+	constexpr Vec3T< T >::Vec3T( T const & v )noexcept
+		: x{ v }
+		, y{ v }
+		, z{ v }
+	{
+	}
+
+	template< typename T >
+	constexpr Vec3T< T >::Vec3T( Vec2T< T > const & xy, T const & z )noexcept
+		: x{ xy.x }
+		, y{ xy.y }
+		, z{ z }
+	{
+	}
+
+	template< typename T >
+	constexpr Vec3T< T >::Vec3T( T const & x, Vec2T< T > const & yz )noexcept
+		: x{ x }
+		, y{ yz.x }
+		, z{ yz.y }
+	{
+	}
+
+	template< typename T >
 	template< typename U >
 	Vec3T< T >::Vec3T( Vec3T< U > const & rhs )noexcept
 		: x{ T( rhs.x ) }
@@ -144,7 +168,7 @@ namespace gl
 	}
 
 	template< typename T >
-	T cross( Vec3T< T > const & lhs, Vec3T< T > const & rhs )noexcept
+	Vec3T< T > cross( Vec3T< T > const & lhs, Vec3T< T > const & rhs )noexcept
 	{
 		return Vec3T< T>
 		{
@@ -179,21 +203,27 @@ namespace gl
 	}
 
 	template< typename T >
+	Vec2T< T > toVec2( Vec3T< T > const & vec )noexcept
+	{
+		return Vec2T< T >{ vec.x, vec.y };
+	}
+
+	template< typename T >
 	inline bool operator==( Vec3T< T > const & lhs
 		, Vec3T< T > const & rhs )noexcept
 	{
-		return lhs.x == lhs.x
-			&& lhs.y == lhs.y
-			&& lhs.z == lhs.z;
+		return lhs.x == rhs.x
+			&& lhs.y == rhs.y
+			&& lhs.z == rhs.z;
 	}
 
 	template< typename T >
 	inline bool operator!=( Vec3T< T > const & lhs
 		, Vec3T< T > const & rhs )noexcept
 	{
-		return lhs.x != lhs.x
-			|| lhs.y != lhs.y
-			|| lhs.z != lhs.z;
+		return lhs.x != rhs.x
+			|| lhs.y != rhs.y
+			|| lhs.z != rhs.z;
 	}
 
 	template< typename T, typename U >
@@ -258,4 +288,18 @@ namespace gl
 		result /= rhs;
 		return result;
 	}
+
+	template< typename R, typename T >
+	struct Caller< R, T, Vec3T< T > >
+	{
+		static Vec3T< T > call( R( *func )( T ), Vec3T< T > const & value )
+		{
+			return Vec3T< T >
+			{
+				func( value.x ),
+				func( value.y ),
+				func( value.z )
+			};
+		}
+	};
 }

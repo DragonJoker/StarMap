@@ -33,17 +33,17 @@ namespace render
 	{
 		gl::Vector3D v{ p2 - p1 };
 		gl::Vector3D w{ p3 - p1 };
-		m_normal = glm::normalize( glm::cross( w, v ) );
+		m_normal = gl::normalize( gl::cross( w, v ) );
 		m_point = ( p1 + p2 + p3 ) / float( 3 );
-		m_d = -glm::dot( m_point, m_normal );
+		m_d = -gl::dot( m_point, m_normal );
 	}
 
 	void PlaneEquation::set( gl::Vector3D const & normal
 		, gl::Vector3D const & point )
 	{
-		m_normal = glm::normalize( normal );
+		m_normal = gl::normalize( normal );
 		m_point = point;
-		m_d = -glm::dot( m_point, m_normal );
+		m_d = -gl::dot( m_point, m_normal );
 	}
 
 	bool PlaneEquation::parallel( PlaneEquation const & plane )const
@@ -57,7 +57,7 @@ namespace render
 
 	float PlaneEquation::distance( gl::Vector3D const & point )const
 	{
-		return glm::dot( m_normal, point ) + m_d;
+		return gl::dot( m_normal, point ) + m_d;
 	}
 
 	gl::Vector3D PlaneEquation::project( gl::Vector3D const & point )const

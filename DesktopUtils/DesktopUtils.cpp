@@ -7,6 +7,10 @@
 
 #include "FontLoader.h"
 
+#ifdef _WIN32
+#	include <Windows.h>
+#endif
+
 namespace utils
 {
 	std::string getFileTextContent( std::string const & fileName )
@@ -59,4 +63,10 @@ namespace utils
 		return content;
 	}
 
+	void logDebugString( std::string const & log )
+	{
+#if _MSC_VER
+		::OutputDebugStringA( log.c_str() );
+#endif
+	}
 }

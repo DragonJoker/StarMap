@@ -193,7 +193,7 @@ namespace utils
 		//! Le contexte de rendu OpenGL.
 		EGLContext m_context{ EGL_NO_CONTEXT };
 		//! Les dimensions de la fenêtre.
-		gl::Size2D m_size{ 0 };
+		gl::Size2D m_size{ 0, 0 };
 	};
 }
 

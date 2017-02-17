@@ -13,8 +13,6 @@
 #include <RenderLib/Billboard.h>
 #include <RenderLib/PolyLine.h>
 
-#include <GlLib/glm/gtc/matrix_transform.hpp>
-
 #define ALLOW_OPENGL_ES_2 1
 
 #ifndef EGL_OPENGL_ES3_BIT

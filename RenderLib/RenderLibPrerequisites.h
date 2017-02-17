@@ -25,7 +25,6 @@ namespace render
 	*\name Prédéclarations.
 	*/
 	/**@{*/
-	class Angle;
 	class BillboardAttributes;
 	class BillboardBuffer;
 	class Billboard;

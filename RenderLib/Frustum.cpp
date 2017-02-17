@@ -25,7 +25,7 @@ namespace render
 		float near{ 0.1f };
 		float far{ 10000.0f };
 
-		float tan = float( render::tan( Radians{ m_viewport.fovY() } ) );
+		float tan = float( gl::tan( gl::Radians{ m_viewport.fovY() } ) );
 		nearHeight = tan * near;
 		nearWidth = nearHeight * ratio;
 		farHeight = tan * far;

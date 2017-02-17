@@ -41,7 +41,7 @@ namespace starmap
 		: m_id{ std::hash< std::string >()( name ) }
 		, m_name{ name }
 		, m_magnitude{ magnitude }
-		, m_position{ glm::normalize( position ) * 100.0f }
+		, m_position{ gl::normalize( position ) * 100.0f }
 		, m_colour{ colour }
 	{
 	}

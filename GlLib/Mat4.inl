@@ -140,6 +140,26 @@ namespace gl
 		col3 /= rhs;
 	}
 
+	template< typename T >
+	inline bool operator==( Mat4T< T > const & lhs
+		, Mat4T< T > const & rhs )noexcept
+	{
+		return lhs[0] == rhs[0]
+			&& lhs[1] == rhs[1]
+			&& lhs[2] == rhs[2]
+			&& lhs[3] == rhs[3];
+	}
+
+	template< typename T >
+	inline bool operator!=( Mat4T< T > const & lhs
+		, Mat4T< T > const & rhs )noexcept
+	{
+		return lhs[0] != rhs[0]
+			|| lhs[1] != rhs[1]
+			|| lhs[2] != rhs[2]
+			|| lhs[3] != rhs[3];
+	}
+
 	template< typename T, typename U >
 	inline Mat4T< T > operator+( Mat4T< T > const & lhs
 		, Mat4T< U > const & rhs )noexcept
@@ -204,7 +224,7 @@ namespace gl
 	}
 
 	template< typename T >
-	inline Vec4T< T > & operator*( Mat4T< T > const & lhs
+	inline Vec4T< T > operator*( Mat4T< T > const & lhs
 		, Vec4T< T > const & rhs )noexcept
 	{
 		Vec4T< T > const mov0( rhs.x, rhs.x, rhs.x, rhs.x );

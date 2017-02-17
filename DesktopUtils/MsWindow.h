@@ -10,7 +10,14 @@
 
 #include "DesktopUtilsPrerequisites.h"
 
-#include <Windows.h>
+struct HINSTANCE__;
+typedef struct HINSTANCE__ *HINSTANCE;
+struct HWND__;
+typedef struct HWND__ *HWND;
+struct HDC__;
+typedef struct HDC__ *HDC;
+struct HGLRC__;
+typedef struct HGLRC__ *HGLRC;
 
 namespace utils
 {
@@ -100,13 +107,13 @@ namespace utils
 			, std::string const & className
 			, int iconResourceID
 			, int smallIconResourceID );
-		LRESULT processMessage( UINT message
-			, WPARAM wParam
-			, LPARAM lParam );
-		static LRESULT CALLBACK WndProc( HWND hWnd
-			, UINT message
-			, WPARAM wParam
-			, LPARAM lParam );
+		intptr_t processMessage( uint32_t message
+			, size_t wParam
+			, intptr_t lParam );
+		static intptr_t CALLBACK WndProc( HWND hWnd
+			, uint32_t message
+			, size_t wParam
+			, intptr_t lParam );
 		static void doRegisterInstance( MsWindow * window );
 		static void doUnregisterInstance( MsWindow * window );
 		static MsWindow * doGetInstance( HWND hWnd );

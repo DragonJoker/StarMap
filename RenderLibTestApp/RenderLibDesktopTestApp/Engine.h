@@ -8,8 +8,6 @@
 #include <RenderLib/RenderWindow.h>
 #include <RenderLib/Scene.h>
 
-#include <Windows.h>
-
 class Engine
 	: public utils::MsWindow
 {
@@ -63,16 +61,6 @@ public:
 	*	Un évènement de molette.
 	*/
 	void onMouseWheel( utils::MouseEvent const & event )override;
-	/**
-	*\brief
-	*	Démarre la surveillance de l'accéléromètre.
-	*/
-	void onGainedFocus();
-	/**
-	*\brief
-	*	Stoppe la surveillance de l'accéléromètre.
-	*/
-	void onLostFocus();
 	/**
 	*\brief
 	*	Gestion du signal de sélection d'objet.
@@ -136,7 +124,7 @@ private:
 	render::RenderWindowPtr m_window;
 	render::Debug m_debug;
 
-	glm::ivec2 m_mouse;
+	gl::IVec2 m_mouse;
 
 	render::Connection< render::OnObjectPicked > m_onObjectPicked;
 	render::Connection< render::OnBillboardPicked > m_onBillboardPicked;

@@ -122,10 +122,10 @@ namespace gl
 	*	Structure de traits définissant les informations d'un attribut, en
 	*	fonction de son type.
 	*\remarks
-	*	Spécialisation pour gl::Vector2D.
+	*	Spécialisation pour gl::Vec2.
 	*/
 	template<>
-	struct AttributeTraits< gl::Vector2D >
+	struct AttributeTraits< gl::Vec2 >
 	{
 		static int constexpr size = 2;
 		static AttributeType constexpr type = AttributeType::eFloat;
@@ -139,7 +139,7 @@ namespace gl
 	*	Spécialisation pour gl::Vector3D.
 	*/
 	template<>
-	struct AttributeTraits< gl::Vector3D >
+	struct AttributeTraits< gl::Vec3 >
 	{
 		static int constexpr size = 3;
 		static AttributeType constexpr type = AttributeType::eFloat;
@@ -153,7 +153,7 @@ namespace gl
 	*	Spécialisation pour gl::Vector4D.
 	*/
 	template<>
-	struct AttributeTraits< gl::Vector4D >
+	struct AttributeTraits< gl::Vec4 >
 	{
 		static int constexpr size = 4;
 		static AttributeType constexpr type = AttributeType::eFloat;
@@ -164,10 +164,10 @@ namespace gl
 	*	Structure de traits définissant les informations d'un attribut, en
 	*	fonction de son type.
 	*\remarks
-	*	Spécialisation pour glm::ivec2.
+	*	Spécialisation pour gl::IVec2.
 	*/
 	template<>
-	struct AttributeTraits< glm::ivec2 >
+	struct AttributeTraits< gl::IVec2 >
 	{
 		static int constexpr size = 2;
 		static AttributeType constexpr type = AttributeType::eInt;
@@ -178,10 +178,10 @@ namespace gl
 	*	Structure de traits définissant les informations d'un attribut, en
 	*	fonction de son type.
 	*\remarks
-	*	Spécialisation pour glm::ivec3.
+	*	Spécialisation pour gl::IVec3.
 	*/
 	template<>
-	struct AttributeTraits< glm::ivec3 >
+	struct AttributeTraits< gl::IVec3 >
 	{
 		static int constexpr size = 3;
 		static AttributeType constexpr type = AttributeType::eInt;
@@ -192,10 +192,10 @@ namespace gl
 	*	Structure de traits définissant les informations d'un attribut, en
 	*	fonction de son type.
 	*\remarks
-	*	Spécialisation pour glm::ivec4.
+	*	Spécialisation pour gl::IVec4.
 	*/
 	template<>
-	struct AttributeTraits< glm::ivec4 >
+	struct AttributeTraits< gl::IVec4 >
 	{
 		static int constexpr size = 4;
 		static AttributeType constexpr type = AttributeType::eInt;

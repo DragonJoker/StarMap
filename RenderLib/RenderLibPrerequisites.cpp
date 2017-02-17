@@ -26,10 +26,10 @@ namespace render
 			return uint32_t( atoi( text.c_str() ) );
 		}
 
-		glm::ivec2 getIVec2( std::string const & text )
+		gl::IVec2 getIVec2( std::string const & text )
 		{
 			auto infos = split( text, " ", 3, false );
-			glm::ivec2 ret;
+			gl::IVec2 ret;
 
 			if ( infos.size() == 2 )
 			{

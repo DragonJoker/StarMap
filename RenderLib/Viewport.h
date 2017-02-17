@@ -8,7 +8,7 @@
 #define ___RenderLib_Viewport_HPP___
 #pragma once
 
-#include "Angle.h"
+#include <GlLib/Angle.h>
 
 namespace render
 {
@@ -57,7 +57,7 @@ namespace render
 		*\param[in] fovy
 		*	La nouvelle valeur.
 		*/
-		void fovY( Angle const & fovy )noexcept;
+		void fovY( gl::Angle const & fovy )noexcept;
 		/**
 		*\brief
 		*	Applique le viewport.
@@ -83,7 +83,7 @@ namespace render
 		*\return
 		*	L'angle d'ouverture vertical.
 		*/
-		inline Angle const & fovY()const noexcept
+		inline gl::Angle const & fovY()const noexcept
 		{
 			return m_fovy;
 		}
@@ -104,7 +104,7 @@ namespace render
 		//! La matrice de projection.
 		gl::Matrix4x4 m_projection;
 		//! L'angle d'ouverture verticale.
-		Angle m_fovy;
+		gl::Angle m_fovy;
 		//! Dit si le viewport a changé.
 		mutable bool m_changed{ true };
 	};

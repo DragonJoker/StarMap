@@ -203,6 +203,7 @@
     <ClCompile Include="OpenGL.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Angle.h" />
     <ClInclude Include="Converter.h" />
     <ClInclude Include="GlArrayUniform.h" />
     <ClInclude Include="GlAttributeBase.h" />
@@ -371,6 +372,7 @@
     <ClInclude Include="Mat4.h" />
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="Vec3.h" />
@@ -493,6 +495,7 @@
     <None Include="glm\gtx\wrap.inl" />
     <None Include="GlUniformBuffer.inl" />
     <None Include="Mat4.inl" />
+    <None Include="Quaternion.inl" />
     <None Include="Transform.inl" />
     <None Include="Vec2.inl" />
     <None Include="Vec3.inl" />

@@ -31,6 +31,13 @@ namespace gl
 	}
 
 	template< typename T >
+	constexpr Vec2T< T >::Vec2T( T const & v )noexcept
+		: x{ v }
+		, y{ v }
+	{
+	}
+
+	template< typename T >
 	template< typename U >
 	Vec2T< T > & Vec2T< T >::operator=( Vec2T< U > const & rhs )noexcept
 	{
@@ -156,14 +163,16 @@ namespace gl
 	inline bool operator==( Vec2T< T > const & lhs
 		, Vec2T< T > const & rhs )noexcept
 	{
-		return lhs.x == lhs.x && lhs.y == lhs.y;
+		return lhs.x == rhs.x
+			&& lhs.y == rhs.y;
 	}
 
 	template< typename T >
 	inline bool operator!=( Vec2T< T > const & lhs
 		, Vec2T< T > const & rhs )noexcept
 	{
-		return lhs.x != lhs.x || lhs.y != lhs.y;
+		return lhs.x != rhs.x
+			|| lhs.y != rhs.y;
 	}
 
 	template< typename T, typename U >
@@ -228,4 +237,17 @@ namespace gl
 		result /= rhs;
 		return result;
 	}
+
+	template< typename R, typename T >
+	struct Caller< R, T, Vec2T< T > >
+	{
+		static Vec2T< T > call( R( *func )( T ), Vec2T< T > const & value )
+		{
+			return Vec2T< T >
+			{
+				func( value.x ),
+				func( value.y )
+			};
+		}
+	};
 }

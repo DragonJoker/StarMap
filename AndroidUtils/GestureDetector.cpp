@@ -60,7 +60,7 @@ namespace utils
 								AMotionEvent_getY( event, 0 ),
 							};
 
-							if ( glm::distance( position, m_down ) < TOUCH_SLOP * TOUCH_SLOP * m_dpFactor )
+							if ( gl::distance( position, m_down ) < TOUCH_SLOP * TOUCH_SLOP * m_dpFactor )
 							{
 								m_result = position;
 								ret = ResultType::eTap;
@@ -107,7 +107,7 @@ namespace utils
 							AMotionEvent_getY( event, 0 ),
 						};
 
-						if ( glm::distance( position, m_lastTap ) < DOUBLE_TAP_SLOP * DOUBLE_TAP_SLOP * m_dpFactor )
+						if ( gl::distance( position, m_lastTap ) < DOUBLE_TAP_SLOP * DOUBLE_TAP_SLOP * m_dpFactor )
 						{
 							m_result = position;
 							ret = ResultType::eDoubleTap;
@@ -205,7 +205,7 @@ namespace utils
 				&& second != ResultType::eNone )
 			{
 				gl::Vector2D diff{ m_dpFactor * ( m_secondary.position() - m_main.position() ) };
-				float distance{ glm::length( diff ) };
+				float distance{ gl::length( diff ) };
 
 				if ( main == ResultType::eMove
 					&& second == ResultType::eMove )

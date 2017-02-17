@@ -49,7 +49,7 @@ namespace gl
 		/**
 		*\brief
 		*	Constructeur.
-		*\param[in] x, y
+		*\param[in] x, y, z
 		*	Les valeurs des composantes.
 		*/
 		template< typename X
@@ -58,6 +58,31 @@ namespace gl
 		constexpr Vec3T( X const & x
 			, Y const & y
 			, Z const & z )noexcept;
+		/**
+		*\brief
+		*	Constructeur.
+		*\param[in] v
+		*	La valeur des composantes.
+		*/
+		constexpr Vec3T( T const & v )noexcept;
+		/**
+		*\brief
+		*	Constructeur.
+		*\param[in] xy
+		*	La valeur des composantes x et y.
+		*\param[in] z
+		*	La valeur de la composante z.
+		*/
+		constexpr Vec3T( Vec2T< T > const & xy, T const & z )noexcept;
+		/**
+		*\brief
+		*	Constructeur.
+		*\param[in] x
+		*	La valeur de la composante x.
+		*\param[in] yz
+		*	La valeur des composantes y et z.
+		*/
+		constexpr Vec3T( T const & x, Vec2T< T > const & yz )noexcept;
 		/**
 		*\brief
 		*	Constructeur de conversion.
@@ -184,6 +209,17 @@ namespace gl
 	*/
 	template< typename T >
 	Vec3T< T > normalize( Vec3T< T > const & vec )noexcept;
+	/**
+	*\brief
+	*	Supprime la composante z du point 3D donné pour le transformer en
+	*	point 2D.
+	*\param[in] vec
+	*	Le point 3D.
+	*\return
+	*	Le point 2D.
+	*/
+	template< typename T >
+	Vec2T< T > toVec2( Vec3T< T > const & vec )noexcept;
 	/**
 	*\name Opérateurs logiques.
 	*/

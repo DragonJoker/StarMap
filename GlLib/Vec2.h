@@ -10,12 +10,26 @@
 
 namespace gl
 {
+	template< typename R, typename T, typename V >
+	struct Caller;
+
+	template< typename R, typename T, typename V >
+	V call( R( *func )( T ), V const & value )
+	{
+		return Caller< R, T, V >::call( func, value );
+	}
+	/**
+	*\brief
+	*	Classe servant uniquement à construire des points et matrices sans
+	*	initialiser leurs données.
+	*/
 	struct NoInit
 	{
 		NoInit()
 		{
 		}
 	};
+	//! Instance statique de noInit pour éviter d'en construire.
 	static const NoInit noInit;
 	/**
 	*\brief
@@ -61,6 +75,13 @@ namespace gl
 			, typename Y>
 		constexpr Vec2T( X const & x
 			, Y const & y )noexcept;
+		/**
+		*\brief
+		*	Constructeur.
+		*\param[in] v
+		*	La valeur des composantes.
+		*/
+		constexpr Vec2T( T const & v )noexcept;
 		/**
 		*\brief
 		*	Constructeur de conversion.

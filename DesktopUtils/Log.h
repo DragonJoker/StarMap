@@ -13,10 +13,6 @@
 
 #include <RenderLib/LogUtils.h>
 
-#ifdef _WIN32
-#	include <Windows.h>
-#endif
-
 namespace utils
 {
 	enum class LogType
@@ -26,6 +22,13 @@ namespace utils
 		eWarning,
 		eError,
 	};
+	/**
+	*\brief
+	*	Affiche la ligne donnée dans la console de débogage.
+	*\param[in] log
+	*	La ligne à logger.
+	*/
+	void logDebugString( std::string const & log );
 	/**
 	*\brief
 	*	Classe trait, pour afficher une ligne dans le logcat.
@@ -56,10 +59,7 @@ namespace utils
 			};
 			auto log = appName + " - " + LogName[size_t( Type )] + ": " + text + "\n";
 			printf( "%s", log.c_str() );
-
-#if _MSC_VER
-			::OutputDebugStringA( log.c_str() );
-#endif
+			logDebugString( log );
 		}
 	};
 

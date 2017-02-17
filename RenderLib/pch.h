@@ -15,9 +15,6 @@
 #include <GlLib/GlUniform.h>
 #include <GlLib/OpenGL.h>
 
-#include <GlLib/glm/gtc/matrix_transform.hpp>
-#include <GlLib/glm/gtx/quaternion.hpp>
-
 #include"RenderLibPrerequisites.h"
 
 #if defined( PLATFORM_ANDROID )

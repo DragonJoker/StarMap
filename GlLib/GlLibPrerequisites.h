@@ -24,13 +24,7 @@
 #include <string>
 #include <vector>
 
-#include "glm/glm.hpp"
-#include "glm/gtx/quaternion.hpp"
-
-#include "Vec2.h"
-#include "Vec3.h"
-#include "Vec4.h"
-#include "Mat4.h"
+#include "Quaternion.h"
 
 #include "GlDebug.h"
 
@@ -51,6 +45,7 @@
 #elif defined( DESKTOP )
 #	define PLATFORM_DESKTOP
 #	if defined( _WIN32 )
+#		define NOMINMAX
 #		define PLATFORM_WINDOWS
 #	elif defined( __linux__ )
 #		define PLATORM_LINUX
@@ -158,7 +153,7 @@ namespace gl
 	using Vector2D = Vec2;
 	using Vector3D = Vec3;
 	using Vector4D = Vec4;
-	using Quaternion = glm::quat;
+	using Quaternion = QuaternionT< float >;
 	using Matrix4x4 = Mat4;
 	/**@}*/
 	/**
@@ -167,9 +162,9 @@ namespace gl
 	/**@{*/
 	using RgbaColour = Vector4D;
 	using RgbColour = Vector3D;
-	using Size2D = glm::ivec2;
-	using Position2D = glm::ivec2;
-	using Offset2D = glm::ivec2;
+	using Size2D = Vec2T< int >;
+	using Position2D = Vec2T< int >;
+	using Offset2D = Vec2T< int >;
 	using ByteArray = std::vector< uint8_t >;
 	using UInt16Array = std::vector< uint16_t >;
 	using UInt32Array = std::vector< uint32_t >;

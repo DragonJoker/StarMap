@@ -7,8 +7,6 @@
 
 #include <DesktopUtils/MsWindow.h>
 
-#include <Windows.h>
-
 class Window
 	: public utils::MsWindow
 {

@@ -29,6 +29,60 @@ namespace gl
 		, w{ T( w ) }
 	{
 	}
+	
+	template< typename T >
+	constexpr Vec4T< T >::Vec4T( T const & v )noexcept
+		: x{ v }
+		, y{ v }
+		, z{ v }
+		, w{ v }
+	{
+	}
+	
+	template< typename T >
+	constexpr Vec4T< T >::Vec4T( Vec2T< T > const & xy, T const & z, T const & w )noexcept
+		: x{ xy.x }
+		, y{ xy.y }
+		, z{ z }
+		, w{ w }
+	{
+	}
+
+	template< typename T >
+	constexpr Vec4T< T >::Vec4T(T const & x, Vec2T< T > const & yz, T const & w )noexcept
+		: x{ x }
+		, y{ yz.x }
+		, z{ yz.y }
+		, w{ w }
+	{
+	}
+
+	template< typename T >
+	constexpr Vec4T< T >::Vec4T(T const & x, T const & y, Vec2T< T > const & zw )noexcept
+		: x{ x }
+		, y{ y }
+		, z{ zw.x }
+		, w{ zw.y }
+	{
+	}
+
+	template< typename T >
+	constexpr Vec4T< T >::Vec4T( Vec3T< T > const & xyz, T const & w )noexcept
+		: x{ xyz.x }
+		, y{ xyz.y }
+		, z{ xyz.z }
+		, w{ w }
+	{
+	}
+
+	template< typename T >
+	constexpr Vec4T< T >::Vec4T( T const & x, Vec3T< T > const & yzw )noexcept
+		: x{ x }
+		, y{ yzw.x }
+		, z{ yzw.y }
+		, w{ yzw.z }
+	{
+	}
 
 	template< typename T >
 	template< typename U >
@@ -184,25 +238,37 @@ namespace gl
 			vec.w / norm
 		};
 	}
+	
+	template< typename T >
+	Vec2T< T > toVec2( Vec4T< T > const & vec )noexcept
+	{
+		return Vec2T< T >{ vec.x, vec.y };
+	}
+
+	template< typename T >
+	Vec3T< T > toVec3( Vec4T< T > const & vec )noexcept
+	{
+		return Vec3T< T >{ vec.x, vec.y, vec.z };
+	}
 
 	template< typename T >
 	inline bool operator==( Vec4T< T > const & lhs
 		, Vec4T< T > const & rhs )noexcept
 	{
-		return lhs.x == lhs.x
-			&& lhs.y == lhs.y
-			&& lhs.z == lhs.z
-			&& lhs.w == lhs.w;
+		return lhs.x == rhs.x
+			&& lhs.y == rhs.y
+			&& lhs.z == rhs.z
+			&& lhs.w == rhs.w;
 	}
 
 	template< typename T >
 	inline bool operator!=( Vec4T< T > const & lhs
 		, Vec4T< T > const & rhs )noexcept
 	{
-		return lhs.x != lhs.x
-			|| lhs.y != lhs.y
-			|| lhs.z != lhs.z
-			|| lhs.w != lhs.w;
+		return lhs.x != rhs.x
+			|| lhs.y != rhs.y
+			|| lhs.z != rhs.z
+			|| lhs.w != rhs.w;
 	}
 
 	template< typename T, typename U >
@@ -267,4 +333,19 @@ namespace gl
 		result /= rhs;
 		return result;
 	}
+
+	template< typename R, typename T >
+	struct Caller< R, T, Vec4T< T > >
+	{
+		static Vec4T< T > call( R( *func )( T ), Vec4T< T > const & value )
+		{
+			return Vec4T< T >
+			{
+				func( value.x ),
+				func( value.y ),
+				func( value.z ),
+				func( value.w )
+			};
+		}
+	};
 }

@@ -139,7 +139,7 @@ namespace render
 		*\brief
 		*	Définit l'angle d'ouverture vertical de la caméra.
 		*/
-		inline void fovY( Angle const & fovy )noexcept
+		inline void fovY( gl::Angle const & fovy )noexcept
 		{
 			m_viewport.fovY( fovy );
 		}
@@ -147,7 +147,7 @@ namespace render
 		*\return
 		*	L'angle d'ouverture vertical de la caméra.
 		*/
-		inline Angle const & fovY()const noexcept
+		inline gl::Angle const & fovY()const noexcept
 		{
 			return m_viewport.fovY();
 		}

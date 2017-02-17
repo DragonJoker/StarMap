@@ -15,8 +15,6 @@
 #include <RenderLib/PolyLine.h>
 #include <RenderLib/RenderWindow.h>
 
-#include <GlLib/glm/gtc/matrix_transform.hpp>
-
 //*****************************************************************************
 
 Window::Window( utils::AndroidApp const & parent

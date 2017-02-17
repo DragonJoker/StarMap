@@ -517,6 +517,12 @@
     <ClInclude Include="Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Angle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GlLibPrerequisites.cpp">
@@ -944,6 +950,9 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Transform.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Quaternion.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include <RenderLib/RenderLibPrerequisites.h>
 #include <RenderLib/FlagCombination.h>
 
+#include <Windows.h>
 #include <windowsx.h>
 
 #define GLEW_STATIC
@@ -29,7 +30,7 @@ namespace utils
 		{
 			std::string ret;
 			ret.resize( 1024 );
-			DWORD count{ 1023u };
+			uint32_t count{ 1023u };
 			count = ::GetModuleFileNameA( NULL, &ret[0], count );
 			ret.resize( count + 1 );
 			ret = ret.substr( 0, ret.find_last_of( "\\" ) );
@@ -244,9 +245,9 @@ namespace utils
 		::RegisterClassExA( &wcex );
 	}
 
-	LRESULT MsWindow::processMessage( UINT message
-		, WPARAM wParam
-		, LPARAM lParam )
+	intptr_t MsWindow::processMessage( uint32_t message
+		, size_t wParam
+		, intptr_t lParam )
 	{
 		static utils::Clock::time_point time;
 		static constexpr std::chrono::milliseconds ClickTimeout{ 200 };
@@ -376,10 +377,10 @@ namespace utils
 		return 0;
 	}
 
-	LRESULT CALLBACK MsWindow::WndProc( HWND hWnd
-		, UINT message
-		, WPARAM wParam
-		, LPARAM lParam )
+	intptr_t CALLBACK MsWindow::WndProc( HWND hWnd
+		, uint32_t message
+		, size_t wParam
+		, intptr_t lParam )
 	{
 		auto window = doGetInstance( hWnd );
 

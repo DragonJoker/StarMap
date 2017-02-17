@@ -2,8 +2,6 @@
 
 #include "GlShaderProgram.h"
 
-#include "glm/gtc/type_ptr.hpp"
-
 namespace gl
 {
 	UniformBase::UniformBase( std::string const & name
@@ -23,71 +21,35 @@ namespace gl
 		m_size = uint32_t( size );
 	}
 
-	int * UniformBase::doGetPointer( int & value )noexcept
-	{
-		return &value;
-	}
-
-	float * UniformBase::doGetPointer( float & value )noexcept
-	{
-		return &value;
-	}
-
-	float * UniformBase::doGetPointer( Vector2D & value )noexcept
-	{
-		return &value.x;
-	}
-
-	float * UniformBase::doGetPointer( Vector3D & value )noexcept
-	{
-		return &value.x;
-	}
-
-	float * UniformBase::doGetPointer( Vector4D & value )noexcept
-	{
-		return &value.x;
-	}
-
-	float * UniformBase::doGetPointer( Matrix4x4 & value )noexcept
-	{
-		return &value[0].x;
-	}
-
-	int const * UniformBase::doGetPointer( int const & value )noexcept
-	{
-		return &value;
-	}
-
-	float const * UniformBase::doGetPointer( float const & value )noexcept
-	{
-		return &value;
-	}
-
-	float const * UniformBase::doGetPointer( Vector2D const & value )noexcept
-	{
-		return &value.x;
-	}
-
-	float const * UniformBase::doGetPointer( Vector3D const & value )noexcept
-	{
-		return &value.x;
-	}
-
-	float const * UniformBase::doGetPointer( Vector4D const & value )noexcept
-	{
-		return &value.x;
-	}
-
-	float const * UniformBase::doGetPointer( Matrix4x4 const & value )noexcept
-	{
-		return &value[0].x;
-	}
-
 	void UniformBase::doSetValue( int const & value )const noexcept
 	{
 		glCheckError( glUniform1i
 			, m_location
 			, value );
+	}
+
+	void UniformBase::doSetValue( IVec2 const & value )const noexcept
+	{
+		glCheckError( glUniform2iv
+			, m_location
+			, 1
+			, doGetPointer( value ) );
+	}
+
+	void UniformBase::doSetValue( IVec3 const & value )const noexcept
+	{
+		glCheckError( glUniform3iv
+			, m_location
+			, 1
+			, doGetPointer( value ) );
+	}
+
+	void UniformBase::doSetValue( IVec4 const & value )const noexcept
+	{
+		glCheckError( glUniform4iv
+			, m_location
+			, 1
+			, doGetPointer( value ) );
 	}
 
 	void UniformBase::doSetValue( float const & value )const noexcept
@@ -97,7 +59,7 @@ namespace gl
 			, value );
 	}
 
-	void UniformBase::doSetValue( Vector2D const & value )const noexcept
+	void UniformBase::doSetValue( Vec2 const & value )const noexcept
 	{
 		glCheckError( glUniform2fv
 			, m_location
@@ -105,7 +67,7 @@ namespace gl
 			, doGetPointer( value ) );
 	}
 
-	void UniformBase::doSetValue( Vector3D const & value )const noexcept
+	void UniformBase::doSetValue( Vec3 const & value )const noexcept
 	{
 		glCheckError( glUniform3fv
 			, m_location
@@ -113,7 +75,7 @@ namespace gl
 			, doGetPointer( value ) );
 	}
 
-	void UniformBase::doSetValue( Vector4D const & value )const noexcept
+	void UniformBase::doSetValue( Vec4 const & value )const noexcept
 	{
 		glCheckError( glUniform4fv
 			, m_location
@@ -139,6 +101,33 @@ namespace gl
 			, values );
 	}
 
+	void UniformBase::doSetValues( IVec2 const * values
+		, uint32_t count )const noexcept
+	{
+		glCheckError( glUniform2iv
+			, m_location
+			, count
+			, doGetPointer( values[0] ) );
+	}
+
+	void UniformBase::doSetValues( IVec3 const * values
+		, uint32_t count )const noexcept
+	{
+		glCheckError( glUniform3iv
+			, m_location
+			, count
+			, doGetPointer( values[0] ) );
+	}
+
+	void UniformBase::doSetValues( IVec4 const * values
+		, uint32_t count )const noexcept
+	{
+		glCheckError( glUniform4iv
+			, m_location
+			, count
+			, doGetPointer( values[0] ) );
+	}
+
 	void UniformBase::doSetValues( float const * values
 		, uint32_t count )const noexcept
 	{
@@ -148,7 +137,7 @@ namespace gl
 			, values );
 	}
 
-	void UniformBase::doSetValues( Vector2D const * values
+	void UniformBase::doSetValues( Vec2 const * values
 		, uint32_t count )const noexcept
 	{
 		glCheckError( glUniform2fv
@@ -157,7 +146,7 @@ namespace gl
 			, doGetPointer( values[0] ) );
 	}
 
-	void UniformBase::doSetValues( Vector3D const * values
+	void UniformBase::doSetValues( Vec3 const * values
 		, uint32_t count )const noexcept
 	{
 		glCheckError( glUniform3fv
@@ -166,7 +155,7 @@ namespace gl
 			, doGetPointer( values[0] ) );
 	}
 
-	void UniformBase::doSetValues( Vector4D const * values
+	void UniformBase::doSetValues( Vec4 const * values
 		, uint32_t count )const noexcept
 	{
 		glCheckError( glUniform4fv
@@ -183,5 +172,95 @@ namespace gl
 			, count
 			, GL_FALSE
 			, doGetPointer( values[0] ) );
+	}
+
+	int * UniformBase::doGetPointer( int & value )noexcept
+	{
+		return &value;
+	}
+
+	int * UniformBase::doGetPointer( IVec2 & value )noexcept
+	{
+		return &value.x;
+	}
+
+	int * UniformBase::doGetPointer( IVec3 & value )noexcept
+	{
+		return &value.x;
+	}
+
+	int * UniformBase::doGetPointer( IVec4 & value )noexcept
+	{
+		return &value.x;
+	}
+
+	float * UniformBase::doGetPointer( float & value )noexcept
+	{
+		return &value;
+	}
+
+	float * UniformBase::doGetPointer( Vec2 & value )noexcept
+	{
+		return &value.x;
+	}
+
+	float * UniformBase::doGetPointer( Vec3 & value )noexcept
+	{
+		return &value.x;
+	}
+
+	float * UniformBase::doGetPointer( Vec4 & value )noexcept
+	{
+		return &value.x;
+	}
+
+	float * UniformBase::doGetPointer( Matrix4x4 & value )noexcept
+	{
+		return &value[0].x;
+	}
+
+	int const * UniformBase::doGetPointer( int const & value )noexcept
+	{
+		return &value;
+	}
+
+	int const * UniformBase::doGetPointer( IVec2 const & value )noexcept
+	{
+		return &value.x;
+	}
+
+	int const * UniformBase::doGetPointer( IVec3 const & value )noexcept
+	{
+		return &value.x;
+	}
+
+	int const * UniformBase::doGetPointer( IVec4 const & value )noexcept
+	{
+		return &value.x;
+	}
+
+	float const * UniformBase::doGetPointer( float const & value )noexcept
+	{
+		return &value;
+	}
+
+	float const * UniformBase::doGetPointer( Vec2 const & value )noexcept
+	{
+		return &value.x;
+	}
+
+	float const * UniformBase::doGetPointer( Vec3 const & value )noexcept
+	{
+		return &value.x;
+	}
+
+	float const * UniformBase::doGetPointer( Vec4 const & value )noexcept
+	{
+		return &value.x;
+	}
+
+	float const * UniformBase::doGetPointer( Matrix4x4 const & value )noexcept
+	{
+		return &value[0].x;
 	}
 }

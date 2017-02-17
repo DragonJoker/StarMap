@@ -5,7 +5,7 @@
 
 #include <algorithm>
 
-#include <GlLib/glm/gtc/matrix_transform.hpp>
+#include <GlLib/Transform.h>
 
 namespace render
 {
@@ -177,7 +177,7 @@ namespace render
 		if ( m_positionChanged )
 		{
 			m_transform = gl::Matrix4x4{ 1 };
-			m_transform = glm::translate( m_transform
+			m_transform = gl::translate( m_transform
 				, gl::Vector3D{ m_position.x, m_position.y, 0 } );
 			m_positionChanged = false;
 		}

@@ -140,7 +140,7 @@ void Engine::doInitialise3DElements()
 	// Initialise the render window
 	m_window = std::make_unique< render::RenderWindow >( gl::Size2D{ width
 		, height } );
-	m_window->viewport().fovY( render::Angle{ 45.0_degrees } );
+	m_window->viewport().fovY( gl::Angle{ 45.0_degrees } );
 
 	// Initialise the scene
 	auto & scene = m_window->scene();
@@ -311,7 +311,7 @@ void Engine::doUpdatePicked( render::Object const & object )
 {
 	m_picked->moveTo( object.position() - gl::Vector3D{ 0, 0, object.boundaries().z + 0.1 } );
 	doUpdatePicked( static_cast< render::Movable const & >( object ) );
-	m_picked->dimensions( object.boundaries() );
+	m_picked->dimensions( gl::toVec2(  object.boundaries() ) );
 	m_picked->buffer().at( 0u, { -1000.0f, gl::Vector3D{ 0, 0, 0 }, gl::Vector2D{ 1, 1 } } );
 }
 

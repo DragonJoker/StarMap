@@ -15,7 +15,7 @@ namespace render
 		translate = gl::translate( translate, m_position );
 		gl::Matrix4x4 scale{ 1.0f };
 		scale = gl::scale( scale, m_scale );
-		gl::Matrix4x4 rotate = glm::toMat4( m_orientation );
+		gl::Matrix4x4 rotate = gl::toMat4( m_orientation );
 		m_transform = translate * rotate * scale;
 	}
 }

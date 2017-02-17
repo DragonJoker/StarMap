@@ -112,6 +112,27 @@ namespace gl
 		void doSetValue( int const & value )const noexcept;
 		/**
 		*\brief
+		*	Définit la valeur IVec2 de la variable uniforme.
+		*\param[in] value
+		*	La valeur.
+		*/
+		void doSetValue( IVec2 const & value )const noexcept;
+		/**
+		*\brief
+		*	Définit la valeur IVec3 de la variable uniforme.
+		*\param[in] value
+		*	La valeur.
+		*/
+		void doSetValue( IVec3 const & value )const noexcept;
+		/**
+		*\brief
+		*	Définit la valeur IVec4 de la variable uniforme.
+		*\param[in] value
+		*	La valeur.
+		*/
+		void doSetValue( IVec4 const & value )const noexcept;
+		/**
+		*\brief
 		*	Définit la valeur float de la variable uniforme.
 		*\param[in] value
 		*	La valeur.
@@ -119,25 +140,25 @@ namespace gl
 		void doSetValue( float const & value )const noexcept;
 		/**
 		*\brief
-		*	Définit la valeur vec2 de la variable uniforme.
+		*	Définit la valeur Vec2 de la variable uniforme.
 		*\param[in] value
 		*	La valeur.
 		*/
-		void doSetValue( Vector2D const & value )const noexcept;
+		void doSetValue( Vec2 const & value )const noexcept;
 		/**
 		*\brief
-		*	Définit la valeur vec3 de la variable uniforme.
+		*	Définit la valeur Vec3 de la variable uniforme.
 		*\param[in] value
 		*	La valeur.
 		*/
-		void doSetValue( Vector3D const & value )const noexcept;
+		void doSetValue( Vec3 const & value )const noexcept;
 		/**
 		*\brief
-		*	Définit la valeur vec4 de la variable uniforme.
+		*	Définit la valeur Vec4 de la variable uniforme.
 		*\param[in] value
 		*	La valeur.
 		*/
-		void doSetValue( Vector4D const & value )const noexcept;
+		void doSetValue( Vec4 const & value )const noexcept;
 		/**
 		*\brief
 		*	Définit la valeur mat4 de la variable uniforme.
@@ -145,6 +166,96 @@ namespace gl
 		*	La valeur.
 		*/
 		void doSetValue( Matrix4x4 const & value )const noexcept;
+		/**
+		*\brief
+		*	Définit la valeur int de la variable uniforme.
+		*\param[in] values
+		*	La valeur.
+		*\param[in] count
+		*	Le nombre de valeurs.
+		*/
+		void doSetValues( int const * values
+			, uint32_t count )const noexcept;
+		/**
+		*\brief
+		*	Définit la valeur vec2 de la variable uniforme.
+		*\param[in] values
+		*	La valeur.
+		*\param[in] count
+		*	Le nombre de valeurs.
+		*/
+		void doSetValues( IVec2 const * values
+			, uint32_t count )const noexcept;
+		/** 
+		*\brief
+		*	Définit la valeur vec3 de la variable uniforme.
+		*\param[in] values
+		*	La valeur.
+		*\param[in] count
+		*	Le nombre de valeurs.
+		*/
+		void doSetValues( IVec3 const * values
+			, uint32_t count )const noexcept;
+		/**
+		*\brief
+		*	Définit la valeur vec4 de la variable uniforme.
+		*\param[in] values
+		*	La valeur.
+		*\param[in] count
+		*	Le nombre de valeurs.
+		*/
+		void doSetValues( IVec4 const * values
+			, uint32_t count )const noexcept;
+		/**
+		*\brief
+		*	Définit la valeur float de la variable uniforme.
+		*\param[in] values
+		*	La valeur.
+		*\param[in] count
+		*	Le nombre de valeurs.
+		*/
+		void doSetValues( float const * values
+			, uint32_t count )const noexcept;
+		/**
+		*\brief
+		*	Définit la valeur vec2 de la variable uniforme.
+		*\param[in] values
+		*	La valeur.
+		*\param[in] count
+		*	Le nombre de valeurs.
+		*/
+		void doSetValues( Vec2 const * values
+			, uint32_t count )const noexcept;
+		/** 
+		*\brief
+		*	Définit la valeur vec3 de la variable uniforme.
+		*\param[in] values
+		*	La valeur.
+		*\param[in] count
+		*	Le nombre de valeurs.
+		*/
+		void doSetValues( Vec3 const * values
+			, uint32_t count )const noexcept;
+		/**
+		*\brief
+		*	Définit la valeur vec4 de la variable uniforme.
+		*\param[in] values
+		*	La valeur.
+		*\param[in] count
+		*	Le nombre de valeurs.
+		*/
+		void doSetValues( Vec4 const * values
+			, uint32_t count )const noexcept;
+		/**
+		*\brief
+		*	Définit la valeur mat4 de la variable uniforme.
+		*\param[in] values
+		*	La valeur.
+		*\param[in] count
+		*	Le nombre de valeurs.
+		*/
+		void doSetValues( Matrix4x4 const * values
+			, uint32_t count )const noexcept;
 		/**
 		*\brief
 		*	Récupère le pointeur de la valeur int donnée.
@@ -156,6 +267,33 @@ namespace gl
 		static int * doGetPointer( int & value )noexcept;
 		/**
 		*\brief
+		*	Récupère le pointeur de la valeur IVec2 donnée.
+		*\param[in] value
+		*	La valeur.
+		*\return
+		*	Le pointeur.
+		*/
+		static int * doGetPointer( IVec2 & value )noexcept;
+		/**
+		*\brief
+		*	Récupère le pointeur de la valeur IVec3 donnée.
+		*\param[in] value
+		*	La valeur.
+		*\return
+		*	Le pointeur.
+		*/
+		static int * doGetPointer( IVec3 & value )noexcept;
+		/**
+		*\brief
+		*	Récupère le pointeur de la valeur IVec4 donnée.
+		*\param[in] value
+		*	La valeur.
+		*\return
+		*	Le pointeur.
+		*/
+		static int * doGetPointer( IVec4 & value )noexcept;
+		/**
+		*\brief
 		*	Récupère le pointeur de la valeur float donnée.
 		*\param[in] value
 		*	La valeur.
@@ -165,31 +303,31 @@ namespace gl
 		static float * doGetPointer( float & value )noexcept;
 		/**
 		*\brief
-		*	Récupère le pointeur de la valeur Vector2D donnée.
+		*	Récupère le pointeur de la valeur Vec2 donnée.
 		*\param[in] value
 		*	La valeur.
 		*\return
 		*	Le pointeur.
 		*/
-		static float * doGetPointer( Vector2D & value )noexcept;
+		static float * doGetPointer( Vec2 & value )noexcept;
 		/**
 		*\brief
-		*	Récupère le pointeur de la valeur Vector3D donnée.
+		*	Récupère le pointeur de la valeur Vec3 donnée.
 		*\param[in] value
 		*	La valeur.
 		*\return
 		*	Le pointeur.
 		*/
-		static float * doGetPointer( Vector3D & value )noexcept;
+		static float * doGetPointer( Vec3 & value )noexcept;
 		/**
 		*\brief
-		*	Récupère le pointeur de la valeur Vector4D donnée.
+		*	Récupère le pointeur de la valeur Vec4 donnée.
 		*\param[in] value
 		*	La valeur.
 		*\return
 		*	Le pointeur.
 		*/
-		static float * doGetPointer( Vector4D & value )noexcept;
+		static float * doGetPointer( Vec4 & value )noexcept;
 		/**
 		*\brief
 		*	Récupère le pointeur de la valeur Matrix4x4 donnée.
@@ -210,6 +348,33 @@ namespace gl
 		static int const * doGetPointer( int const & value )noexcept;
 		/**
 		*\brief
+		*	Récupère le pointeur de la valeur IVec2 donnée.
+		*\param[in] value
+		*	La valeur.
+		*\return
+		*	Le pointeur.
+		*/
+		static int const * doGetPointer( IVec2 const & value )noexcept;
+		/**
+		*\brief
+		*	Récupère le pointeur de la valeur IVec3 donnée.
+		*\param[in] value
+		*	La valeur.
+		*\return
+		*	Le pointeur.
+		*/
+		static int const * doGetPointer( IVec3 const & value )noexcept;
+		/**
+		*\brief
+		*	Récupère le pointeur de la valeur IVec4 donnée.
+		*\param[in] value
+		*	La valeur.
+		*\return
+		*	Le pointeur.
+		*/
+		static int const * doGetPointer( IVec4 const & value )noexcept;
+		/**
+		*\brief
 		*	Récupère le pointeur de la valeur float donnée.
 		*\param[in] value
 		*	La valeur.
@@ -219,31 +384,31 @@ namespace gl
 		static float const * doGetPointer( float const & value )noexcept;
 		/**
 		*\brief
-		*	Récupère le pointeur de la valeur Vector2D donnée.
+		*	Récupère le pointeur de la valeur Vec2 donnée.
 		*\param[in] value
 		*	La valeur.
 		*\return
 		*	Le pointeur.
 		*/
-		static float const * doGetPointer( Vector2D const & value )noexcept;
+		static float const * doGetPointer( Vec2 const & value )noexcept;
 		/**
 		*\brief
-		*	Récupère le pointeur de la valeur Vector3D donnée.
+		*	Récupère le pointeur de la valeur Vec3 donnée.
 		*\param[in] value
 		*	La valeur.
 		*\return
 		*	Le pointeur.
 		*/
-		static float const * doGetPointer( Vector3D const & value )noexcept;
+		static float const * doGetPointer( Vec3 const & value )noexcept;
 		/**
 		*\brief
-		*	Récupère le pointeur de la valeur Vector4D donnée.
+		*	Récupère le pointeur de la valeur Vec4 donnée.
 		*\param[in] value
 		*	La valeur.
 		*\return
 		*	Le pointeur.
 		*/
-		static float const * doGetPointer( Vector4D const & value )noexcept;
+		static float const * doGetPointer( Vec4 const & value )noexcept;
 		/**
 		*\brief
 		*	Récupère le pointeur de la valeur Matrix4x4 donnée.
@@ -253,66 +418,6 @@ namespace gl
 		*	Le pointeur.
 		*/
 		static float const * doGetPointer( Matrix4x4 const & value )noexcept;
-		/**
-		*\brief
-		*	Définit la valeur int de la variable uniforme.
-		*\param[in] values
-		*	La valeur.
-		*\param[in] count
-		*	Le nombre de valeurs.
-		*/
-		void doSetValues( int const * values
-			, uint32_t count )const noexcept;
-		/**
-		*\brief
-		*	Définit la valeur float de la variable uniforme.
-		*\param[in] values
-		*	La valeur.
-		*\param[in] count
-		*	Le nombre de valeurs.
-		*/
-		void doSetValues( float const * values
-			, uint32_t count )const noexcept;
-		/**
-		*\brief
-		*	Définit la valeur vec2 de la variable uniforme.
-		*\param[in] values
-		*	La valeur.
-		*\param[in] count
-		*	Le nombre de valeurs.
-		*/
-		void doSetValues( Vector2D const * values
-			, uint32_t count )const noexcept;
-		/** 
-		*\brief
-		*	Définit la valeur vec3 de la variable uniforme.
-		*\param[in] values
-		*	La valeur.
-		*\param[in] count
-		*	Le nombre de valeurs.
-		*/
-		void doSetValues( Vector3D const * values
-			, uint32_t count )const noexcept;
-		/**
-		*\brief
-		*	Définit la valeur vec4 de la variable uniforme.
-		*\param[in] values
-		*	La valeur.
-		*\param[in] count
-		*	Le nombre de valeurs.
-		*/
-		void doSetValues( Vector4D const * values
-			, uint32_t count )const noexcept;
-		/**
-		*\brief
-		*	Définit la valeur mat4 de la variable uniforme.
-		*\param[in] values
-		*	La valeur.
-		*\param[in] count
-		*	Le nombre de valeurs.
-		*/
-		void doSetValues( Matrix4x4 const * values
-			, uint32_t count )const noexcept;
 
 	private:
 		//! Le nom de la variable.

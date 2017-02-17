@@ -23,7 +23,7 @@ namespace render
 		m_zoomVelocity = 0.0_degrees;
 		m_velocityX = 0.0_degrees;
 		m_velocityY = 0.0_degrees;
-		m_fovy = Angle{ 45.0_degrees };
+		m_fovy = gl::Angle{ 45.0_degrees };
 		m_angleX = 0.0_radians;
 		m_angleY = 0.0_radians;
 	}
@@ -32,7 +32,7 @@ namespace render
 	{
 #if !defined( NDEBUG )
 
-		m_angleRange = makeRange( Radians( -render::PiMult2 ), Radians( render::PiMult2 ) );
+		m_angleRange = makeRange( gl::Radians( -gl::PiMult2 ), gl::Radians( gl::PiMult2 ) );
 		m_angleX.updateRange( m_angleRange );
 		m_angleY.updateRange( m_angleRange );
 
@@ -44,11 +44,11 @@ namespace render
 		m_velocityX = doUpdateVelocity( m_velocityX );
 		m_velocityY = doUpdateVelocity( m_velocityY );
 		m_zoomVelocity = doUpdateVelocity( m_zoomVelocity );
-		auto zoom = to_radians( m_zoomVelocity.value() / 2 );
+		auto zoom = to_radians( m_zoomVelocity.value() / 2.0f );
 
-		if ( Radians( m_fovy.value() ) > zoom )
+		if ( gl::Radians( m_fovy.value() ) > zoom )
 		{
-			m_fovy = Radians{ m_fovy.value() } - zoom;
+			m_fovy = gl::Radians{ m_fovy.value() } - zoom;
 		}
 	}
 }

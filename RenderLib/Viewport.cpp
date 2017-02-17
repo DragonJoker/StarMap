@@ -1,6 +1,6 @@
 #include "Viewport.h"
 
-#include <GlLib/glm/gtc/matrix_transform.hpp>
+#include <GlLib/Transform.h>
 
 namespace render
 {
@@ -21,10 +21,10 @@ namespace render
 		, float near
 		, float far )noexcept
 	{
-		m_projection = glm::ortho( left, right, bottom, top, near, far );
+		m_projection = gl::ortho( left, right, bottom, top, near, far );
 	}
 
-	void Viewport::fovY( Angle const & fovy )noexcept
+	void Viewport::fovY( gl::Angle const & fovy )noexcept
 	{
 		m_changed = m_fovy != fovy;
 
@@ -32,7 +32,7 @@ namespace render
 		{
 			m_fovy = fovy;
 			float aspect = float( m_size.x ) / m_size.y;
-			m_projection = glm::infinitePerspective( float( Radians( m_fovy ) ), aspect, 0.1f );
+			m_projection = gl::infinitePerspective( gl::Radians{ m_fovy }, aspect, 0.1f );
 		}
 	}
 
