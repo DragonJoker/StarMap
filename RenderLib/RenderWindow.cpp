@@ -83,7 +83,6 @@ namespace render
 	{
 #if !DEBUG_PICKING
 		if ( m_pick )
-#endif
 		{
 			m_picking.pick( m_pickPosition
 				, m_scene.camera()
@@ -93,28 +92,15 @@ namespace render
 			m_pick = false;
 		}
 
-#if !DEBUG_PICKING
 		m_target.drawScene( m_scene );
-
-		glCheckError( glClear, GL_COLOR_BUFFER_BIT );
-		m_pipeline.apply();
-		m_viewport.apply();
-		m_program->bind();
-		m_vbo->bind();
-		m_posAttrib->bind();
-		m_texAttrib->bind();
-		m_texUniform->value( 0 );
-		m_target.texture().bind( 0 );
-		m_sampler->bind( 0 );
-		glCheckError( glDrawArrays
-			, GL_TRIANGLE_FAN
-			, 0
-			, m_vbo->count() );
-		m_sampler->unbind( 0 );
-		m_target.texture().unbind( 0 );
-		m_texAttrib->unbind();
-		m_posAttrib->unbind();
-		m_vbo->unbind();
+		doRenderTextureToScreen( m_target.texture() );
+#else
+		m_picking.pick( m_pickPosition
+			, m_scene.camera()
+			, state().zoomBounds().percent( state().zoom() )
+			, m_scene.renderObjects()
+			, m_scene.renderBillboards() );
+		doRenderTextureToScreen( m_picking.texture() );
 #endif
 
 		m_overlayRenderer->beginRender( m_size );
@@ -134,5 +120,28 @@ namespace render
 		m_size = size;
 		m_viewport.resize( m_size );
 		m_scene.resize( m_size );
+	}
+
+	void RenderWindow::doRenderTextureToScreen( gl::Texture const & texture )const noexcept
+	{
+		glCheckError( glClear, GL_COLOR_BUFFER_BIT );
+		m_pipeline.apply();
+		m_viewport.apply();
+		m_program->bind();
+		m_vbo->bind();
+		m_posAttrib->bind();
+		m_texAttrib->bind();
+		m_texUniform->value( 0 );
+		texture.bind( 0 );
+		m_sampler->bind( 0 );
+		glCheckError( glDrawArrays
+			, GL_TRIANGLE_FAN
+			, 0
+			, m_vbo->count() );
+		m_sampler->unbind( 0 );
+		texture.unbind( 0 );
+		m_texAttrib->unbind();
+		m_posAttrib->unbind();
+		m_vbo->unbind();
 	}
 }

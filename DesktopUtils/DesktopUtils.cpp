@@ -68,5 +68,19 @@ namespace utils
 #if _MSC_VER
 		::OutputDebugStringA( log.c_str() );
 #endif
+		std::tm today = { 0 };
+		time_t ttime;
+		time( &ttime );
+		localtime_s( &today, &ttime );
+		char buffer[33] = { 0 };
+		strftime( buffer, 32, "%Y-%m-%d %H:%M:%S", &today );
+		std::string timeStamp = buffer;
+
+		std::ofstream file{ "Debug.log", std::ios::app };
+
+		if ( file )
+		{
+			file << timeStamp << " - " << log << std::endl;
+		}
 	}
 }

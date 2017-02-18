@@ -125,13 +125,14 @@ namespace gl
 	template< typename T >
 	T dot( Vec2T< T > const & lhs, Vec2T< T > const & rhs )noexcept
 	{
-		return sqrt( lhs.x * rhs.x + lhs.y * rhs.y );
+		return lhs.x * rhs.x
+			+ lhs.y * rhs.y;
 	}
 
 	template< typename T >
 	T length( Vec2T< T > const & vec )noexcept
 	{
-		return dot( vec, vec );
+		return sqrt( dot( vec, vec ) );
 	}
 
 	template< typename T >

@@ -314,7 +314,7 @@ namespace render
 				{
 					node.m_mtxModel->value(
 						object.m_object->transform() );
-					node.m_nodeIndex->value( id++ );
+					node.m_nodeIndex->value( id );
 					doBindMaterial( node, *object.m_material );
 					node.m_mtxUbo.bind( 0u );
 					node.m_pickUbo.bind( 1u );
@@ -328,6 +328,8 @@ namespace render
 						, node.m_texture.get() );
 					doUnbindMaterial( node, *object.m_material );
 				}
+
+				++id;
 			}
 
 			node.m_program->unbind();
@@ -360,7 +362,7 @@ namespace render
 					&& billboard->buffer().count() )
 				{
 					node.m_mtxModel->value( billboard->transform() );
-					node.m_nodeIndex->value( id++ );
+					node.m_nodeIndex->value( id );
 					doBindMaterial( node, billboard->material() );
 					node.m_mtxUbo.bind( 0u );
 					node.m_pickUbo.bind( 1u );
@@ -381,6 +383,8 @@ namespace render
 					billboard->buffer().vbo().unbind();
 					doUnbindMaterial( node, billboard->material() );
 				}
+
+				++id;
 			}
 
 			node.m_program->unbind();

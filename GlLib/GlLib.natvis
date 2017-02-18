@@ -4,93 +4,93 @@
 	<Type Name="gl::RadiansT&lt;*&gt;">
 		<DisplayString>{{{m_value} radians}}</DisplayString>
 		<Expand>
-			<Item Name="[value]">m_value</Item>
+			<Item Name="value">m_value</Item>
 		</Expand>
 	</Type>
 
 	<Type Name="gl::DegreesT&lt;*&gt;">
 		<DisplayString>{{{m_value} degrees}}</DisplayString>
 		<Expand>
-			<Item Name="[value]">m_value</Item>
+			<Item Name="value">m_value</Item>
 		</Expand>
 	</Type>
 
 	<Type Name="gl::AngleT&lt;*&gt;">
 		<DisplayString>{{{m_radians}}}</DisplayString>
 		<Expand>
-			<Item Name="[angle]">m_radians</Item>
+			<Item Name="angle">m_radians</Item>
 		</Expand>
 	</Type>
 
 	<Type Name="gl::Vec2T&lt;*&gt;">
     <DisplayString>{{x={x} y={y}}}</DisplayString>
     <Expand>
-      <Item Name="[x]">x</Item>
-      <Item Name="[y]">y</Item>
+      <Item Name="x">x</Item>
+      <Item Name="y">y</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::Vec3T&lt;*&gt;">
     <DisplayString>{{x={x} y={y} z={z}}}</DisplayString>
     <Expand>
-      <Item Name="[x]">x</Item>
-      <Item Name="[y]">y</Item>
-      <Item Name="[z]">z</Item>
+      <Item Name="x">x</Item>
+      <Item Name="y">y</Item>
+      <Item Name="z">z</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::Vec4T&lt;*&gt;">
     <DisplayString>{{x={x} y={y} z={z} w={w}}}</DisplayString>
     <Expand>
-      <Item Name="[x]">x</Item>
-      <Item Name="[y]">y</Item>
-      <Item Name="[z]">z</Item>
-      <Item Name="[w]">w</Item>
+      <Item Name="x">x</Item>
+      <Item Name="y">y</Item>
+      <Item Name="z">z</Item>
+      <Item Name="w">w</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::QuaternionT&lt;*&gt;">
     <DisplayString>{{w={w} x={x} y={y} z={z}}}</DisplayString>
     <Expand>
-		<Item Name="[w]">w</Item>
-		<Item Name="[x]">x</Item>
-		<Item Name="[y]">y</Item>
-		<Item Name="[z]">z</Item>
+		<Item Name="w">w</Item>
+		<Item Name="x">x</Item>
+		<Item Name="y">y</Item>
+		<Item Name="z">z</Item>
     </Expand>
   </Type>
 
 	<Type Name="gl::Mat4T&lt;*&gt;">
 		<Expand>
-			<Item Name="[col 0]">col0</Item>
-			<Item Name="[col 1]">col1</Item>
-			<Item Name="[col 2]">col2</Item>
-			<Item Name="[col 3]">col3</Item>
+			<Item Name="col 0">col0</Item>
+			<Item Name="col 1">col1</Item>
+			<Item Name="col 2">col2</Item>
+			<Item Name="col 3">col3</Item>
 		</Expand>
 	</Type>
 
 	<Type Name="gl::UniformBase">
     <DisplayString>{{name={m_name} location={m_location}}}</DisplayString>
     <Expand>
-      <Item Name="[name]">m_name</Item>
-      <Item Name="[location]">m_location</Item>
-      <Item Name="[size]">m_size</Item>
+      <Item Name="name">m_name</Item>
+      <Item Name="location">m_location</Item>
+      <Item Name="size">m_size</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::Uniform&lt;*&gt;">
     <DisplayString>{{name={m_name} value={m_value} location={m_location}}}</DisplayString>
     <Expand>
-      <Item Name="[name]">m_name</Item>
-      <Item Name="[location]">m_location</Item>
-      <Item Name="[value]">m_value</Item>
+      <Item Name="name">m_name</Item>
+      <Item Name="location">m_location</Item>
+      <Item Name="value">m_value</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::ArrayUniform&lt;*&gt;">
     <DisplayString>{{name={m_name} location={m_location}}}</DisplayString>
     <Expand>
-      <Item Name="[name]">m_name</Item>
-      <Item Name="[location]">m_location</Item>
+      <Item Name="name">m_name</Item>
+      <Item Name="location">m_location</Item>
       <ExpandedItem>m_values</ExpandedItem>
     </Expand>
   </Type>
@@ -98,105 +98,114 @@
   <Type Name="gl::AttributeBase">
     <DisplayString>{{location={m_location}}}</DisplayString>
     <Expand>
-      <Item Name="[location]">m_location</Item>
-      <Item Name="[offset]">m_offset</Item>
-      <Item Name="[stride]">m_stride</Item>
-      <Item Name="[size]">m_size</Item>
-      <Item Name="[type]">m_type</Item>
-      <Item Condition="m_divisor != 0"  Name="[divisor]">m_divisor</Item>
+      <Item Name="location">m_location</Item>
+      <Item Name="offset">m_offset</Item>
+      <Item Name="stride">m_stride</Item>
+      <Item Name="size">m_size</Item>
+      <Item Name="type">m_type</Item>
+      <Item Condition="m_divisor != 0"  Name="divisor">m_divisor</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::BufferBase">
     <DisplayString>{id={m_name} size={m_size}}}</DisplayString>
     <Expand>
-      <Item Name="[id]">m_name</Item>
-      <Item Name="[size]">m_size</Item>
-      <Item Name="[target]">m_target</Item>
+      <Item Name="id">m_name</Item>
+      <Item Name="size">m_size</Item>
+      <Item Name="target">m_target</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="gl::Buffer&lt;*&gt;">
+    <DisplayString>{id={m_name} size={m_size}}}</DisplayString>
+    <Expand>
+      <Item Name="id">m_name</Item>
+      <Item Name="size">m_size</Item>
+      <Item Name="target">m_target</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::FrameBuffer">
     <DisplayString>{id={m_name} size={m_size}}}</DisplayString>
     <Expand>
-      <Item Name="[id]">m_name</Item>
-      <Item Name="[size]">m_size</Item>
+      <Item Name="id">m_name</Item>
+      <Item Name="size">m_size</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::GeometryBuffers">
     <DisplayString>{id={m_name} attributes={m_attributes}}}</DisplayString>
     <Expand>
-      <Item Name="[id]">m_name</Item>
-      <Item Name="[attributes]">m_attributes</Item>
+      <Item Name="id">m_name</Item>
+      <Item Name="attributes">m_attributes</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::Pipeline">
     <DisplayString>{culling={m_culling} blending={m_blending} depth test={m_depthTest} depth write={m_depthWrite}}}</DisplayString>
     <Expand>
-      <Item Name="[culling]">m_culling</Item>
-      <Item Name="[blending]">m_blending</Item>
-      <Item Name="[depth test]">m_depthTest</Item>
-      <Item Name="[depth write]">m_depthWrite</Item>
+      <Item Name="culling">m_culling</Item>
+      <Item Name="blending">m_blending</Item>
+      <Item Name="depth test">m_depthTest</Item>
+      <Item Name="depth write">m_depthWrite</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::RenderBuffer">
     <DisplayString>{id={m_name} size={m_size} format={m_format}}}</DisplayString>
     <Expand>
-      <Item Name="[id]">m_name</Item>
-      <Item Name="[size]">m_size</Item>
-      <Item Name="[format]">m_format</Item>
+      <Item Name="id">m_name</Item>
+      <Item Name="size">m_size</Item>
+      <Item Name="format">m_format</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::Sampler">
     <DisplayString>{min={m_minFilter} mag={m_magFilter} wrap=[{m_wrapS}, {m_wrapT}]}}</DisplayString>
     <Expand>
-      <Item Name="[min]">m_minFilter</Item>
-      <Item Name="[mag]">m_magFilter</Item>
-      <Item Name="[wrapS]">m_wrapS</Item>
-      <Item Name="[wrapT]">m_wrapT</Item>
+      <Item Name="min">m_minFilter</Item>
+      <Item Name="mag">m_magFilter</Item>
+      <Item Name="wrapS">m_wrapS</Item>
+      <Item Name="wrapT">m_wrapT</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::SamplerObject">
     <DisplayString>{id={m_name} min={m_minFilter} mag={m_magFilter} wrap=[{m_wrapS}, {m_wrapT}]}}</DisplayString>
     <Expand>
-      <Item Name="[id]">m_name</Item>
-      <Item Name="[min]">m_minFilter</Item>
-      <Item Name="[mag]">m_magFilter</Item>
-      <Item Name="[wrapS]">m_wrapS</Item>
-      <Item Name="[wrapT]">m_wrapT</Item>
+      <Item Name="id">m_name</Item>
+      <Item Name="min">m_minFilter</Item>
+      <Item Name="mag">m_magFilter</Item>
+      <Item Name="wrapS">m_wrapS</Item>
+      <Item Name="wrapT">m_wrapT</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::AttributeInfo">
     <DisplayString>{id={m_name} type={m_type}}}</DisplayString>
     <Expand>
-      <Item Name="[id]">m_name</Item>
-      <Item Name="[type]">m_type</Item>
+      <Item Name="id">m_name</Item>
+      <Item Name="type">m_type</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::ShaderProgram">
     <DisplayString>{id={m_name}}}</DisplayString>
     <Expand>
-      <Item Name="[id]">m_name</Item>
-      <Item Name="[attributes]">m_attributes</Item>
-      <Item Name="[vertex]">m_vertex</Item>
-      <Item Name="[pixel]">m_pixel</Item>
+      <Item Name="id">m_name</Item>
+      <Item Name="attributes">m_attributes</Item>
+      <Item Name="vertex">m_vertex</Item>
+      <Item Name="pixel">m_pixel</Item>
     </Expand>
   </Type>
 
   <Type Name="gl::Texture">
     <DisplayString>{id={m_name} size={m_size} format={m_format}}}</DisplayString>
     <Expand>
-      <Item Name="[id]">m_name</Item>
-      <Item Name="[size]">m_size</Item>
-      <Item Name="[format]">m_format</Item>
-      <Item Name="[type]">m_type</Item>
+      <Item Name="id">m_name</Item>
+      <Item Name="size">m_size</Item>
+      <Item Name="format">m_format</Item>
+      <Item Name="type">m_type</Item>
     </Expand>
   </Type>
 

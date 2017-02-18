@@ -26,7 +26,11 @@ namespace starmap
 		: m_onPick{ events.onPick.connect
 		( [this]( gl::Position2D const & coord )
 		{
-			if ( m_window )
+			if ( m_pickedStar )
+			{
+				onUnpick();
+			}
+			else if ( m_window )
 			{
 				m_window->pick( coord );
 			}
@@ -241,6 +245,7 @@ namespace starmap
 		m_pickBillboard->dimensions( gl::Size2D{ gl::toVec2( object.boundaries() * 2.0f ) } );
 		m_pickBillboard->buffer().at( 0u
 			, { -1000.0f, gl::Vector3D{ 0, 0, 0 }, gl::Vector2D{ 1, 1 } } );
+		m_pickBillboard->buffer().upload();
 	}
 
 	void StarMap::doUpdatePicked( render::Billboard const & billboard
@@ -260,6 +265,7 @@ namespace starmap
 			auto scale = 0.1f + m_window->state().zoomBounds().percent( m_window->state().zoom() );
 			m_pickBillboard->buffer().at( 0u
 				, { -1000.0f, data.center, gl::Vector2D{ scale, scale } } );
+			m_pickBillboard->buffer().upload();
 		}
 	}
 

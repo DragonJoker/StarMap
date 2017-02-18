@@ -85,11 +85,13 @@ namespace render
 		, RenderBillboardArray const & billboards )const
 	{
 #if DEBUG_PICKING
+		m_fbo->bind();
 		m_fbo->clear( gl::RgbaColour{ 0, 0, 0, 1 } );
 		m_renderer.draw( camera
 			, zoomPercent
 			, objects
 			, billboards );
+		m_fbo->unbind();
 		return NodeType::eNone;
 #else
 		onUnpick();

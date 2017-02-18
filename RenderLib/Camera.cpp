@@ -2,10 +2,6 @@
 
 #include <GlLib/Transform.h>
 
-#include <GlLib/glm/gtc/matrix_transform.hpp>
-#include <GlLib/glm/gtc/quaternion.hpp>
-#include <GlLib/glm/gtx/quaternion.hpp>
-
 namespace render
 {
 	Camera::Camera( gl::Size2D const & size )

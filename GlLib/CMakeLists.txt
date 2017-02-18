@@ -32,4 +32,3 @@ include_directories(
 )
 
 add_library( ${PROJECT_NAME} STATIC ${${PROJECT_NAME}_SRC_FILES} ${${PROJECT_NAME}_HDR_FILES} ${${PROJECT_NAME}_DBG_FILES} )
-target_add_doc( ${PROJECT_NAME} "" "*.h" )

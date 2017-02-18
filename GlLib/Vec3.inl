@@ -155,7 +155,9 @@ namespace gl
 	template< typename T >
 	T dot( Vec3T< T > const & lhs, Vec3T< T > const & rhs )noexcept
 	{
-		return sqrt( lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z );
+		return lhs.x * rhs.x
+			+ lhs.y * rhs.y
+			+ lhs.z * rhs.z;
 	}
 
 	template< typename T >
@@ -172,7 +174,7 @@ namespace gl
 	template< typename T >
 	T length( Vec3T< T > const & vec )noexcept
 	{
-		return dot( vec, vec );
+		return sqrt( dot( vec, vec ) );
 	}
 
 	template< typename T >

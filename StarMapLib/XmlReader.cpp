@@ -90,33 +90,26 @@ namespace starmap
 				sNode;
 				sNode = sNode->next_sibling() )
 			{
-				auto pAttrib = sNode->first_attribute( "proper" );
-				auto gAttrib = sNode->first_attribute( "gl" );
-				auto hAttrib = sNode->first_attribute( "hip" );
-				auto mAttrib = sNode->first_attribute( "mag" );
-				auto dAttrib = sNode->first_attribute( "decrad" );
-				auto rAttrib = sNode->first_attribute( "rarad" );
-				auto sAttrib = sNode->first_attribute( "spect" );
-				auto cAttrib = sNode->first_attribute( "ci" );
-				auto nAttrib = sNode->first_attribute( "con" );
-				std::string name{ doParseString( pAttrib ) };
+				auto name = doParseString( sNode->first_attribute( "proper" ) );
 
 				if ( name.empty() )
 				{
-					name = doParseString( gAttrib );
+					name = doParseString( sNode->first_attribute( "gl" ) );
 				}
 
 				if ( name.empty() )
 				{
-					name = doParseString( hAttrib );
+					name = doParseString( sNode->first_attribute( "hip" ) );
 				}
 
-				auto magnitude = doParseFloat( mAttrib );
-				auto ra = doParseFloat( rAttrib );
-				auto dec = doParseFloat( dAttrib );
-				auto ci = doParseFloat( cAttrib );
+				auto mag = doParseFloat( sNode->first_attribute( "mag" ) );
+				auto dec = doParseFloat( sNode->first_attribute( "decrad" ) );
+				auto ra = doParseFloat( sNode->first_attribute( "rarad" ) );
+				auto ci = doParseFloat( sNode->first_attribute( "ci" ) );
 				auto colour = bvToRgb( ci );
-				starmap.add( Star{ name, magnitude,gl::Vector2D{ ra, dec },colour } );
+				sNode->first_attribute( "spect" );
+				sNode->first_attribute( "con" );
+				starmap.add( Star{ name, mag, gl::Vector2D{ ra, dec },colour } );
 			}
 		}
 	}

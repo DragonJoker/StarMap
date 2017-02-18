@@ -164,6 +164,13 @@ namespace render
 		}
 
 	private:
+		/**
+		*\brief
+		*	Dessine une texture dans le backbuffer.
+		*/
+		void doRenderTextureToScreen( gl::Texture const & texture )const noexcept;
+
+	private:
 		//! Le pipeline de rendu dans la fenêtre.
 		gl::Pipeline m_pipeline;
 		//! La cible de rendu.

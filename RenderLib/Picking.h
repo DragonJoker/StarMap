@@ -112,6 +112,15 @@ namespace render
 			, float zoomPercent
 			, RenderSubmeshArray const & objects
 			, RenderBillboardArray const & billboards )const;
+		/**
+		*\return
+		*	La texture de couleurs.
+		*/
+		inline gl::Texture const & texture()const noexcept
+		{
+			assert( m_colour != nullptr );
+			return *m_colour;
+		}
 
 	public:
 		//! Le signal émis lorsque l'on sélectionne un objet.
