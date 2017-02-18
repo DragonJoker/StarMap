@@ -10,7 +10,7 @@
 
 #include "RenderLibPrerequisites.h"
 
-#include <cmath>
+#include <math.h>
 #include <limits>
 
 namespace render
@@ -26,14 +26,14 @@ namespace render
 		/**
 		*\brief
 		*	Constructeur.
-		*\param[in] min, max
+		*\param[in] lower, upper
 		*	Les bornes de l'intervalle.
 		*/
-		inline Range( T const & min, T const & max )noexcept
-			: m_min{ std::min( min, max ) }
-			, m_max{ std::max( min, max ) }
+		inline Range( T const & lower, T const & upper )noexcept
+			: m_lower{ std::min( lower, upper ) }
+			, m_upper{ std::max( lower, upper ) }
 		{
-			assert( m_min != m_max );
+			assert( m_lower != m_upper );
 		}
 		/**
 		*\brief
@@ -41,20 +41,20 @@ namespace render
 		*\param[in] value
 		*	La valeur.
 		*\return
-		*	\p m_min si la valeur y est inférieure.\n
-		*	\p m_max si la valeur y est supérieure.\n
+		*	\p m_lower si la \p value y est inférieure.\n
+		*	\p m_upper si la \p value y est supérieure.\n
 		*	\p value sinon.
 		*/
 		T const & clamp( T const & value )const noexcept
 		{
-			if ( value < m_min )
+			if ( value < m_lower )
 			{
-				return m_min;
+				return m_lower;
 			}
 
-			if ( value > m_max )
+			if ( value > m_upper )
 			{
-				return m_max;
+				return m_upper;
 			}
 
 			return value;
@@ -65,14 +65,14 @@ namespace render
 		*\param[in] value
 		*	La valeur.
 		*\return
-		*	0.0 si \p value est égal à ou inférieur à \p m_min.\n
-		*	1.0 si \p value est égal à ou supérieur à \p m_max.\n
+		*	0.0 si \p value est égal à ou inférieur à \p m_lower.\n
+		*	1.0 si \p value est égal à ou supérieur à \p m_upper.\n
 		*	Une pourcentage allant de 0.0 à 1.0, selon que la valeur est plus
-		*	proche de \p m_min ou de \p m_max.
+		*	proche de \p m_lower ou de \p m_upper.
 		*/
 		float percent( T const & value )const noexcept
 		{
-			return float( m_min - clamp( value ) ) / float( m_min - m_max );
+			return float( m_lower - clamp( value ) ) / float( m_lower - m_upper );
 		}
 		/**
 		*\brief
@@ -80,10 +80,10 @@ namespace render
 		*\param[in] value
 		*	La valeur.
 		*\return
-		*	0.0 si \p value est égal à ou supérieur à \p m_max.\n
-		*	1.0 si \p value est égal à ou inférieur à \p m_min.\n
+		*	0.0 si \p value est égal à ou supérieur à \p m_upper.\n
+		*	1.0 si \p value est égal à ou inférieur à \p m_lower.\n
 		*	Une pourcentage allant de 0.0 à 1.0, selon que la valeur est plus
-		*	proche de \p m_max ou de \p m_min.
+		*	proche de \p m_upper ou de \p m_lower.
 		*/
 		float invpercent( T const & value )const noexcept
 		{
@@ -95,49 +95,49 @@ namespace render
 		*\param[in] percent
 		*	Le pourcentage.
 		*\return
-		*	\p m_min si \p percent vaut 0.0.\n
-		*	\p m_max si \p percent vaut 1.0.\n
-		*	Une valeur comprise entre \p m_min et \p m_max.
+		*	\p m_lower si \p percent vaut 0.0.\n
+		*	\p m_upper si \p percent vaut 1.0.\n
+		*	Une valeur comprise entre \p m_lower et \p m_upper.
 		*/
 		T value( float const & percent )const noexcept
 		{
-			return T{ m_min + percent * float( m_max - m_min ) };
+			return T{ m_lower + percent * float( m_upper - m_lower ) };
 		}
 		/**
 		*\return
-		*	La borne minimale.
+		*	La borne inférieure.
 		*/
-		inline T const & min()const noexcept
+		inline T const & lower()const noexcept
 		{
-			return m_min;
+			return m_lower;
 		}
 		/**
 		*\return
-		*	La borne maximale.
+		*	La borne supérieure.
 		*/
-		inline T const & max()const noexcept
+		inline T const & upper()const noexcept
 		{
-			return m_max;
+			return m_upper;
 		}
 
 	private:
 		//! La borne inférieure.
-		T m_min;
+		T m_lower;
 		//! La borne supérieure.
-		T m_max;
+		T m_upper;
 	};
 	/**
 	*\brief
 	*	Fonction d'aide à la construction d'un intervalle.
-	*\param[in] min, max
+	*\param[in] lower, upper
 	*	Les bornes de l'intervalle.
 	*\return
 	*	L'intervalle créé.
 	*/
 	template< typename T >
-	inline Range< T > makeRange( T const & min, T const & max )noexcept
+	inline Range< T > makeRange( T const & lower, T const & upper )noexcept
 	{
-		return Range< T >( min, max );
+		return Range< T >( lower, upper );
 	}
 }
 

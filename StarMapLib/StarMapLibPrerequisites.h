@@ -10,6 +10,9 @@
 
 #include <RenderLib/RenderLibPrerequisites.h>
 
+#include <errno.h>
+#include <string.h>
+
 #include <memory>
 #include <unordered_map>
 

@@ -121,6 +121,9 @@
     <ClInclude Include="PlaneEquation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Logarithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderLibPrerequisites.cpp">

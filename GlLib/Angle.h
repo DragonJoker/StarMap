@@ -8,7 +8,7 @@
 #define ___GlLib_Angle_HPP___
 #pragma once
 
-#include <cmath>
+#include <math.h>
 #include <limits>
 
 namespace gl

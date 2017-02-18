@@ -1,7 +1,7 @@
 #include "DesktopUtils.h"
 
 #include <array>
-#include <cstdlib>
+#include <stdlib.h>
 #include <fstream>
 #include <sstream>
 

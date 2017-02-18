@@ -13,10 +13,10 @@
 #include "Camera.h"
 #include "CameraState.h"
 #include "ElementsList.h"
-#include "LogarithmicRange.h"
 #include "Material.h"
 #include "Mesh.h"
 #include "Picking.h"
+#include "Range.h"
 #include "RenderableContainer.h"
 #include "TextOverlay.h"
 #include "Texture.h"
@@ -270,7 +270,6 @@ namespace render
 		inline void thresholdBounds( float min, float max )noexcept
 		{
 			m_threshold.updateRange( makeRange( min, max * 1.5f ) );
-			m_threshRange = makeLogarithmicRange( min, max * 1.5f );
 		}
 		/**
 		*\return
@@ -310,8 +309,6 @@ namespace render
 		TextOverlayList m_overlays;
 		//! La couleur du fond.
 		gl::RgbaColour m_backgroundColour;
-		//! L'échelle logarithmique des seuils
-		LogarithmicRange< float > m_threshRange{ -30.0f, 30.0f };
 		//! Le seuil d'affichage des objets.
 		RangedValue< float > m_threshold
 		{

@@ -9,8 +9,8 @@
 #pragma once
 
 #include <algorithm>
-#include <cassert>
-#include <cstdint>
+#include <assert.h>
+#include <stdint.h>
 #include <exception>
 #include <functional>
 #include <iomanip>

@@ -9,6 +9,7 @@
 #pragma once
 
 #include "RenderSignal.h"
+#include <GlLib/Quaternion.h>
 
 namespace render
 {
@@ -47,7 +48,7 @@ namespace render
 		*/
 		inline void scale( gl::Vector3D const & scale )noexcept
 		{
-			static constexpr gl::Vector3D noChangeScale{ 1, 1, 1 };
+			static const gl::Vector3D noChangeScale{ 1, 1, 1 };
 
 			if ( scale != noChangeScale )
 			{
@@ -77,7 +78,7 @@ namespace render
 		*/
 		inline void translate( gl::Vector3D const & translate )noexcept
 		{
-			static constexpr gl::Vector3D noChangeTranslate;
+			static const gl::Vector3D noChangeTranslate;
 
 			if ( translate != noChangeTranslate )
 			{
@@ -107,7 +108,7 @@ namespace render
 		*/
 		inline void rotate( gl::Quaternion const & rotation )noexcept
 		{
-			static constexpr gl::Quaternion noChangeRotate;
+			static const gl::Quaternion noChangeRotate;
 
 			if ( rotation != noChangeRotate )
 			{

@@ -1,7 +1,4 @@
-#include"GlLibPrerequisites.h"
-
-#include <iomanip>
-#include <algorithm>
+#include "GlLibPrerequisites.h"
 
 #if defined( PLATFORM_ANDROID )
 #	include <EGL/egl.h>

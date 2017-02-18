@@ -1,7 +1,5 @@
 #include "GlBufferBase.h"
 
-#include "Mat4.h"
-
 namespace gl
 {
 	namespace

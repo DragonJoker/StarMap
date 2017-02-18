@@ -1,6 +1,8 @@
 #include "Scene.h"
 
 #include "Billboard.h"
+#include "ExponentialRange.h"
+#include "LogarithmicRange.h"
 #include "Object.h"
 #include "PolyLine.h"
 #include "StringUtils.h"
@@ -157,9 +159,11 @@ namespace render
 
 	void Scene::doUpdateBillboards()
 	{
+		static float constexpr offset = 1.0f;
+		static LogarithmicRange< 2, float > threshRange{ 0 + offset, 1 + offset };
 		auto percent = m_state.zoomBounds().invpercent( m_state.zoom() );
+		//percent = threshRange.value( percent + offset ) - offset;
 		auto threshold = m_threshold.range().value( percent );
-		//threshold = m_threshRange.logValue( threshold );
 		
 		// First, initialise the billboards that need to be.
 		for ( auto & billboard : m_newBillboardBuffers )

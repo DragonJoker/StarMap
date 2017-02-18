@@ -1,20 +1,3 @@
-#include <ctime>
-#include <functional>
-#include <iomanip>
-#include <sstream>
-
-#include <GlLib/GlArrayUniform.h>
-#include <GlLib/GlAttribute.h>
-#include <GlLib/GlBuffer.h>
-#include <GlLib/GlDebug.h>
-#include <GlLib/GlFrameBuffer.h>
-#include <GlLib/GlRenderBuffer.h>
-#include <GlLib/GlSampler.h>
-#include <GlLib/GlShaderProgram.h>
-#include <GlLib/GlTexture.h>
-#include <GlLib/GlUniform.h>
-#include <GlLib/OpenGL.h>
-
 #include"RenderLibPrerequisites.h"
 
 #if defined( PLATFORM_ANDROID )

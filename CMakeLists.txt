@@ -14,6 +14,7 @@ project( ${MAIN_PROJECT_NAME} )
 
 include( Platform )
 include( FileUtils )
+include( PCHSupport )
 
 # Organize projects into folders
 set_property( GLOBAL PROPERTY USE_FOLDERS ON )

@@ -224,6 +224,7 @@
     <ClInclude Include="FontTexture.h" />
     <ClInclude Include="Frustum.h" />
     <ClInclude Include="Glyph.h" />
+    <ClInclude Include="Logarithm.h" />
     <ClInclude Include="LogUtils.h" />
     <ClInclude Include="Movable.h" />
     <ClInclude Include="OverlayRenderer.h" />

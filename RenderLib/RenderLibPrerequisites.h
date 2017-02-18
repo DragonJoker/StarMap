@@ -8,7 +8,23 @@
 #define ___RenderLib_RenderLibPrerequisites_HPP___
 #pragma once
 
-#include <GlLib/GlLibPrerequisites.h>
+#include <GlLib/GlArrayUniform.h>
+#include <GlLib/GlAttribute.h>
+#include <GlLib/GlBuffer.h>
+#include <GlLib/GlDebug.h>
+#include <GlLib/GlFrameBuffer.h>
+#include <GlLib/GlRenderBuffer.h>
+#include <GlLib/GlSampler.h>
+#include <GlLib/GlShaderProgram.h>
+#include <GlLib/GlTexture.h>
+#include <GlLib/GlUniform.h>
+#include <GlLib/OpenGL.h>
+#include <GlLib/Quaternion.h>
+
+#include <time.h>
+#include <functional>
+#include <iomanip>
+#include <sstream>
 
 namespace render
 {

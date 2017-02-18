@@ -15,7 +15,7 @@ namespace gl
 {
 	/**
 	*\brief
-	*	Point à 4 composantes.
+	*	Classe basique de quaternion.
 	*/
 	template< typename T >
 	class QuaternionT
@@ -94,24 +94,6 @@ namespace gl
 		template< typename U >
 		QuaternionT & operator=( QuaternionT< U > const & rhs )noexcept;
 		/**
-		*\brief
-		*	Opérateur d'indexation.
-		*\param[in] index
-		*	L'indice de la composante à récupérer.
-		*\return
-		*	Une référence sur la composante.
-		*/
-		T & operator[]( size_t index )noexcept;
-		/**
-		*\brief
-		*	Opérateur d'indexation.
-		*\param[in] index
-		*	L'indice de la composante à récupérer.
-		*\return
-		*	Une référence sur la composante.
-		*/
-		T const & operator[]( size_t index )const noexcept;
-		/**
 		*\name Opérateurs arithmétiques membres.
 		*/
 		/**@{*/
@@ -128,25 +110,11 @@ namespace gl
 		/**@}*/
 
 	public:
-		//! Les composantes du point.
-		union
-		{
-			T data[4];
-			struct
-			{
-				T x;
-				T y;
-				T z;
-				T w;
-			};
-			struct
-			{
-				T r;
-				T g;
-				T b;
-				T a;
-			};
-		};
+		//! Les composantes du quaternion.
+		T x;
+		T y;
+		T z;
+		T w;
 	};
 	/**
 	*\brief
