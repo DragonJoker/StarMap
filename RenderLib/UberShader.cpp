@@ -523,13 +523,36 @@ void main()
 			static std::string const PickingPackPixelES2
 			{
 				R"(
-	int discarded = int( floor( nodeIndex / 65536.0 ) );            // ( nodeIndex & 0xFFFF0000 ) >> 16;
-	discarded = discarded * 65536;                                  // ( nodeIndex & 0xFFFF0000 )
-	int hiNode = int( floor( ( nodeIndex - discarded ) / 256.0 ) ); // ( nodeIndex & 0x0000FF00 ) >> 8;
-	int loNode = nodeIndex - discarded - ( hiNode * 256 );          // ( nodeIndex & 0x000000FF );
-	pxl_fragColour.xyz = vec3( float( drawIndex ) / 255.0
-		, float( hiNode ) / 255.0
-		, float( loNode ) / 255.0 );)"
+int leftShift( int value, int shift )
+{
+	float mult = pow( 2.0, float( shift ) );
+	return int( floor( float( value ) * mult ) );
+}
+int rightShift( int value, int shift )
+{
+	float div = pow( 2.0, float( shift ) );
+	return int( floor( float( value ) / div ) );
+}
+vec4 packPixel( int drawIndex, int nodeIndex, int instIndex )
+{
+	int discarded = leftShift( rightShift( drawIndex, 6 ), 6 );  // ( drawIndex & 0xFFFFFFC0 )
+	int hiR = leftShift( drawIndex - discarded, 2 );             // ( drawIndex & 0x0000003F ) << 2
+	discarded = leftShift( rightShift( nodeIndex, 8 ), 2 );      // ( ( nodeIndex >> 6 ) & 0xFFFFFFFC )
+	int loR = rightShift( nodeIndex, 6 ) - discarded;            // ( ( nodeIndex >> 6 ) & 0x00000003 )
+	discarded = leftShift( rightShift( nodeIndex, 6 ), 6 );      // ( nodeIndex & 0xFFFFFFC0 )
+	int hiG = leftShift( nodeIndex - discarded, 2 );             // ( nodeIndex & 0x0000003F ) << 2
+	discarded = leftShift( rightShift( instIndex, 14 ), 14 );    // ( instIndex & 0xFFFC0000 )
+	int loG = rightShift( instIndex - discarded, 16 );           // ( instIndex & 0x00030000 ) >> 16
+	discarded = leftShift( rightShift( instIndex, 16 ), 16 );    // ( instIndex & 0xFFFF0000 )
+	int hlB = rightShift( instIndex - discarded, 8 );            // ( instIndex & 0x0000FF00 ) >> 8
+	discarded = leftShift( rightShift( instIndex, 8 ), 8 );      // ( instIndex & 0xFFFFFF00 )
+	int hlA = instIndex - discarded;                             // ( instIndex & 0x000000FF ) >> 0
+	return vec4( float( hiR + loR ) / 255.0
+		, float( hiG + loG ) / 255.0
+		, float( hlB ) / 255.0
+		, float( hlA ) / 255.0 );
+}
+)"
 			};
 
 			static std::string const PickingPackPixelES3
@@ -576,7 +599,7 @@ void main()
 	}
 #endif
 	[gl_FragColor] = packPixel( drawIndex, nodeIndex, int( vtx_instance + 0.1 ) );
-	//[gl_FragColor] = vec4( vtx_instance, 0.0, 0.0, 1.0 );
+	//[gl_FragColor] = vec4( drawIndex, nodeIndex, vtx_instance, 1.0 );
 }
 )"
 			};
@@ -773,7 +796,7 @@ void main()
 				case RenderType::ePicking:
 					if ( gl::OpenGL::checkSupport( gl::FeatureLevel::eGLES3 ) )
 					{
-						ret += PickingPackPixelES3;
+						ret += PickingPackPixelES2;
 					}
 					else
 					{

@@ -31,6 +31,16 @@ namespace render
 		*/
 		Billboard( std::string const & name, BillboardBuffer & buffer );
 		/**
+		*\brief
+		*	Cache les billboards qui ne sont pas visibles par la caméra donnée.
+		*\param[in] camera
+		*	La caméra.
+		*\param[in] scale
+		*	L'échelle du zoom.
+		*/
+		void cull( Camera const & camera
+			, float scale );
+		/**
 		*\return
 		*	Le tampon contenant les positions.
 		*/

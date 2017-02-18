@@ -192,7 +192,7 @@ namespace gl
 				, this );
 		}
 
-		if ( pfnDebugMessageCallbackAMD || pfnDebugMessageCallbackAMD )
+		if ( pfnDebugMessageCallback || pfnDebugMessageCallbackAMD )
 		{
 			m_hasExtension = true;
 

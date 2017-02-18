@@ -285,6 +285,8 @@ void Window::doUpdatePicked( render::Object const & object )
 	doUpdatePicked( static_cast< render::Movable const & >( object ) );
 	m_picked->dimensions( gl::toVec2( object.boundaries() ) );
 	m_picked->buffer().at( 0u, { -1000.0f, gl::Vector3D{ 0, 0, 0 }, gl::Vector2D{ 1, 1 } } );
+	auto percent = m_renderWindow->state().zoomBounds().invpercent( m_renderWindow->state().zoom() );
+	m_picked->cull( m_renderWindow->scene().camera(), 2.0f - 2.0f * percent );
 }
 
 void Window::doUpdatePicked( render::Billboard const & billboard
@@ -294,7 +296,11 @@ void Window::doUpdatePicked( render::Billboard const & billboard
 	doUpdatePicked( static_cast< render::Movable const & >( billboard ) );
 	m_picked->dimensions( billboard.dimensions() );
 	auto data = billboard.buffer()[index];
-	m_picked->buffer().at( 0u, { -1000.0f, data.center, data.scale } );
+	auto percent = m_renderWindow->state().zoomBounds().invpercent( m_renderWindow->state().zoom() );
+	auto scale = 0.1f + percent;
+	m_picked->buffer().at( 0u
+		, { -1000.0f, data.center, gl::Vector2D{ scale, scale } } );
+	m_picked->cull( m_renderWindow->scene().camera(), 2.0f - 2.0f * percent );
 }
 
 //*****************************************************************************

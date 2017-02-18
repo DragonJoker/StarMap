@@ -166,7 +166,9 @@ namespace gl
 			, uint32_t count
 			, uint32_t access )const noexcept
 		{
-			return BufferBase::lock( offset * m_elemSize, count * m_elemSize, access );
+			return reinterpret_cast< T * >( BufferBase::lock( offset * m_elemSize
+				, count * m_elemSize
+				, access ) );
 		}
 		/**
 		*\return

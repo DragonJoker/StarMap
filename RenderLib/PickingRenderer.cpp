@@ -347,12 +347,11 @@ namespace render
 			gl::Matrix4x4 const & projection = camera.projection();
 			gl::Matrix4x4 const & view = camera.view();
 			gl::Vector3D const & position = camera.position();
-			float scale = m_billboardScale.value( zoomPercent );
 			node.m_program->bind();
 			node.m_mtxProjection->value( projection );
 			node.m_mtxView->value( view );
 			node.m_camera->value( position );
-			node.m_dimensions->value( { scale, scale } );
+			node.m_dimensions->value( { 30.0, 30.0 } );
 			node.m_drawIndex->value( BillboardMask | int( type ) );
 			uint32_t id{ 0u };
 

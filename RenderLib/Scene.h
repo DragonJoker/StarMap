@@ -289,11 +289,6 @@ namespace render
 		void onMovableChanged( Movable & movable );
 		/**
 		*\brief
-		*	Gestion du signal de changement de tampon de billboard.
-		*/
-		void onBillboardBufferChanged( BillboardBuffer & buffer );
-		/**
-		*\brief
 		*	Met à jour les billboards.
 		*/
 		void doUpdateBillboards();
@@ -329,10 +324,6 @@ namespace render
 		std::vector< Movable * > m_changedMovables;
 		//! Les connections aux évènements de Movable changé.
 		std::map< Movable *, Connection< OnMovableChanged > > m_onMovableChanged;
-		//! Les BillboardBuffer qui ont changé.
-		std::vector< BillboardBuffer * > m_changedBillboardBuffers;
-		//! Les connections aux évènements de BillboardBuffer changé.
-		std::map< BillboardBuffer *, Connection< OnBillboardBufferChanged > > m_onBillboardBufferChanged;
 		//! Dit si la caméra a changé entre 2 updates.
 		bool m_cameraChanged{ true };
 

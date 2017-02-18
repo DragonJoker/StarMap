@@ -245,7 +245,8 @@ namespace starmap
 		m_pickBillboard->dimensions( gl::Size2D{ gl::toVec2( object.boundaries() * 2.0f ) } );
 		m_pickBillboard->buffer().at( 0u
 			, { -1000.0f, gl::Vector3D{ 0, 0, 0 }, gl::Vector2D{ 1, 1 } } );
-		m_pickBillboard->buffer().upload();
+		auto percent = m_window->state().zoomBounds().percent( m_window->state().zoom() );
+		m_pickBillboard->cull( m_window->scene().camera(), 2.0f * percent );
 	}
 
 	void StarMap::doUpdatePicked( render::Billboard const & billboard
@@ -262,10 +263,10 @@ namespace starmap
 			m_pickBillboard->moveTo( billboard.position() - gl::Vector3D{ 0, 0, 0.2 } );
 			doUpdatePicked( static_cast< render::Movable const & >( billboard ) );
 			auto & data = billboard.buffer()[index];
-			auto scale = 0.1f + m_window->state().zoomBounds().percent( m_window->state().zoom() );
+			auto percent = m_window->state().zoomBounds().percent( m_window->state().zoom() );
 			m_pickBillboard->buffer().at( 0u
-				, { -1000.0f, data.center, gl::Vector2D{ scale, scale } } );
-			m_pickBillboard->buffer().upload();
+				, { -1000.0f, data.center, gl::Vector2D{ 1.0, 1.0 } } );
+			m_pickBillboard->cull( m_window->scene().camera(), 2.0f * percent );
 		}
 	}
 
@@ -387,7 +388,7 @@ namespace starmap
 		pickedMat->opacityMap( m_opacity );
 		pickedMat->ambient( PickBillboardColour );
 		pickedMat->diffuse( PickBillboardColour );
-		auto pickedBuffers = std::make_shared< render::BillboardBuffer >( false );
+		auto pickedBuffers = std::make_shared< render::BillboardBuffer >( true );
 		pickedBuffers->add( { -1000.0
 			, gl::Vector3D{ 0, 0, 0 }
 			, gl::Vector2D{ 1, 1 } } );

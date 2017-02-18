@@ -4,6 +4,69 @@
 
 namespace render
 {
+	namespace
+	{
+		//*********************************************************************
+
+		class StorageES2
+			: public BillboardBuffer::Storage
+		{
+		public:
+			StorageES2( uint32_t size )
+				: m_data( size )
+			{
+				m_vbo = gl::makeBuffer< BillboardBuffer::Quad >
+					( gl::BufferTarget::eArrayBuffer, m_data );
+			}
+
+			BillboardBuffer::Quad * lock()override
+			{
+				return m_data.data();
+			}
+
+			void unlock()override
+			{
+				m_vbo->bind();
+				m_vbo->upload( 0u, m_vbo->count(), m_data.data() );
+				m_vbo->unbind();
+			}
+
+		private:
+			//! Les données du stockage.
+			std::vector< BillboardBuffer::Quad > m_data;
+		};
+
+		//*********************************************************************
+
+		class StorageES3
+			: public BillboardBuffer::Storage
+		{
+		public:
+			StorageES3( uint32_t size )
+			{
+				m_vbo = gl::makeBuffer< BillboardBuffer::Quad >
+					( gl::BufferTarget::eArrayBuffer );
+				m_vbo->bind();
+				m_vbo->resize( size );
+				m_vbo->unbind();
+			}
+
+			BillboardBuffer::Quad * lock()override
+			{
+				m_vbo->bind();
+				return m_vbo->lock( 0u, m_vbo->count(), GL_MAP_WRITE_BIT );
+			}
+
+			void unlock()override
+			{
+				m_vbo->unlock();
+				m_vbo->unbind();
+			}
+		};
+
+		//*********************************************************************
+	}
+
 	BillboardBuffer::BillboardBuffer( bool scale )
 		: m_scale{ scale }
 	{
@@ -11,14 +74,19 @@ namespace render
 
 	void BillboardBuffer::initialise()
 	{
-		m_vbo = gl::makeBuffer( gl::BufferTarget::eArrayBuffer
-			, m_buffer );
-		m_visible.resize( m_buffer.size() );
+		if ( gl::OpenGL::checkSupport( gl::FeatureLevel::eGLES3 ) )
+		{
+			m_visible = std::make_unique< StorageES3 >( m_buffer.size() );
+		}
+		else
+		{
+			m_visible = std::make_unique< StorageES2 >( m_buffer.size() );
+		}
 	}
 
 	void BillboardBuffer::cleanup()
 	{
-		m_vbo.reset();
+		m_visible.reset();
 	}
 
 	void BillboardBuffer::update( float threshold )
@@ -32,7 +100,8 @@ namespace render
 
 		if ( it != std::end( m_buffer ) )
 		{
-			m_unculled = uint32_t( std::distance( std::begin( m_buffer ), it ) );
+			m_unculled = uint32_t( std::distance( std::begin( m_buffer )
+				, it ) );
 		}
 		else
 		{
@@ -44,57 +113,52 @@ namespace render
 		, gl::Vector3D const & position
 		, float scale )
 	{
-		auto count = 0u;
-		std::for_each( std::begin( m_buffer )
-			, std::begin( m_buffer ) + m_unculled
-			, [&count
-				, &camera
-				, &position
-				, &scale
-				, this]( Quad const & quad )
-		{
-			if ( m_scale )
-			{
-				if ( camera.visible( quad[0].data.center + position ) )
-				{
-					auto & visible = m_visible[count];
-					visible = quad;
+		auto buffer = m_visible->lock();
 
-					visible[0].data.scale *= scale;
-					visible[1].data.scale *= scale;
-					visible[2].data.scale *= scale;
-					visible[3].data.scale *= scale;
-					visible[4].data.scale *= scale;
-					visible[5].data.scale *= scale;
+		if ( buffer )
+		{
+			auto count = 0u;
+			std::for_each( std::begin( m_buffer )
+				, std::begin( m_buffer ) + m_unculled
+				, [&count
+					, &camera
+					, &position
+					, &scale
+					, &buffer
+					, this]( Quad const & quad )
+			{
+				if ( m_scale )
+				{
+					if ( camera.visible( quad[0].data.center + position ) )
+					{
+						auto & visible = buffer[count];
+						visible = quad;
+
+						visible[0].data.scale *= scale;
+						visible[1].data.scale *= scale;
+						visible[2].data.scale *= scale;
+						visible[3].data.scale *= scale;
+						visible[4].data.scale *= scale;
+						visible[5].data.scale *= scale;
+
+						count++;
+					}
+				}
+				else
+				{
+					if ( camera.visible( quad[0].data.center + position ) )
+					{
+						auto & visible = buffer[count];
+						visible = quad;
+					}
 
 					count++;
 				}
-			}
-			else
-			{
-				if ( camera.visible( quad[0].data.center + position ) )
-				{
-					auto & visible = m_visible[count];
-					visible = quad;
-				}
-
-				count++;
-			}
-		} );
-
-		if ( count )
-		{
-			upload();
+			} );
+			m_count = count;
 		}
 
-		m_count = count;
-	}
-
-	void BillboardBuffer::upload()const
-	{
-		m_vbo->bind();
-		m_vbo->upload( 0u, m_count, m_visible.data() );
-		m_vbo->unbind();
+		m_visible->unlock();
 	}
 
 	void BillboardBuffer::remove( uint32_t index )
@@ -143,23 +207,8 @@ namespace render
 			in.data = data;
 		}
 
-		auto it = std::find_if( std::begin( m_visible )
-			, std::end( m_visible )
-			, [index]( Quad const & quad )
-			{
-				return quad[0].id == index;
-			} );
-
-		if ( it != std::end( m_visible ) )
-		{
-			auto & quad = *it;
-
-			for ( auto & in : quad )
-			{
-				in.data = data;
-			}
-
-			onBillboardBufferChanged( *this );
-		}
+		onBillboardBufferChanged( *this );
 	}
+
+	//*************************************************************************
 }

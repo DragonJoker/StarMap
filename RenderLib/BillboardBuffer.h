@@ -51,6 +51,41 @@ namespace render
 		};
 		//! Un quad est composé de 6 sommets, pour l'afficher en tant que triangle.
 		using Quad = std::array< Vertex, 6 >;
+		/**
+		*\brief
+		*	Le stockage des billboards visibles.
+		*/
+		class Storage
+		{
+		public:
+			/**
+			*\brief
+			*	Mappe en RAM le tampon VRAM.
+			*\return
+			*	Le pointeur sur le tampon en RAM.
+			*/
+			virtual Quad * lock() = 0;
+			/**
+			*\brief
+			*	Démappe le tampon de la RAM.
+			*/
+			virtual void unlock() = 0;
+			/**
+			*\return
+			*	Le tampon GPU contenant les données.
+			*/
+			inline gl::Buffer< Quad > const & vbo()const
+			{
+				assert( m_vbo );
+				return *m_vbo;
+			}
+
+		protected:
+			//! Le VBO contenant les données.
+			gl::BufferPtr< BillboardBuffer::Quad > m_vbo;
+		};
+		//! Un pointeur sur le stockage.
+		using StoragePtr = std::unique_ptr< Storage >;
 
 	public:
 		/**
@@ -91,11 +126,6 @@ namespace render
 		void cull( Camera const & camera
 			, gl::Vector3D const & position
 			, float scale );
-		/**
-		*\brief
-		*	Transfère les données du tampon en VRAM.
-		*/
-		void upload()const;
 		/**
 		*\brief
 		*	Retire un point de la liste.
@@ -161,7 +191,8 @@ namespace render
 		*/
 		inline gl::Buffer< Quad > const & vbo()const
 		{
-			return *m_vbo;
+			assert( m_visible );
+			return m_visible->vbo();
 		}
 
 	public:
@@ -175,10 +206,8 @@ namespace render
 		uint32_t m_count{ 0u };
 		//! La liste des sommets.
 		std::vector< Quad > m_buffer;
-		//! La liste des sommets visibles.
-		std::vector< Quad > m_visible;
-		//! Le VBO contenant les sommets.
-		gl::BufferPtr< Quad > m_vbo;
+		//! Le stockage des sommets visibles.
+		StoragePtr m_visible;
 		//! Dit si on veut que les billboards soient mis à l'échelle du zoom.
 		bool m_scale{ false };
 	};
