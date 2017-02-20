@@ -1,9 +1,9 @@
-AndroitOpenGLTest
+AndroidOpenGLTest
 =================
 
 Tiny 3D engine written in C++ 14, using OpenGL ES 2/3.
 
-Building AndroitOpenGLTest
+Building AndroidOpenGLTest
 --------------------------
 
 This project is built with Visual Studio 2015 Update 3.

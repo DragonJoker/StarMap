@@ -245,5 +245,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /doc/GlLib
-/doc/html/html
 /doc/html
