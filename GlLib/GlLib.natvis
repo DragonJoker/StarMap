@@ -108,7 +108,7 @@
   </Type>
 
   <Type Name="gl::BufferBase">
-    <DisplayString>{id={m_name} size={m_size}}}</DisplayString>
+    <DisplayString>{{id={m_name} size={m_size}}}</DisplayString>
     <Expand>
       <Item Name="id">m_name</Item>
       <Item Name="size">m_size</Item>
@@ -117,7 +117,7 @@
   </Type>
 
   <Type Name="gl::Buffer&lt;*&gt;">
-    <DisplayString>{id={m_name} size={m_size}}}</DisplayString>
+    <DisplayString>{{id={m_name} size={m_size}}}</DisplayString>
     <Expand>
       <Item Name="id">m_name</Item>
       <Item Name="size">m_size</Item>
@@ -126,7 +126,7 @@
   </Type>
 
   <Type Name="gl::FrameBuffer">
-    <DisplayString>{id={m_name} size={m_size}}}</DisplayString>
+    <DisplayString>{{id={m_name} size={m_size}}}</DisplayString>
     <Expand>
       <Item Name="id">m_name</Item>
       <Item Name="size">m_size</Item>
@@ -134,7 +134,7 @@
   </Type>
 
   <Type Name="gl::GeometryBuffers">
-    <DisplayString>{id={m_name} attributes={m_attributes}}}</DisplayString>
+    <DisplayString>{{id={m_name} attributes={m_attributes}}}</DisplayString>
     <Expand>
       <Item Name="id">m_name</Item>
       <Item Name="attributes">m_attributes</Item>
@@ -142,7 +142,7 @@
   </Type>
 
   <Type Name="gl::Pipeline">
-    <DisplayString>{culling={m_culling} blending={m_blending} depth test={m_depthTest} depth write={m_depthWrite}}}</DisplayString>
+    <DisplayString>{{culling={m_culling} blending={m_blending} depth test={m_depthTest} depth write={m_depthWrite}}}</DisplayString>
     <Expand>
       <Item Name="culling">m_culling</Item>
       <Item Name="blending">m_blending</Item>
@@ -152,7 +152,7 @@
   </Type>
 
   <Type Name="gl::RenderBuffer">
-    <DisplayString>{id={m_name} size={m_size} format={m_format}}}</DisplayString>
+    <DisplayString>{{id={m_name} size={m_size} format={m_format}}}</DisplayString>
     <Expand>
       <Item Name="id">m_name</Item>
       <Item Name="size">m_size</Item>
@@ -161,7 +161,7 @@
   </Type>
 
   <Type Name="gl::Sampler">
-    <DisplayString>{min={m_minFilter} mag={m_magFilter} wrap=[{m_wrapS}, {m_wrapT}]}}</DisplayString>
+    <DisplayString>{{min={m_minFilter} mag={m_magFilter} wrap=[{m_wrapS}, {m_wrapT}]}}</DisplayString>
     <Expand>
       <Item Name="min">m_minFilter</Item>
       <Item Name="mag">m_magFilter</Item>
@@ -171,7 +171,7 @@
   </Type>
 
   <Type Name="gl::SamplerObject">
-    <DisplayString>{id={m_name} min={m_minFilter} mag={m_magFilter} wrap=[{m_wrapS}, {m_wrapT}]}}</DisplayString>
+    <DisplayString>{{id={m_name} min={m_minFilter} mag={m_magFilter} wrap=[{m_wrapS}, {m_wrapT}]}}</DisplayString>
     <Expand>
       <Item Name="id">m_name</Item>
       <Item Name="min">m_minFilter</Item>
@@ -182,7 +182,7 @@
   </Type>
 
   <Type Name="gl::AttributeInfo">
-    <DisplayString>{id={m_name} type={m_type}}}</DisplayString>
+    <DisplayString>{{id={m_name} type={m_type}}}</DisplayString>
     <Expand>
       <Item Name="id">m_name</Item>
       <Item Name="type">m_type</Item>
@@ -190,7 +190,7 @@
   </Type>
 
   <Type Name="gl::ShaderProgram">
-    <DisplayString>{id={m_name}}}</DisplayString>
+    <DisplayString>{{id={m_name}}}</DisplayString>
     <Expand>
       <Item Name="id">m_name</Item>
       <Item Name="attributes">m_attributes</Item>
@@ -200,7 +200,7 @@
   </Type>
 
   <Type Name="gl::Texture">
-    <DisplayString>{id={m_name} size={m_size} format={m_format}}}</DisplayString>
+    <DisplayString>{{id={m_name} size={m_size} format={m_format}}}</DisplayString>
     <Expand>
       <Item Name="id">m_name</Item>
       <Item Name="size">m_size</Item>

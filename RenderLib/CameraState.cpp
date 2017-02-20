@@ -26,6 +26,8 @@ namespace render
 		m_fovy = gl::Angle{ 45.0_degrees };
 		m_angleX = 0.0_radians;
 		m_angleY = 0.0_radians;
+		m_quatX = gl::Quaternion{};
+		m_quatY = gl::Quaternion{};
 	}
 
 	void CameraState::update()
@@ -39,16 +41,36 @@ namespace render
 #endif
 
 		auto scale = m_fovy.percent() + 0.1f;
-		m_angleX += to_radians( m_velocityY.value() ) * scale / 2.0f;
-		m_angleY += to_radians( m_velocityX.value() ) * scale / 2.0f;
+		auto angleX = m_angleX;
+		auto angleY = m_angleY;
+		auto rotY = gl::toRadians( m_velocityY.value() ) * scale / 2.0f;
+		auto rotX = gl::toRadians( m_velocityX.value() ) * scale / 2.0f;
+		m_angleX += rotY;
+		m_angleY += rotX;
+
+		if ( angleX != m_angleX )
+		{
+			m_quatX = gl::pitch( m_quatX, rotY );
+		}
+
+		if ( angleY != m_angleY )
+		{
+			m_quatY = gl::yaw( m_quatY, rotX );
+		}
+
 		m_velocityX = doUpdateVelocity( m_velocityX );
 		m_velocityY = doUpdateVelocity( m_velocityY );
 		m_zoomVelocity = doUpdateVelocity( m_zoomVelocity );
-		auto zoom = to_radians( m_zoomVelocity.value() / 2.0f );
+		auto zoom = gl::toRadians( m_zoomVelocity.value() / 2.0f );
 
 		if ( gl::Radians( m_fovy.value() ) > zoom )
 		{
 			m_fovy = gl::Radians{ m_fovy.value() } - zoom;
 		}
+	}
+
+	gl::Quaternion CameraState::rotation()const noexcept
+	{
+		return gl::Quaternion{ gl::Vec3T< gl::Radians >{ m_angleX.value(), m_angleY.value(), 0.0_radians } };// m_quatY * m_quatX;
 	}
 }

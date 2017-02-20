@@ -174,11 +174,11 @@ namespace render
 		{
 			{
 				Vertex{ data,{ -0.5, -0.5 }, fid },
+				Vertex{ data,{ +0.5, +0.5 }, fid },
 				Vertex{ data,{ +0.5, -0.5 }, fid },
-				Vertex{ data,{ +0.5, +0.5 }, fid },
 				Vertex{ data,{ -0.5, -0.5 }, fid },
-				Vertex{ data,{ +0.5, +0.5 }, fid },
 				Vertex{ data,{ -0.5, +0.5 }, fid },
+				Vertex{ data,{ +0.5, +0.5 }, fid },
 			}
 		};
 		m_buffer.push_back( quad );

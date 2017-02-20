@@ -124,6 +124,21 @@
     <ClInclude Include="Logarithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ExponentialRange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogarithmicRange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BorderPanelOverlay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OverlayCategory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelOverlay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderLibPrerequisites.cpp">
@@ -208,6 +223,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Frustum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BorderPanelOverlay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OverlayCategory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelOverlay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

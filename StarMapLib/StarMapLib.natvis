@@ -4,21 +4,32 @@
   <Type Name="Constellation">
     <DisplayString>{{name={m_name} position={m_position}}}</DisplayString>
     <Expand>
-      <Item Name="[name]">m_name</Item>
-      <Item Name="[position]">m_position</Item>
-      <Item Name="[letters]">m_letters</Item>
+      <Item Name="name">m_name</Item>
+      <Item Name="position">m_position</Item>
+      <Item Name="letters">m_letters</Item>
       <ExpandedItem>m_links</ExpandedItem>
+    </Expand>
+  </Type>
+
+  <Type Name="ConstellationStar">
+    <DisplayString>{{id={m_id} letter={m_letter}}}</DisplayString>
+    <Expand>
+      <Item Name="id">m_id</Item>
+      <Item Name="letter">m_letter</Item>
+      <Item Condition="m_star != 0" Name="star">*m_star</Item>
+      <Item Condition="m_star == 0" Name="star">m_name</Item>
+      <Item Name="constellation">m_constellation</Item>
     </Expand>
   </Type>
 
   <Type Name="Star">
     <DisplayString>{{id={m_id} name={m_name} position={m_position}}}</DisplayString>
     <Expand>
-      <Item Name="[id]">m_id</Item>
-      <Item Name="[name]">m_name</Item>
-      <Item Name="[magnitude]">m_magnitude</Item>
-      <Item Name="[position]">m_position</Item>
-      <Item Name="[colour]">m_colour</Item>
+      <Item Name="id">m_id</Item>
+      <Item Name="name">m_name</Item>
+      <Item Name="magnitude">m_magnitude</Item>
+      <Item Name="position">m_position</Item>
+      <Item Name="colour">m_colour</Item>
     </Expand>
   </Type>
 

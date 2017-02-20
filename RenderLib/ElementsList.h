@@ -14,22 +14,6 @@ namespace render
 {
 	/**
 	*\brief
-	*	L'allocateur de base pour les éléments d'une ElementsList.
-	*/
-	template< typename T >
-	struct AllocatorT
-	{
-		/**
-		*\brief
-		*	Alloue un élément via std::make_shared.
-		*/
-		std::shared_ptr< T > operator()()
-		{
-			return std::make_shared< T >();
-		}
-	};
-	/**
-	*\brief
 	*	Un wrapper de std::map pour faciliter son utilisation avec des
 	*	éléments nommés.
 	*\remarks
@@ -48,11 +32,8 @@ namespace render
 		/**
 		*\brief
 		*	Constructeur.
-		*\param[in] allocator
-		*	L'allocateur utilisé pour créer les éléments.
 		*/
-		ElementsList( Allocator allocator = AllocatorT< T >{} )
-			: m_allocator{ allocator }
+		ElementsList()
 		{
 		}
 		/**
@@ -62,27 +43,6 @@ namespace render
 		void clear()
 		{
 			m_elements.clear();
-		}
-		/**
-		*\brief
-		*	Ajoute un élément, s'il n'est pas déjà présent dans la liste.
-		*\remarks
-		*	Si l'élément n'est pas présent, il est alors créé.
-		*\param[in] name
-		*	Le nom de l'élément.
-		*\return
-		*	L'élément créé, ou l'existant.
-		*/
-		inline ElementPtr addElement( std::string const & name )
-		{
-			auto it = m_elements.find( name );
-
-			if ( it == m_elements.end() )
-			{
-				it = m_elements.emplace( name, m_allocator() ).first;
-			}
-
-			return it->second;
 		}
 		/**
 		*\brief
@@ -180,8 +140,6 @@ namespace render
 	private:
 		//! La liste d'éléments.
 		ElementMap m_elements;
-		//! L'allocateur d'éléments.
-		Allocator m_allocator;
 	};
 }
 

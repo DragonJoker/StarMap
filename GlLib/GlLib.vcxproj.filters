@@ -526,6 +526,12 @@
     <ClInclude Include="Vectorisation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Radians.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Degrees.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GlLibPrerequisites.cpp">
@@ -959,6 +965,9 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Vectorisation.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Converter.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

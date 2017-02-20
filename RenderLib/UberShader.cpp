@@ -219,8 +219,13 @@ void main()
 void main()
 {
 	vec4 mPosition = mtxModel * vec4( position, 1.0 );
-	vec3 right = vec3( mtxView[0][0], mtxView[1][0], mtxView[2][0] );
-	vec3 up = -vec3( mtxView[0][1], mtxView[1][1], mtxView[2][1] );
+	vec3 front = camera - mPosition.xyz;
+	front = normalize( front );
+	vec3 up = vec3( 0.0, 1.0, 0.0 );
+	vec3 right = cross( up, front );
+	up = cross( front, right );
+	//vec3 right = vec3( mtxView[0][0], mtxView[1][0], mtxView[2][0] );
+	//vec3 up = -vec3( mtxView[0][1], mtxView[1][1], mtxView[2][1] );
 	float width = dimensions.x;
 	float height = dimensions.y;
 	mPosition.xyz += ( right * texture.x * width * scale.x )
@@ -254,7 +259,20 @@ void main()
 )"
 			};
 
-			static std::string OverlayShader
+			static std::string PanelOverlayShader
+			{
+				R"([attribute] vec2 position;
+
+uniform mat4 mtxMP;
+
+void main()
+{
+	gl_Position = mtxMP * vec4( position, 0.0, 1.0 );
+}
+)"
+			};
+
+			static std::string TextOverlayShader
 			{
 				R"([attribute] vec2 position;
 [attribute] vec2 texture;
@@ -419,9 +437,14 @@ void main()
 				return ret;
 			}
 
-			std::string getOverlayShader( RenderType render )
+			std::string getPanelOverlayShader( RenderType render )
 			{
-				return OverlayShader;
+				return PanelOverlayShader;
+			}
+
+			std::string getTextOverlayShader( RenderType render )
+			{
+				return TextOverlayShader;
 			}
 
 			std::string getTextureShader( RenderType render )
@@ -448,8 +471,12 @@ void main()
 					ret = getLineShader( render );
 					break;
 
-				case ObjectType::eOverlay:
-					ret = getOverlayShader( render );
+				case ObjectType::ePanelOverlay:
+					ret = getPanelOverlayShader( render );
+					break;
+
+				case ObjectType::eTextOverlay:
+					ret = getTextOverlayShader( render );
 					break;
 
 				case ObjectType::eTexture:
@@ -604,7 +631,18 @@ void main()
 )"
 			};
 
-			static std::string OverlayShader
+			static std::string PanelOverlayShader
+			{
+				R"(uniform vec4 colour;
+
+void main()
+{
+	[gl_FragColor] = colour;
+}
+)"
+			};
+
+			static std::string TextOverlayShader
 			{
 				R"([varying] vec2 vtx_texture;
 
@@ -705,7 +743,8 @@ void main()
 				if ( GlLib_UseUBO
 					&& gl::OpenGL::checkSupport( gl::FeatureLevel::eGLES3 ) )
 				{
-					if ( object != ObjectType::eOverlay
+					if ( object != ObjectType::ePanelOverlay
+						&& object != ObjectType::eTextOverlay
 						&& object != ObjectType::eTexture )
 					{
 						ret += MatUbo;
@@ -735,7 +774,8 @@ void main()
 				}
 				else
 				{
-					if ( object != ObjectType::eOverlay
+					if ( object != ObjectType::ePanelOverlay
+						&& object != ObjectType::eTextOverlay
 						&& object != ObjectType::eTexture )
 					{
 						ret += MatUniforms;
@@ -779,8 +819,12 @@ void main()
 						ret += PolyLineShader;
 						break;
 
-					case ObjectType::eOverlay:
-						ret += OverlayShader;
+					case ObjectType::ePanelOverlay:
+						ret += PanelOverlayShader;
+						break;
+
+					case ObjectType::eTextOverlay:
+						ret += TextOverlayShader;
 						break;
 
 					case ObjectType::eTexture:

@@ -33,7 +33,7 @@ namespace gl
 		constexpr QuaternionT()noexcept;
 		/**
 		*\brief
-		*	Constructeur depuis 2 axes.
+		*	Constructeur depuis 2 axes normalisés.
 		*\param[in] u, v
 		*	Les 2 axes.
 		*/
@@ -182,6 +182,63 @@ namespace gl
 	template< typename T, typename U >
 	inline Vec4T< T > rotate( QuaternionT< T > const & lhs
 		, Vec4T< U > const & rhs )noexcept;
+	/**
+	*\brief
+	*	Tourne le quaternion à partir d'un axe et d'un angle.
+	*\remarks
+	*	L'axe de rotation doit être normalisé.
+	*\param[in] q
+	*	Le quaternion.
+	*\param[in] angle
+	*	L'angle de rotation.
+	*\param[in] axis
+	*	L'axe de rotation.
+	*\return
+	*	Le quaternion résultant.
+	*/
+	template< typename T >
+	QuaternionT< T > rotate( QuaternionT< T > const & q,
+		RadiansT < T > const & angle,
+		Vec3T< T > const & axis )noexcept;
+	/**
+	*\brief
+	*	Tourne le quaternion d'un angle autour de l'axe X.
+	*\param[in] q
+	*	Le quaternion.
+	*\param[in] angle
+	*	L'angle de rotation.
+	*\return
+	*	Le quaternion résultant.
+	*/
+	template< typename T >
+	QuaternionT< T > pitch( QuaternionT< T > const & q,
+		RadiansT < T > const & angle )noexcept;
+	/**
+	*\brief
+	*	Tourne le quaternion d'un angle autour de l'axe Y.
+	*\param[in] q
+	*	Le quaternion.
+	*\param[in] angle
+	*	L'angle de rotation.
+	*\return
+	*	Le quaternion résultant.
+	*/
+	template< typename T >
+	QuaternionT< T > yaw( QuaternionT< T > const & q,
+		RadiansT < T > const & angle )noexcept;
+	/**
+	*\brief
+	*	Tourne le quaternion d'un angle autour de l'axe Z.
+	*\param[in] q
+	*	Le quaternion.
+	*\param[in] angle
+	*	L'angle de rotation.
+	*\return
+	*	Le quaternion résultant.
+	*/
+	template< typename T >
+	QuaternionT< T > roll( QuaternionT< T > const & q,
+		RadiansT < T > const & angle )noexcept;
 	/**
 	*\brief
 	*	Crée une matrice de rotation à partir du quaternion donné.

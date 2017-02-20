@@ -190,6 +190,19 @@
     </Expand>
   </Type>
 
+  <Type Name="render::Overlay">
+    <DisplayString>{{index={m_index} position={m_position}}}</DisplayString>
+    <Expand>
+      <Item Name="index">m_index</Item>
+      <Item Name="position">m_position</Item>
+      <Item Name="size">m_size</Item>
+      <Item Name="colour">m_colour</Item>
+      <Item Name="visible">m_visible</Item>
+      <Item Name="transform">m_transform</Item>
+      <Item Name="quads">m_quads</Item>
+    </Expand>
+  </Type>
+
   <Type Name="render::TextOverlay::DisplayableChar">
     <DisplayString>{{{m_glyph}}}</DisplayString>
     <Expand>
@@ -214,6 +227,22 @@
     <Expand>
       <Item Name="position">coords</Item>
       <Item Name="uv">text</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="render::TextOverlay">
+    <DisplayString>{{index={m_index} position={m_position} caption={m_previousCaption}}}</DisplayString>
+    <Expand>
+      <Item Name="caption">m_previousCaption</Item>
+      <Item Name="index">m_index</Item>
+      <Item Name="position">m_position</Item>
+      <Item Name="size">m_size</Item>
+      <Item Name="colour">m_colour</Item>
+      <Item Name="visible">m_visible</Item>
+      <Item Name="align">m_hAlign</Item>
+      <Item Name="spacing mode">m_lineSpacingMode</Item>
+      <Item Name="transform">m_transform</Item>
+      <Item Name="quads">m_quads</Item>
     </Expand>
   </Type>
 

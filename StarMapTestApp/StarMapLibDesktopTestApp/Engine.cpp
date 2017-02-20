@@ -20,7 +20,7 @@ Window::Window()
 		, m_onScreenDoubleTap
 		, m_onScreenSingleMove
 		, m_onScreenDoubleMove }
-	, m_starmap{ m_events }
+	, m_starmap{ m_events, 5u }
 {
 	std::string const appName = "RenderLibTestApp";
 	m_cout = new render::LogStreambuf< utils::InfoLogStreambufTraits >( appName

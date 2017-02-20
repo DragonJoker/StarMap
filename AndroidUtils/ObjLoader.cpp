@@ -25,7 +25,8 @@ namespace utils
 
 			if ( !ret )
 			{
-				ret = textures.addElement( name );
+				ret = std::make_shared< render::Texture >();
+				textures.addElement( name, ret );
 				render::loadTexture( fileContent, *ret );
 			}
 
@@ -53,7 +54,8 @@ namespace utils
 			{
 				std::string name;
 				stream >> name;
-				select = materialsList.addElement( name );
+				select = std::make_shared< render::Material >();
+				materialsList.addElement( name, select );
 			}
 			else if ( select )
 			{
@@ -261,7 +263,8 @@ namespace utils
 		uint16_t normalsCount = 0u;
 
 		materials.reserve( faces.size() );
-		mesh = meshesList.addElement( name );
+		mesh = std::make_shared< render::Mesh >();
+		meshesList.addElement( name, mesh );
 
 		while ( std::getline( file, line ) )
 		{

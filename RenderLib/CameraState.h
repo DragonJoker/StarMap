@@ -32,6 +32,11 @@ namespace render
 		*/
 		void update();
 		/**
+		*\return
+		*	La rotation voulue pour la caméra.
+		*/
+		gl::Quaternion rotation()const noexcept;
+		/**
 		*\brief
 		*	Définit les angles d'ouverture minimal et maximal.
 		*\param[in] fovyMin, fovyMax
@@ -73,14 +78,6 @@ namespace render
 		}
 		/**
 		*\return
-		*	Les angles voulus pour l'orientation de la caméra.
-		*/
-		inline gl::Vec2T< gl::Radians > angle()const noexcept
-		{
-			return{ m_angleX.value(), m_angleY.value() };
-		}
-		/**
-		*\return
 		*	La valeur du zoom.
 		*/
 		inline gl::Angle const & zoom()const noexcept
@@ -92,8 +89,8 @@ namespace render
 		//! L'intervalle d'angles de rotation.
 		Range< gl::Radians > m_angleRange
 		{
-			gl::Radians{ float( -gl::Pi ) / 6.0f },
-			gl::Radians{ float( gl::Pi ) / 6.0f }
+			gl::Radians{ float( -gl::PiDiv2 ) },
+			gl::Radians{ float( gl::PiDiv2 ) }
 		};
 		//! La rotation sur l'axe X.
 		RangedValue< gl::Radians > m_angleX
@@ -107,6 +104,10 @@ namespace render
 			0.0_radians,
 			m_angleRange
 		};
+		//! La rotation sur l'axe X.
+		gl::Quaternion m_quatX;
+		//! La rotation sur l'axe Y.
+		gl::Quaternion m_quatY;
 		//! L'intervalle de vitesse de rotation.
 		Range< gl::Degrees > m_velocityRange
 		{
@@ -135,7 +136,7 @@ namespace render
 		RangedValue< gl::Angle > m_fovy
 		{
 			gl::Angle{ 45.0_degrees },
-			makeRange(gl::Angle{ 0.1_degrees }, gl::Angle{ 90.0_degrees } )
+			makeRange( gl::Angle{ 0.1_degrees }, gl::Angle{ 90.0_degrees } )
 		};
 	};
 }

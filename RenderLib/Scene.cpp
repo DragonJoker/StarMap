@@ -33,20 +33,11 @@ namespace render
 
 			objects.clear();
 		}
-
-		struct BillboardAllocator
-		{
-			BillboardBufferPtr operator()()
-			{
-				return std::make_shared< BillboardBuffer >( true );
-			}
-		};
 	}
 
 	Scene::Scene( gl::Size2D const & size )
 		: RenderableContainer{}
 		, m_camera{ size }
-		, m_billboardsBuffers{ BillboardAllocator{} }
 	{
 #if !defined( NDEBUG )
 

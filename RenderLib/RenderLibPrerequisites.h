@@ -44,6 +44,7 @@ namespace render
 	class BillboardAttributes;
 	class BillboardBuffer;
 	class Billboard;
+	class BorderPanelOverlay;
 	class Camera;
 	class CameraState;
 	class Font;
@@ -54,7 +55,9 @@ namespace render
 	class Mesh;
 	class Movable;
 	class Object;
+	class Overlay;
 	class OverlayRenderer;
+	class PanelOverlay;
 	class PolyLine;
 	class RenderTarget;
 	class RenderWindow;
@@ -91,7 +94,9 @@ namespace render
 	using PolyLinePtr = std::shared_ptr< PolyLine >;
 	using RenderWindowPtr = std::unique_ptr< RenderWindow >;
 	using SubmeshPtr = std::shared_ptr< Submesh >;
+	using BorderPanelOverlayPtr = std::shared_ptr< BorderPanelOverlay >;
 	using TextOverlayPtr = std::shared_ptr< TextOverlay >;
+	using OverlayPtr = std::shared_ptr< Overlay >;
 	using TexturePtr = std::shared_ptr< Texture >;
 
 	using MaterialArray = std::vector< MaterialPtr >;
@@ -105,7 +110,7 @@ namespace render
 	using TextureList = ElementsList< Texture >;
 	using BillboardList = ElementsList< BillboardBuffer >;
 	using MeshList = ElementsList< Mesh >;
-	using TextOverlayList = ElementsList< TextOverlay >;
+	using OverlayList = ElementsList< Overlay >;
 	/**@}*/
 	/**
 	*\name Définitions des signaux.

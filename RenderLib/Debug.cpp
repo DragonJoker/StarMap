@@ -32,26 +32,30 @@ namespace render
 				( std::move( font ) );
 
 			m_scene = &scene;
-			m_version = m_scene->overlays().addElement( Version );
+			m_version = std::make_shared< TextOverlay >();
 			m_version->position( { 0, 0 } );
 			m_version->colour( { 1, 1, 1, 1 } );
 			m_version->caption( gl::OpenGL::getVersion() );
 			m_version->fontTexture( *m_fontTexture );
+			m_scene->overlays().addElement( Version, m_version );
 
-			m_time = m_scene->overlays().addElement( Time );
+			m_time = std::make_shared< TextOverlay >();
 			m_time->position( { 0, 40 } );
 			m_time->colour( { 1, 1, 1, 1 } );
 			m_time->fontTexture( *m_fontTexture );
+			m_scene->overlays().addElement( Time, m_time );
 
-			m_billboardCount = m_scene->overlays().addElement( BillboardCount );
+			m_billboardCount = std::make_shared< TextOverlay >();
 			m_billboardCount->position( { 0, 80 } );
 			m_billboardCount->colour( { 1, 1, 1, 1 } );
 			m_billboardCount->fontTexture( *m_fontTexture );
+			m_scene->overlays().addElement( BillboardCount, m_billboardCount );
 
-			m_buffersCount = m_scene->overlays().addElement( BufferCount );
+			m_buffersCount = std::make_shared< TextOverlay >();
 			m_buffersCount->position( { 0, 120 } );
 			m_buffersCount->colour( { 1, 1, 1, 1 } );
 			m_buffersCount->fontTexture( *m_fontTexture );
+			m_scene->overlays().addElement( BufferCount, m_buffersCount );
 		}
 	}
 

@@ -67,8 +67,10 @@ namespace render
 		eBillboard,
 		//! Liste de lignes.
 		ePolyLine,
+		//! Incrustation panneau.
+		ePanelOverlay,
 		//! Incrustation texte.
-		eOverlay,
+		eTextOverlay,
 		//! Texture en plein écran.
 		eTexture,
 		GlLib_EnumBounds( eObject )

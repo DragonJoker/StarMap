@@ -253,8 +253,7 @@ namespace render
 	inline bool operator==( RangedValue< T > const & lhs
 		, RangedValue< T > const & rhs )noexcept
 	{
-		static constexpr auto eps = std::numeric_limits< T >::epsilon();
-		return std::abs( lhs.value() - rhs.value() ) < eps;
+		return lhs.value() == rhs.value();
 	}
 
 	template< typename T >
