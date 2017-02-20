@@ -191,9 +191,9 @@ namespace render
 		*\param[in] position
 		*	La nouvelle valeur.
 		*/
-		void borderPosition( BorderPosition p_position )
+		void borderPosition( BorderPosition position )
 		{
-			m_borderPosition = p_position;
+			m_borderPosition = position;
 		}
 		/**
 		*\return

@@ -70,7 +70,7 @@ namespace gl
 		/**
 		*\brief
 		*	Constructeur.
-		*\param[in] xyz
+		*\param[in] xy
 		*	La valeur des composantes x et y.
 		*\param[in] z
 		*	La valeur de la composante z.
@@ -83,7 +83,7 @@ namespace gl
 		*	Constructeur.
 		*\param[in] x
 		*	La valeur de la composante x.
-		*\param[in] yzw
+		*\param[in] yz
 		*	La valeur des composantes y et z.
 		*\param[in] w
 		*	La valeur de la composante w.

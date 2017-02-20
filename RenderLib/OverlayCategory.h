@@ -56,11 +56,8 @@ namespace render
 		*\param[in] type
 		*	Le type d'incrustation.
 		*/
-		Overlay( Type p_type );
+		Overlay( Type type );
 		/**
-		*\~english
-		*\brief		Destructor
-		*\~french
 		*\brief		Destructeur
 		*/
 		virtual ~Overlay();

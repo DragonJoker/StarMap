@@ -27,6 +27,10 @@ typedef long longptr_t;
 
 namespace utils
 {
+	/**
+	*\brief
+	*	Fenêtre Win32.
+	*/
 	class MsWindow
 	{
 	public:

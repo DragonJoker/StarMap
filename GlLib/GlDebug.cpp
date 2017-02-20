@@ -227,7 +227,7 @@ namespace gl
 				"Invalid frame buffer operation",
 			};
 
-			GLenum error = GL_NO_ERROR;
+			uint32_t error = GL_NO_ERROR;
 			std::string errors;
 
 			do
@@ -300,15 +300,15 @@ namespace gl
 		, const char * message )const
 	{
 #ifndef GL_DEBUG_SOURCE_API
-		static constexpr GLenum GL_DEBUG_SOURCE_API = 0x8246;
-		static constexpr GLenum GL_DEBUG_SOURCE_WINDOW_SYSTEM = 0x8247;
-		static constexpr GLenum GL_DEBUG_SOURCE_SHADER_COMPILER = 0x8248;
-		static constexpr GLenum GL_DEBUG_SOURCE_THIRD_PARTY = 0x8249;
-		static constexpr GLenum GL_DEBUG_SOURCE_APPLICATION = 0x824A;
-		static constexpr GLenum GL_DEBUG_SOURCE_OTHER = 0x824B;
+		static constexpr uint32_t GL_DEBUG_SOURCE_API = 0x8246;
+		static constexpr uint32_t GL_DEBUG_SOURCE_WINDOW_SYSTEM = 0x8247;
+		static constexpr uint32_t GL_DEBUG_SOURCE_SHADER_COMPILER = 0x8248;
+		static constexpr uint32_t GL_DEBUG_SOURCE_THIRD_PARTY = 0x8249;
+		static constexpr uint32_t GL_DEBUG_SOURCE_APPLICATION = 0x824A;
+		static constexpr uint32_t GL_DEBUG_SOURCE_OTHER = 0x824B;
 #endif
 
-		static std::map< GLenum, std::string > SourceName
+		static std::map< uint32_t, std::string > SourceName
 		{
 			{ GL_DEBUG_SOURCE_API, "OpenGl" },
 			{ GL_DEBUG_SOURCE_WINDOW_SYSTEM, "Window System" },
@@ -319,18 +319,18 @@ namespace gl
 		};
 
 #ifndef GL_DEBUG_TYPE_ERROR
-		static constexpr GLenum GL_DEBUG_TYPE_ERROR = 0x824C;
-		static constexpr GLenum GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR = 0x824D;
-		static constexpr GLenum GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR = 0x824E;
-		static constexpr GLenum GL_DEBUG_TYPE_PORTABILITY = 0x824F;
-		static constexpr GLenum GL_DEBUG_TYPE_PERFORMANCE = 0x8250;
-		static constexpr GLenum GL_DEBUG_TYPE_OTHER = 0x8251;
-		static constexpr GLenum GL_DEBUG_TYPE_MARKER = 0x8268;
-		static constexpr GLenum GL_DEBUG_TYPE_PUSH_GROUP = 0x8269;
-		static constexpr GLenum GL_DEBUG_TYPE_POP_GROUP = 0x826A;
+		static constexpr uint32_t GL_DEBUG_TYPE_ERROR = 0x824C;
+		static constexpr uint32_t GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR = 0x824D;
+		static constexpr uint32_t GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR = 0x824E;
+		static constexpr uint32_t GL_DEBUG_TYPE_PORTABILITY = 0x824F;
+		static constexpr uint32_t GL_DEBUG_TYPE_PERFORMANCE = 0x8250;
+		static constexpr uint32_t GL_DEBUG_TYPE_OTHER = 0x8251;
+		static constexpr uint32_t GL_DEBUG_TYPE_MARKER = 0x8268;
+		static constexpr uint32_t GL_DEBUG_TYPE_PUSH_GROUP = 0x8269;
+		static constexpr uint32_t GL_DEBUG_TYPE_POP_GROUP = 0x826A;
 #endif
 
-		static std::map< GLenum, std::string > TypeName
+		static std::map< uint32_t, std::string > TypeName
 		{
 			{ GL_DEBUG_TYPE_ERROR, "Error" },
 			{ GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR, "Deprecated behavior" },
@@ -344,13 +344,13 @@ namespace gl
 		};
 
 #ifndef GL_DEBUG_SEVERITY_HIGH
-		static constexpr GLenum GL_DEBUG_SEVERITY_HIGH = 0x9146;
-		static constexpr GLenum GL_DEBUG_SEVERITY_MEDIUM = 0x9147;
-		static constexpr GLenum GL_DEBUG_SEVERITY_LOW = 0x9148;
-		static constexpr GLenum GL_DEBUG_SEVERITY_NOTIFICATION = 0x826B;
+		static constexpr uint32_t GL_DEBUG_SEVERITY_HIGH = 0x9146;
+		static constexpr uint32_t GL_DEBUG_SEVERITY_MEDIUM = 0x9147;
+		static constexpr uint32_t GL_DEBUG_SEVERITY_LOW = 0x9148;
+		static constexpr uint32_t GL_DEBUG_SEVERITY_NOTIFICATION = 0x826B;
 #endif
 
-		static std::map< GLenum, std::string > SeverityName
+		static std::map< uint32_t, std::string > SeverityName
 		{
 			{ GL_DEBUG_SEVERITY_HIGH, "High" },
 			{ GL_DEBUG_SEVERITY_MEDIUM, "Medium" },
@@ -401,17 +401,17 @@ namespace gl
 		, const char * message )const
 	{
 #ifndef GL_DEBUG_CATEGORY_API_ERROR_AMD
-		static constexpr GLenum GL_DEBUG_CATEGORY_API_ERROR_AMD = 0x9149;
-		static constexpr GLenum GL_DEBUG_CATEGORY_WINDOW_SYSTEM_AMD = 0x914A;
-		static constexpr GLenum GL_DEBUG_CATEGORY_DEPRECATION_AMD = 0x914B;
-		static constexpr GLenum GL_DEBUG_CATEGORY_UNDEFINED_BEHAVIOR_AMD = 0x914C;
-		static constexpr GLenum GL_DEBUG_CATEGORY_PERFORMANCE_AMD = 0x914D;
-		static constexpr GLenum GL_DEBUG_CATEGORY_SHADER_COMPILER_AMD = 0x914E;
-		static constexpr GLenum GL_DEBUG_CATEGORY_APPLICATION_AMD = 0x914F;
-		static constexpr GLenum GL_DEBUG_CATEGORY_OTHER_AMD = 0x9150;
+		static constexpr uint32_t GL_DEBUG_CATEGORY_API_ERROR_AMD = 0x9149;
+		static constexpr uint32_t GL_DEBUG_CATEGORY_WINDOW_SYSTEM_AMD = 0x914A;
+		static constexpr uint32_t GL_DEBUG_CATEGORY_DEPRECATION_AMD = 0x914B;
+		static constexpr uint32_t GL_DEBUG_CATEGORY_UNDEFINED_BEHAVIOR_AMD = 0x914C;
+		static constexpr uint32_t GL_DEBUG_CATEGORY_PERFORMANCE_AMD = 0x914D;
+		static constexpr uint32_t GL_DEBUG_CATEGORY_SHADER_COMPILER_AMD = 0x914E;
+		static constexpr uint32_t GL_DEBUG_CATEGORY_APPLICATION_AMD = 0x914F;
+		static constexpr uint32_t GL_DEBUG_CATEGORY_OTHER_AMD = 0x9150;
 #endif
 
-		static std::map< GLenum, std::string > CategoryName
+		static std::map< uint32_t, std::string > CategoryName
 		{
 			{ GL_DEBUG_CATEGORY_API_ERROR_AMD, "OpenGl" },
 			{ GL_DEBUG_CATEGORY_WINDOW_SYSTEM_AMD, "Window System" },
@@ -424,13 +424,13 @@ namespace gl
 		};
 
 #ifndef GL_DEBUG_SEVERITY_HIGH_AMD
-		static constexpr GLenum GL_DEBUG_SEVERITY_HIGH_AMD = 0x9146;
-		static constexpr GLenum GL_DEBUG_SEVERITY_MEDIUM_AMD = 0x9147;
-		static constexpr GLenum GL_DEBUG_SEVERITY_LOW_AMD = 0x9148;
+		static constexpr uint32_t GL_DEBUG_SEVERITY_HIGH_AMD = 0x9146;
+		static constexpr uint32_t GL_DEBUG_SEVERITY_MEDIUM_AMD = 0x9147;
+		static constexpr uint32_t GL_DEBUG_SEVERITY_LOW_AMD = 0x9148;
 #endif
-		static constexpr GLenum GL_DEBUG_SEVERITY_NOTIFICATION_AMD = 0x826B;
+		static constexpr uint32_t GL_DEBUG_SEVERITY_NOTIFICATION_AMD = 0x826B;
 
-		static std::map< GLenum, std::string > SeverityName
+		static std::map< uint32_t, std::string > SeverityName
 		{
 			{ GL_DEBUG_SEVERITY_HIGH_AMD, "High" },
 			{ GL_DEBUG_SEVERITY_MEDIUM_AMD, "Medium" },

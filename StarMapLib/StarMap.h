@@ -114,7 +114,7 @@ namespace starmap
 		/**
 		*\brief
 		*	Recherche une constellation dans la carte du ciel.
-		*\param[in] constellation
+		*\param[in] name
 		*	Le nom de la constellation.
 		*\return
 		*	La constellation, \p nullptr si non trouvée.
@@ -264,10 +264,29 @@ namespace starmap
 		*\brief
 		*	Met à jour la position d'une incrustation texte par rapport à la
 		*	position donnée.
+		*\param[in] overlay
+		*	L'incrustation.
+		*\param[in] camera
+		*	La caméra utilisée pour déterminer si la position est visible.
 		*\param[in] position
-		*\	La position monde 3D de l'objet.
+		*	La position monde 3D de l'objet.
 		*\param[in] offset
-		*\	L'offset 2D donné à la position écran de l'incrustation.
+		*	L'offset 2D donné à la position écran de l'incrustation.
+		*/
+		void doUpdateOverlay( render::Overlay & overlay
+			, render::Camera const & camera
+			, gl::Vector3D const & position
+			, gl::Offset2D const & offset );
+		/**
+		*\brief
+		*	Met à jour la position d'une incrustation texte par rapport à la
+		*	position donnée.
+		*\param[in] overlay
+		*	L'incrustation.
+		*\param[in] position
+		*	La position monde 3D de l'objet.
+		*\param[in] offset
+		*	L'offset 2D donné à la position écran de l'incrustation.
 		*/
 		void doUpdateOverlay( render::Overlay & overlay
 			, gl::Vector3D const & position

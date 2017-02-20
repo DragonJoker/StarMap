@@ -1,4 +1,4 @@
-/**
+﻿/**
 *\file
 *	DesktopUtilsPrerequisites.h
 *\author
@@ -41,32 +41,32 @@ namespace utils
 	class ObjLoader;
 	/**
 	*\brief
-	*	Ev�nement de type redimensionnement de fen�tre.
+	*	Evènement de type redimensionnement de fenêtre.
 	*/
 	struct SizeEvent
 	{
 		//! Les nouvelle dimensions
 		gl::Size2D size;
-		//! Dit si la fen�tre est maximis�e.
+		//! Dit si la fenêtre est maximisée.
 		bool maximized;
-		//! Dit si la fen�tre est minimis�e.
+		//! Dit si la fenêtre est minimisée.
 		bool minimized;
-		//! Dit si la fen�tre est restaur�e.
+		//! Dit si la fenêtre est restaurée.
 		bool restored;
 	};
 	/**
 	*\brief
-	*	Ev�nement li� � la souris.
+	*	Evènement lié à la souris.
 	*/
 	struct MouseEvent
 	{
 		//! La position actuelle de la souris.
 		gl::Position2D position;
-		//! \p true si le bouton gauche de la souris est enfonc�.
+		//! \p true si le bouton gauche de la souris est enfoncé.
 		bool ldown;
-		//! \p true si le bouton milieu de la souris est enfonc�.
+		//! \p true si le bouton milieu de la souris est enfoncé.
 		bool mdown;
-		//! \p true si le bouton droit de la souris est enfonc�.
+		//! \p true si le bouton droit de la souris est enfoncé.
 		bool rdown;
 		//! Le delta de la molette.
 		int delta;

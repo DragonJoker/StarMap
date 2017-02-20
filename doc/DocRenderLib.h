@@ -1,4 +1,4 @@
 /**
-*\page RenderLib
+*\page renderlib RenderLib
 *\tableofcontents
 */

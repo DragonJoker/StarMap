@@ -54,11 +54,11 @@ namespace render
 		/**
 		*\brief
 		*	Retourne la valeur correspondant au pourcentage donné.
-		*\param[in] percent
+		*\param[in] value
 		*	Le pourcentage.
 		*\return
-		*	\p m_min si \p percent vaut 0.0.\n
-		*	\p m_max si \p percent vaut 1.0.\n
+		*	\p m_min si \p value vaut 0.0.\n
+		*	\p m_max si \p value vaut 1.0.\n
 		*	Une valeur comprise entre \p m_min et \p m_max.
 		*/
 		T value( T const & value )const noexcept

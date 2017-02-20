@@ -158,7 +158,7 @@ namespace gl
 	QuaternionT< T > normalize( QuaternionT< T > const & vec )noexcept;
 	/**
 	*\brief
-	*	Effectue une rotation du vecteur \p v par le quaternion \q.
+	*	Effectue une rotation du vecteur \p v par le quaternion \p q.
 	*\param[in] q
 	*	Le quaternion.
 	*\param[in] v
@@ -167,11 +167,11 @@ namespace gl
 	*	Le vecteur transformé.
 	*/
 	template< typename T, typename U >
-	inline Vec3T< T > rotate( QuaternionT< T > const & lhs
-		, Vec3T< U > const & rhs )noexcept;
+	inline Vec3T< T > rotate( QuaternionT< T > const & q
+		, Vec3T< U > const & v )noexcept;
 	/**
 	*\brief
-	*	Effectue une rotation du vecteur \p v par le quaternion \q.
+	*	Effectue une rotation du vecteur \p v par le quaternion \p q.
 	*\param[in] q
 	*	Le quaternion.
 	*\param[in] v
@@ -180,8 +180,8 @@ namespace gl
 	*	Le vecteur transformé.
 	*/
 	template< typename T, typename U >
-	inline Vec4T< T > rotate( QuaternionT< T > const & lhs
-		, Vec4T< U > const & rhs )noexcept;
+	inline Vec4T< T > rotate( QuaternionT< T > const & q
+		, Vec4T< U > const & v )noexcept;
 	/**
 	*\brief
 	*	Tourne le quaternion à partir d'un axe et d'un angle.

@@ -269,7 +269,7 @@ namespace render
 		*/
 		inline void thresholdBounds( float min, float max )noexcept
 		{
-			m_threshold.updateRange( makeRange( min, max * 1.5f ) );
+			m_threshold.updateRange( makeRange( min, max ) );
 		}
 		/**
 		*\return

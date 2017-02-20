@@ -1,4 +1,4 @@
-﻿/**
+/**
 *\file
 *	PlaneEquation.h
 *\author
@@ -47,7 +47,8 @@ namespace render
 		*\param[in] point
 		*	Un point appartenant au plan.
 		*/
-		PlaneEquation( gl::Vector3D const & normal, gl::Vector3D const & point );
+		PlaneEquation( gl::Vector3D const & normal
+			, gl::Vector3D const & point );
 		/**
 		*\brief
 		*	Destructeur.
@@ -63,7 +64,9 @@ namespace render
 		*\param[in] p3
 		*	Le troisième point appartenant au plan.
 		*/
-		void set( gl::Vector3D const & p_p1, gl::Vector3D const & p_p2, gl::Vector3D const & p_p3 );
+		void set( gl::Vector3D const & p1
+			, gl::Vector3D const & p2
+			, gl::Vector3D const & p3 );
 		/**
 		*\brief
 		*	Définit l'équation du plan.

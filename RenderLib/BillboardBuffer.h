@@ -91,7 +91,7 @@ namespace render
 		/**
 		*\brief
 		*	Constructeur.
-		*\param[in]
+		*\param[in] scale
 		*	Dit si on veut que les billboards soient mis à l'échelle du zoom, c'est à
 		*	dire qu'ils ne varieront pas de taille.
 		*/

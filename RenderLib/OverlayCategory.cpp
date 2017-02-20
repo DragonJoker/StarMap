@@ -9,8 +9,8 @@
 
 namespace render
 {
-	Overlay::Overlay( Type p_type )
-		: m_type( p_type )
+	Overlay::Overlay( Type type )
+		: m_type( type )
 	{
 	}
 

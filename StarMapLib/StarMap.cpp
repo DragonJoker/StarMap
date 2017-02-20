@@ -100,13 +100,13 @@ namespace starmap
 
 		if ( !m_stars.empty() )
 		{
-			auto minMagnitude = m_stars.begin()->magnitude();
-			auto maxMagnitude = m_stars.rbegin()->magnitude();
-			m_window->scene().thresholdBounds( minMagnitude, maxMagnitude );
+			auto range = render::makeRange( m_stars.begin()->magnitude()
+				, m_stars.rbegin()->magnitude() );
+			m_window->scene().thresholdBounds( 0.0f, 3.0f );
 
 			for ( auto & star : m_stars )
 			{
-				doAddStar( star, m_window->scene().thresholdBounds() );
+				doAddStar( star, range );
 			}
 
 			for ( auto & constellation : m_constellations )
@@ -277,6 +277,7 @@ namespace starmap
 	{
 		m_pickDescription->caption( object.name() );
 		doUpdateOverlay( *m_pickDescriptionHolder
+			, m_window->scene().camera()
 			, object.position()
 			, StarNameOffset );
 		m_pickDescription->position( m_pickDescriptionHolder->position()
@@ -537,6 +538,7 @@ namespace starmap
 		if ( m_pickedStar )
 		{
 			doUpdateOverlay( *m_pickDescriptionHolder
+				, m_window->scene().camera()
 				, m_pickedStar->position()
 				, StarNameOffset );
 			m_pickDescription->position( m_pickDescriptionHolder->position()
@@ -579,13 +581,30 @@ namespace starmap
 	void StarMap::doUpdateConstellationNames()
 	{
 		auto & scene = m_window->scene();
+		auto & camera = m_window->scene().camera();
 
 		for ( auto const & constellation : m_constellations )
 		{
 			auto overlay = scene.overlays().findElement( constellation.first );
 			doUpdateOverlay( *overlay
+				, camera
 				, constellation.second->position()
 				, ConstellationNameOffset );
+		}
+	}
+
+	void StarMap::doUpdateOverlay( render::Overlay & overlay
+		, render::Camera const & camera
+		, gl::Vector3D const & position
+		, gl::Offset2D const & offset )
+	{
+		if ( camera.visible( position ) )
+		{
+			doUpdateOverlay( overlay, position, offset );
+		}
+		else
+		{
+			overlay.show( false );
 		}
 	}
 
@@ -594,24 +613,16 @@ namespace starmap
 		, gl::Offset2D const & offset )
 	{
 		auto const & camera = m_window->scene().camera();
-
-		if ( camera.visible( position ) )
-		{
-			auto const & viewport = camera.viewport();
-			auto const & projection = camera.projection();
-			auto const & view = camera.view();
-			auto projected = gl::project( position
-				, view
-				, projection
-				, gl::Vector4D{ 0, 0, viewport.size().x, viewport.size().y } );
-			overlay.position( offset + gl::Offset2D{ viewport.size().x - projected.x
-				, viewport.size().y - projected.y } );
-			overlay.show( true );
-		}
-		else
-		{
-			overlay.show( false );
-		}
+		auto const & viewport = camera.viewport();
+		auto const & projection = camera.projection();
+		auto const & view = camera.view();
+		auto projected = gl::project( position
+			, view
+			, projection
+			, gl::Vector4D{ 0, 0, viewport.size().x, viewport.size().y } );
+		overlay.position( offset + gl::Offset2D{ viewport.size().x - projected.x
+			, viewport.size().y - projected.y } );
+		overlay.show( true );
 	}
 
 	void StarMap::doFilterConstellations( bool show )
