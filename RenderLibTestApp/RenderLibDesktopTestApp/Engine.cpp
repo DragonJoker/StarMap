@@ -166,24 +166,28 @@ void Engine::doInitialise3DElements()
 
 	if ( !texture )
 	{
-		texture = scene.textures().addElement( "texture.bmp" );
+		texture = std::make_shared< render::Texture >();
 		render::loadTexture( utils::getFileBinaryContent( "texture.bmp" )
 			, *texture );
+		scene.textures().addElement( "texture.bmp", texture );
 	}
 
 	auto opacity = scene.textures().findElement( "halo.bmp" );
 
 	if ( !opacity )
 	{
-		opacity = scene.textures().addElement( "halo.bmp" );
+		opacity = std::make_shared< render::Texture >();
 		render::loadTexture( utils::getFileBinaryContent( "halo.bmp" )
 			, *opacity );
+		scene.textures().addElement( "halo.bmp", opacity );
 	}
 
-	auto pickedMat = scene.materials().addElement( "picked" );
+	auto pickedMat = std::make_shared< render::Material >();
 	pickedMat->opacityMap( opacity );
 	pickedMat->ambient( gl::RgbColour{ 0.0, 0.0, 0.5 } );
 	pickedMat->diffuse( gl::RgbColour{ 0.0, 0.0, 0.5 } );
+	scene.materials().addElement( "picked", pickedMat );
+
 	auto pickedBuffers = std::make_shared< render::BillboardBuffer >( false );
 	pickedBuffers->add( { -1000.0f, gl::Vector3D{ 0, 0, 0 }, gl::Vector2D{ 1, 1 } } );
 	scene.addBillboardBuffer( "picked", pickedBuffers );
@@ -192,12 +196,13 @@ void Engine::doInitialise3DElements()
 	m_picked->show( false );
 	scene.add( m_picked );
 
-	auto billboardMat = scene.materials().addElement( "billboard" );
+	auto billboardMat = std::make_shared< render::Material >();
 	billboardMat->diffuseMap( texture );
 	billboardMat->opacityMap( opacity );
 	billboardMat->ambient( gl::RgbColour{ 1.0, 0.0, 0.5 } );
 	billboardMat->diffuse( gl::RgbColour{ 1.0, 0.0, 0.5 } );
 	billboardMat->emissive( gl::RgbColour{ 1.0, 0.0, 0.5 } );
+	scene.materials().addElement( "billboard", billboardMat );
 	auto billboardBuffers = std::make_shared< render::BillboardBuffer >( false );
 	billboardBuffers->add( { -100.0f, gl::Vector3D{ 1, 0, 0 }, gl::Vector2D{ 1, 1 } } );
 	billboardBuffers->add( { -100.0f, gl::Vector3D{ 0, 1, 0 }, gl::Vector2D{ 1, 0.5 } } );
@@ -211,17 +216,19 @@ void Engine::doInitialise3DElements()
 	billboard->material( billboardMat );
 	scene.add( billboard );
 
-	auto starsMat = scene.materials().addElement( "stars" );
+	auto starsMat = std::make_shared< render::Material >();
 	starsMat->opacityMap( opacity );
 	starsMat->ambient( gl::RgbColour{ 1.0, 1.0, 0.5 } );
 	starsMat->diffuse( gl::RgbColour{ 1.0, 1.0, 0.5 } );
 	starsMat->emissive( gl::RgbColour{ 1.0, 1.0, 0.5 } );
 	starsMat->alphaTest( true );
-	auto halosMat = scene.materials().addElement( "halos" );
+	scene.materials().addElement( "stars", starsMat );
+	auto halosMat = std::make_shared< render::Material >();
 	halosMat->opacityMap( opacity );
 	halosMat->ambient( gl::RgbColour{ 1.0, 1.0, 0.5 } );
 	halosMat->diffuse( gl::RgbColour{ 1.0, 1.0, 0.5 } );
 	halosMat->emissive( gl::RgbColour{ 1.0, 1.0, 0.5 } );
+	scene.materials().addElement( "halos", halosMat );
 	auto starsBuffers = std::make_shared< render::BillboardBuffer >( false );
 	starsBuffers->add( { 50.0f, gl::Vector3D{ -1, 1, 0 }, gl::Vector2D{ 1, 1 } } );
 	starsBuffers->add( { 50.0f, gl::Vector3D{ 1, 1, 0 }, gl::Vector2D{ 1, 0.5 } } );
@@ -239,10 +246,11 @@ void Engine::doInitialise3DElements()
 	halos->material( halosMat );
 	scene.add( halos );
 
-	auto linesMat = scene.materials().addElement( "lines" );
+	auto linesMat = std::make_shared< render::Material >();
 	linesMat->ambient( gl::RgbColour{ 1.0, 1.0, 0.5 } );
 	linesMat->diffuse( gl::RgbColour{ 1.0, 1.0, 0.5 } );
 	linesMat->emissive( gl::RgbColour{ 1.0, 1.0, 0.5 } );
+	scene.materials().addElement( "lines", linesMat );
 	auto lines = std::make_shared< render::PolyLine >( "lines" );
 	lines->add( { gl::Vector3D{ -1, 1, 0 }, gl::Vector3D{ 1, 1, 0 } } );
 	lines->add( { gl::Vector3D{ 1, 1, 0 }, gl::Vector3D{ 1, -1, 0 } } );
@@ -253,17 +261,19 @@ void Engine::doInitialise3DElements()
 	scene.add( lines );
 
 	doInitialiseFontTexture();
-	auto overlay = scene.overlays().addElement( "coin" );
+	auto overlay = std::make_shared< render::TextOverlay >();
 	overlay->position( gl::Position2D{ 200, 200 } );
 	overlay->colour( gl::RgbaColour{ 0.0, 1.0, 0.0, 1.0 } );
 	overlay->caption( "coin !!" );
 	overlay->fontTexture( *m_fontTexture );
+	scene.overlays().addElement( "coin", overlay );
 
-	overlay = scene.overlays().addElement( "glop" );
+	overlay = std::make_shared< render::TextOverlay >();
 	overlay->position( gl::Position2D{ 400, 200 } );
 	overlay->colour( gl::RgbaColour{ 1.0, 0.0, 0.0, 1.0 } );
 	overlay->caption( "glop !!" );
 	overlay->fontTexture( *m_fontTexture );
+	scene.overlays().addElement( "glop", overlay );
 
 	m_onObjectPicked = m_window->picking().onObjectPicked.connect
 		( std::bind( &Engine::onObjectPicked

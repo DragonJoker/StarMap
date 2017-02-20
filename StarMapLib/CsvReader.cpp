@@ -13,7 +13,7 @@ namespace starmap
 			text = render::replace( text, "\"", "" );
 			text = render::replace( text, ",", "." );
 			std::stringstream stream{ text };
-			float result;
+			float result{ 0.0f };
 			stream >> result;
 			return result;
 		}

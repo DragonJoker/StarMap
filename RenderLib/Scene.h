@@ -191,17 +191,17 @@ namespace render
 		}
 		/**
 		*\return
-		*	La liste d'incrustations texte.
+		*	La liste d'incrustations.
 		*/
-		inline TextOverlayList const & overlays()const noexcept
+		inline OverlayList const & overlays()const noexcept
 		{
 			return m_overlays;
 		}
 		/**
 		*\return
-		*	La liste d'incrustations texte.
+		*	La liste d'incrustations.
 		*/
-		inline TextOverlayList & overlays()noexcept
+		inline OverlayList & overlays()noexcept
 		{
 			return m_overlays;
 		}
@@ -306,7 +306,7 @@ namespace render
 		//! Les textures.
 		TextureList m_textures;
 		//! Les incrustations.
-		TextOverlayList m_overlays;
+		OverlayList m_overlays;
 		//! La couleur du fond.
 		gl::RgbaColour m_backgroundColour;
 		//! Le seuil d'affichage des objets.

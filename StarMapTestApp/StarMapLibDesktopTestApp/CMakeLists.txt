@@ -32,3 +32,8 @@ add_dependencies( ${PROJECT_NAME}
 file( GLOB ASSETS ${CMAKE_CURRENT_SOURCE_DIR}/../StarMapTestApp/assets/*.* )
 
 copy_target_files( ${PROJECT_NAME} "" ${ASSETS} )
+
+if ( WIN32 )
+	configure_file( ${CMAKE_SOURCE_DIR}/CMake/Templates/manifest.bin
+		${CMAKE_CURRENT_BINARY_DIR}/manifest.bin )
+endif ()

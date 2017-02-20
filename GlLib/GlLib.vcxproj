@@ -205,6 +205,7 @@
   <ItemGroup>
     <ClInclude Include="Angle.h" />
     <ClInclude Include="Converter.h" />
+    <ClInclude Include="Degrees.h" />
     <ClInclude Include="GlArrayUniform.h" />
     <ClInclude Include="GlAttributeBase.h" />
     <ClInclude Include="GlBufferBase.h" />
@@ -373,6 +374,7 @@
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Quaternion.h" />
+    <ClInclude Include="Radians.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="Vec3.h" />
@@ -380,6 +382,7 @@
     <ClInclude Include="Vectorisation.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Converter.inl" />
     <None Include="glm\detail\func_common.inl" />
     <None Include="glm\detail\func_common_simd.inl" />
     <None Include="glm\detail\func_exponential.inl" />

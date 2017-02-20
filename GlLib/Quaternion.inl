@@ -202,6 +202,40 @@ namespace gl
 	}
 
 	template< typename T >
+	QuaternionT< T > rotate( QuaternionT< T > const & q,
+		RadiansT < T > const & angle,
+		Vec3T< T > const & axis )noexcept
+	{
+		assert( std::abs( length( axis ) - T( 1 ) ) <= T( 0.001 ) );
+		T const sinA = sin( angle * T( 0.5 ) );
+		return q * QuaternionT< T >{ cos( angle * T( 0.5 ) )
+			, axis.x * sinA
+			, axis.y * sinA
+			, axis.z * sinA };
+	}
+
+	template< typename T >
+	QuaternionT< T > pitch( QuaternionT< T > const & q,
+		RadiansT < T > const & angle )noexcept
+	{
+		return rotate( q, angle, Vec3T< T >{ T{ 1 }, T{}, T{} } );
+	}
+
+	template< typename T >
+	QuaternionT< T > yaw( QuaternionT< T > const & q,
+		RadiansT < T > const & angle )noexcept
+	{
+		return rotate( q, angle, Vec3T< T >{ T{}, T{ 1 }, T{} } );
+	}
+
+	template< typename T >
+	QuaternionT< T > roll( QuaternionT< T > const & q,
+		RadiansT < T > const & angle )noexcept
+	{
+		return rotate( q, angle, Vec3T< T >{ T{}, T{}, T{ 1 } } );
+	}
+
+	template< typename T >
 	Mat4T< T > toMat4( QuaternionT< T > const & q )noexcept
 	{
 		Mat4T< T > result{ T{ 1 } };

@@ -26,8 +26,14 @@ namespace starmap
 		/**
 		*\brief
 		*	Constructeur.
+		*\param[in] events
+		*	Les évènements auxquels la carte va s'abonner.
+		*\param[in] maxDisplayedStarNames
+		*	Nombre d'étoiles dont on va afficher le nom, parmi les étoiles
+		*	ayant la plus faible magnitude.
 		*/
-		StarMap( ScreenEvents & events );
+		StarMap( ScreenEvents & events
+			, uint32_t maxDisplayedStarNames );
 		/**
 		*\brief
 		*	Restaure l'état de la carte du ciel.
@@ -98,11 +104,22 @@ namespace starmap
 		void add( StarArray const & stars );
 		/**
 		*\brief
-		*	Crée et ajoute une constellation à la carte du ciel.
-		*\param[in] name
-		*	Le nom de la constellation.
+		*	Ajoute une constellation à la carte du ciel.
+		*\remarks
+		*	Finalise la constellation avec les étoiles de la carte.
+		*\param[in] constellation
+		*	La constellation.
 		*/
-		Constellation & createConstellation( std::string const & name );
+		void add( Constellation const & constellation );
+		/**
+		*\brief
+		*	Recherche une constellation dans la carte du ciel.
+		*\param[in] constellation
+		*	Le nom de la constellation.
+		*\return
+		*	La constellation, \p nullptr si non trouvée.
+		*/
+		Constellation * findConstellation( std::string const & name );
 		/**
 		*\brief
 		*	Applique un filtre.
@@ -252,7 +269,7 @@ namespace starmap
 		*\param[in] offset
 		*\	L'offset 2D donné à la position écran de l'incrustation.
 		*/
-		void doUpdateOverlay( render::TextOverlay & overlay
+		void doUpdateOverlay( render::Overlay & overlay
 			, gl::Vector3D const & position
 			, gl::Offset2D const & offset );
 		/**
@@ -283,6 +300,26 @@ namespace starmap
 		render::Connection< OnSetZoomVelocity > m_onSetZoomVelocity;
 
 	private:
+		/**
+		*\brief
+		*	Contient un élément et l'incrustation utilisée pour afficher son nom.
+		*/
+		template< typename T >
+		struct ElementName
+		{
+			//! L'élément.
+			T const * m_element;
+			//! L'incrustation.
+			render::TextOverlayPtr m_overlay;
+		};
+		//! Spécialisation pour les étoiles.
+		using StarName = ElementName< Star >;
+		//! Spécialisation pour les constellations.
+		using ConstellationName = ElementName< Constellation >;
+
+	private:
+		//! Le nombre maximal d'étoiles dont le nom est affiché.
+		uint32_t m_maxDisplayedStarNames;
 		//! Le tableau de StarHolders.
 		StarHolderArray m_holders;
 		//! La polyligne contenant les constellations.
@@ -301,12 +338,18 @@ namespace starmap
 		Star const * m_pickedStar{ nullptr };
 		//! Le billboard apparaissant sur la sélection (billboard ou objet).
 		render::BillboardPtr m_pickBillboard;
+		//! L'incrustation contenant la description de la sélection (billboard ou objet).
+		render::BorderPanelOverlayPtr m_pickDescriptionHolder;
 		//! L'incrustation décrivant la sélection (billboard ou objet).
 		render::TextOverlayPtr m_pickDescription;
 		//! La texture d'opacité.
 		render::TexturePtr m_opacity;
 		//! La texture de police des noms.
 		render::FontTexturePtr m_fontTextureNames;
+		//! Les incrustations contenant les noms des étoiles.
+		std::vector< StarName > m_starNames;
+		//! Les incrustations contenant les noms des constellations.
+		std::vector< ConstellationName > m_constellationNames;
 	};
 }
 

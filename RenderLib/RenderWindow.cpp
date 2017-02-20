@@ -69,7 +69,7 @@ namespace render
 	void RenderWindow::update()
 	{
 		state().update();
-		m_scene.camera().reorient( gl::Quaternion{ gl::Vec3T< gl::Radians >{ state().angle(), 0.0_radians } } );
+		m_scene.camera().reorient( state().rotation() );
 		m_scene.camera().fovY( state().zoom() );
 		m_scene.update();
 	}

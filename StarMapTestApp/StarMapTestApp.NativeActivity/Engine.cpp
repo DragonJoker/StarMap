@@ -16,7 +16,7 @@ Window::Window( utils::AndroidApp const & parent
 		, m_onScreenDoubleTap
 		, m_onScreenSingleMove
 		, m_onScreenDoubleMove }
-	, m_starmap{ m_events }
+	, m_starmap{ m_events, 5u }
 {
 	starmap::loadStarsFromXml( m_starmap
 		, m_parent.getFileTextContent( "stars.xml", true ) );

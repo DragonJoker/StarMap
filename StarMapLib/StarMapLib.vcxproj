@@ -178,6 +178,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constellation.h" />
+    <ClInclude Include="ConstellationStar.h" />
     <ClInclude Include="CsvReader.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="rapidxml\rapidxml.hpp" />
@@ -193,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Constellation.cpp" />
+    <ClCompile Include="ConstellationStar.cpp" />
     <ClCompile Include="CsvReader.cpp" />
     <ClCompile Include="ScreenEvents.cpp" />
     <ClCompile Include="Star.cpp" />

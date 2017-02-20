@@ -19,6 +19,7 @@
 namespace starmap
 {
 	class Constellation;
+	class ConstellationStar;
 	class ScreenEvents;
 	class Star;
 	class StarMap;
@@ -26,11 +27,13 @@ namespace starmap
 	struct StarMapState;
 
 	using StarMapPtr = std::unique_ptr< StarMap >;
+	using ConstellationPtr = std::unique_ptr< Constellation >;
 	using StarArray = std::vector< Star >;
 	using StarPtrArray = std::vector< Star const * >;
 	using StarSet = std::multiset< Star >;
 	using StarPtrMap = std::map< std::string, Star const * >;
-	using ConstellationMap = std::unordered_map< std::string, Constellation >;
+	using ConstellationMap = std::unordered_map< std::string, ConstellationPtr >;
+	using ConstellationStarArray = std::vector< ConstellationStar >;
 
 	using OnScreenTap = render::Signal< std::function< void( gl::Position2D const & ) > >;
 	using OnScreenDoubleTap = render::Signal< std::function< void( gl::Position2D const & ) > >;

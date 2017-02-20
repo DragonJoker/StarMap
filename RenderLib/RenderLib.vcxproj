@@ -183,6 +183,7 @@
   <ItemGroup>
     <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="BillboardBuffer.cpp" />
+    <ClCompile Include="BorderPanelOverlay.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraState.cpp" />
     <ClCompile Include="Debug.cpp" />
@@ -191,7 +192,9 @@
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Movable.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="OverlayCategory.cpp" />
     <ClCompile Include="OverlayRenderer.cpp" />
+    <ClCompile Include="PanelOverlay.cpp" />
     <ClCompile Include="Picking.cpp" />
     <ClCompile Include="PickingRenderer.cpp" />
     <ClCompile Include="PlaneEquation.cpp" />
@@ -214,10 +217,12 @@
     <ClInclude Include="Angle.h" />
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="BillboardBuffer.h" />
+    <ClInclude Include="BorderPanelOverlay.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraState.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="ElementsList.h" />
+    <ClInclude Include="ExponentialRange.h" />
     <ClInclude Include="FlagCombination.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontLoader.h" />
@@ -225,9 +230,12 @@
     <ClInclude Include="Frustum.h" />
     <ClInclude Include="Glyph.h" />
     <ClInclude Include="Logarithm.h" />
+    <ClInclude Include="LogarithmicRange.h" />
     <ClInclude Include="LogUtils.h" />
     <ClInclude Include="Movable.h" />
+    <ClInclude Include="OverlayCategory.h" />
     <ClInclude Include="OverlayRenderer.h" />
+    <ClInclude Include="PanelOverlay.h" />
     <ClInclude Include="Picking.h" />
     <ClInclude Include="PickingRenderer.h" />
     <ClInclude Include="PlaneEquation.h" />

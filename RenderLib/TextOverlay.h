@@ -9,6 +9,7 @@
 #pragma once
 
 #include "FontTexture.h"
+#include "OverlayCategory.h"
 
 namespace render
 {
@@ -46,22 +47,8 @@ namespace render
 	*	Une incrustation contenant du texte.
 	*/
 	class TextOverlay
+		: public Overlay
 	{
-	public:
-		/**
-		*\brief
-		*	Contient les données spécifiques de sommet pour un TextOverlay.
-		*/
-		struct Vertex
-		{
-			//! Sa position.
-			gl::Vector2D coords;
-			//! Ses coordonnées de texture dans la texture de police.
-			gl::Vector2D text;
-		};
-		//! Liste de sommets composant l'incrustation.
-		using VertexArray = std::vector< Vertex >;
-
 	public:
 		/**
 		*\brief
@@ -75,9 +62,11 @@ namespace render
 		~TextOverlay();
 		/**
 		*\brief
-		*	Met à jour le tampon de sommets.
+		*	Dessine l'incrustation.
+		*\param[in] renderer
+		*	Le renderer utilisé pour dessiner cette incrustation.
 		*/
-		void update();
+		void render( OverlayRenderer & renderer )const override;
 		/**
 		*\brief
 		*	Définit la texture de police utilisée pour le dessin de
@@ -100,39 +89,12 @@ namespace render
 			return *m_fontTexture;
 		}
 		/**
-		*\brief
-		*	Définit la position de l'incrustation.
-		*\param[in] position
-		*	La nouvelle valeur.
-		*/
-		inline void position( gl::Position2D const & position )noexcept
-		{
-			m_position = position;
-			m_positionChanged = true;
-		}
-		/**
-		*\return
-		*	La position de l'incrustation.
-		*/
-		inline gl::Position2D const & position()const noexcept
-		{
-			return m_position;
-		}
-		/**
-		*\return
-		*	La taille de l'incrustation.
-		*/
-		inline gl::Size2D const & size()const noexcept
-		{
-			return m_computedSize;
-		}
-		/**
 		*\return
 		*	Le tampon de sommets du panneau.
 		*/
-		inline VertexArray const & textVertex()const noexcept
+		inline QuadArray const & textVertex()const noexcept
 		{
-			return m_vertex;
+			return m_quads;
 		}
 		/**
 		*\return
@@ -191,50 +153,13 @@ namespace render
 			m_textChanged |= m_lineSpacingMode != value;
 			m_lineSpacingMode = value;
 		}
-		/**
-		*\return
-		*	La couleur de l'incrustation.
-		*/
-		inline gl::RgbaColour const & colour()const noexcept
-		{
-			return m_colour;
-		}
+
+	private:
 		/**
 		*\brief
-		*	Définit la couleur de l'incrustation.
-		*\param[in] colour
-		*	La nouvelle couleur.
+		*	Met à jour le tampon de sommets.
 		*/
-		inline void colour( gl::RgbaColour const & colour )noexcept
-		{
-			m_colour = colour;
-		}
-		/**
-		*\return
-		*	La matrice de transformation de l'incrustation.
-		*/
-		inline gl::Matrix4x4 const & transform()const noexcept
-		{
-			return m_transform;
-		}
-		/**
-		*\return
-		*	Le statut de visibilité de l'objet.
-		*/
-		inline bool visible()const noexcept
-		{
-			return m_visible;
-		}
-		/**
-		*\brief
-		*	Définit le statut de visibilité de l'objet.
-		*\param[in] show
-		*	Le nouveau statut.
-		*/
-		inline void show( bool show = true )noexcept
-		{
-			m_visible = show;
-		}
+		void doUpdate()override;
 
 	private:
 		/**
@@ -329,9 +254,9 @@ namespace render
 			//! La position de la ligne.
 			gl::Position2D m_position;
 			//! La largeur de la ligne.
-			int32_t m_width;
+			uint32_t m_width;
 			//! La hauteur de la ligne.
-			int32_t m_height;
+			uint32_t m_height;
 			//! Les caractères affichables.
 			std::vector< DisplayableChar > m_characters;
 		};
@@ -387,42 +312,23 @@ namespace render
 			, DisplayableLineArray & lines );
 		/**
 		*\brief
-		*	Met à jour la matrice de transformation de l'incrustation.
-		*/
-		void doUpdatePosition();
-		/**
-		*\brief
 		*	Met à jour le tampon de sommets.
 		*/
 		void doUpdateBuffer();
 
 	private:
-		//! La taille relative à l'écran.
-		gl::Size2D m_computedSize;
-		//! La position relative à l'écran.
-		gl::Position2D m_position;
-		//! Dit si la position de cette incrustation a changé.
-		bool m_positionChanged{ true };
 		//! Le texte courant de l'incrustation.
 		std::string m_currentCaption;
 		//! Le texte précédent de l'incrustation.
 		std::string m_previousCaption;
 		//! Dit si le texte (contenu, mode de découpe, alignements) a changé.
 		bool m_textChanged{ true };
-		//! Les données du tampon de sommets.
-		VertexArray m_vertex;
 		//! Le mode d'espacement des lignes.
 		TextLineSpacingMode m_lineSpacingMode{ TextLineSpacingMode::eOwnHeight };
 		//! L'alignement horizontal du texte.
 		HAlign m_hAlign{ HAlign::eLeft };
-		//! La couleur de l'incrustation.
-		gl::RgbaColour m_colour;
-		//! La matrice de transformation de l'incrustation.
-		gl::Matrix4x4 m_transform;
 		//! La texture de police utilisée pour dessiner cette incrustation.
 		FontTexture const * m_fontTexture{ nullptr };
-		//! Le statut de visibilité.
-		bool m_visible{ true };
 	};
 }
 
