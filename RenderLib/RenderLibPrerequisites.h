@@ -264,7 +264,7 @@ namespace render
 		return stream;
 	}
 
-	inline std::ostream & operator<<( std::ostream & stream, gl::Matrix4x4 const & value )
+	inline std::ostream & operator<<( std::ostream & stream, gl::Mat4 const & value )
 	{
 		stream << value[0].x << ", " << value[0].y << ", " << value[0].z << ", " << value[0].w << "\n";
 		stream << value[1].x << ", " << value[1].y << ", " << value[1].z << ", " << value[1].w << "\n";

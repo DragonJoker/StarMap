@@ -36,7 +36,7 @@ namespace render
 		*\return
 		*	La matrice de transformation de l'objet.
 		*/
-		inline gl::Matrix4x4 const & transform()const noexcept
+		inline gl::Mat4 const & transform()const noexcept
 		{
 			return m_transform;
 		}
@@ -198,7 +198,7 @@ namespace render
 		//! L'orientation de l'objet dans le monde.
 		gl::Quaternion m_orientation;
 		//! La matrice de transformation de l'objet.
-		gl::Matrix4x4 m_transform;
+		gl::Mat4 m_transform;
 		// Le nom de l'objet.
 		std::string m_name;
 		//! Le statut de visibilité.

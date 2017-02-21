@@ -67,7 +67,7 @@ namespace render
 		*\return
 		*	La matrice de projection du viewport.
 		*/
-		inline gl::Matrix4x4 const & transform()const noexcept
+		inline gl::Mat4 const & transform()const noexcept
 		{
 			return m_projection;
 		}
@@ -102,7 +102,7 @@ namespace render
 		//! Les dimensions du viewport.
 		gl::IVec2 m_size;
 		//! La matrice de projection.
-		gl::Matrix4x4 m_projection;
+		gl::Mat4 m_projection;
 		//! L'angle d'ouverture verticale.
 		gl::Angle m_fovy;
 		//! Dit si le viewport a changé.

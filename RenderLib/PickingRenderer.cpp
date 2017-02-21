@@ -95,9 +95,9 @@ namespace render
 	PickingRenderer::RenderNode::RenderNode( gl::ShaderProgramPtr && program )
 		: m_program{ std::move( program ) }
 		, m_mtxUbo{ "Matrices", 0u, *m_program }
-		, m_mtxProjection{ &m_mtxUbo.createUniform< gl::Matrix4x4 >( "mtxProjection" ) }
-		, m_mtxView{ &m_mtxUbo.createUniform< gl::Matrix4x4 >( "mtxView" ) }
-		, m_mtxModel{ &m_mtxUbo.createUniform< gl::Matrix4x4 >( "mtxModel" ) }
+		, m_mtxProjection{ &m_mtxUbo.createUniform< gl::Mat4 >( "mtxProjection" ) }
+		, m_mtxView{ &m_mtxUbo.createUniform< gl::Mat4 >( "mtxView" ) }
+		, m_mtxModel{ &m_mtxUbo.createUniform< gl::Mat4 >( "mtxModel" ) }
 		, m_mapOpacity{ gl::makeUniform< int >( "mapOpacity", *m_program ) }
 		, m_pickUbo{ "Picking", 1u, *m_program }
 		, m_drawIndex{ &m_pickUbo.createUniform< int >( "drawIndex" ) }
@@ -299,8 +299,8 @@ namespace render
 	{
 		if ( !objects.empty() )
 		{
-			gl::Matrix4x4 const & projection = camera.projection();
-			gl::Matrix4x4 const & view = camera.view();
+			gl::Mat4 const & projection = camera.projection();
+			gl::Mat4 const & view = camera.view();
 			node.m_program->bind();
 			node.m_mtxProjection->value( projection );
 			node.m_mtxView->value( view );
@@ -344,8 +344,8 @@ namespace render
 	{
 		if ( !billboards.empty() )
 		{
-			gl::Matrix4x4 const & projection = camera.projection();
-			gl::Matrix4x4 const & view = camera.view();
+			gl::Mat4 const & projection = camera.projection();
+			gl::Mat4 const & view = camera.view();
 			gl::Vec3 const & position = camera.position();
 			node.m_program->bind();
 			node.m_mtxProjection->value( projection );

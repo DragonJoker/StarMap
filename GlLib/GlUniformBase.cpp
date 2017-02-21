@@ -83,7 +83,7 @@ namespace gl
 			, doGetPointer( value ) );
 	}
 
-	void UniformBase::doSetValue( Matrix4x4 const & value )const noexcept
+	void UniformBase::doSetValue( Mat4 const & value )const noexcept
 	{
 		glCheckError( glUniformMatrix4fv
 			, m_location
@@ -164,7 +164,7 @@ namespace gl
 			, doGetPointer( values[0] ) );
 	}
 
-	void UniformBase::doSetValues( Matrix4x4 const * values
+	void UniformBase::doSetValues( Mat4 const * values
 		, uint32_t count )const noexcept
 	{
 		glCheckError( glUniformMatrix4fv
@@ -214,7 +214,7 @@ namespace gl
 		return &value.x;
 	}
 
-	float * UniformBase::doGetPointer( Matrix4x4 & value )noexcept
+	float * UniformBase::doGetPointer( Mat4 & value )noexcept
 	{
 		return &value[0].x;
 	}
@@ -259,7 +259,7 @@ namespace gl
 		return &value.x;
 	}
 
-	float const * UniformBase::doGetPointer( Matrix4x4 const & value )noexcept
+	float const * UniformBase::doGetPointer( Mat4 const & value )noexcept
 	{
 		return &value[0].x;
 	}

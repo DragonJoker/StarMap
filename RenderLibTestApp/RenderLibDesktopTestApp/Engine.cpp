@@ -261,16 +261,18 @@ void Engine::doInitialise3DElements()
 	scene.add( lines );
 
 	doInitialiseFontTexture();
+	auto coinMat = doCreateOverlayMaterial( "coin", gl::RgbColour{ 0, 1, 0 }, 1 );
 	auto overlay = std::make_shared< render::TextOverlay >();
 	overlay->position( gl::IVec2{ 200, 200 } );
-	overlay->colour( gl::RgbaColour{ 0.0, 1.0, 0.0, 1.0 } );
+	overlay->material( coinMat );
 	overlay->caption( "coin !!" );
 	overlay->fontTexture( *m_fontTexture );
 	scene.overlays().addElement( "coin", overlay );
 
+	auto glopMat = doCreateOverlayMaterial( "glop", gl::RgbColour{ 1, 0, 0 }, 1 );
 	overlay = std::make_shared< render::TextOverlay >();
 	overlay->position( gl::IVec2{ 400, 200 } );
-	overlay->colour( gl::RgbaColour{ 1.0, 0.0, 0.0, 1.0 } );
+	overlay->material( glopMat );
 	overlay->caption( "glop !!" );
 	overlay->fontTexture( *m_fontTexture );
 	scene.overlays().addElement( "glop", overlay );
@@ -307,6 +309,26 @@ void Engine::doInitialiseFontTexture()
 	render::loadFont( loader, *font );
 	m_fontTexture = std::make_unique< render::FontTexture >
 		( std::move( font ) );
+}
+
+render::MaterialPtr Engine::doCreateOverlayMaterial( std::string const & name
+	, gl::RgbColour const & colour
+	, float opacity )
+{
+	render::MaterialPtr result = m_window->scene().materials().findElement( name );
+
+	if ( !result )
+	{
+		result = std::make_unique< render::Material >();
+		result->ambient( colour );
+		result->diffuse( colour );
+		result->specular( colour );
+		result->emissive( colour );
+		result->opacity( opacity );
+		m_window->scene().materials().addElement( name, result );
+	}
+
+	return result;
 }
 
 void Engine::doUpdatePicked( render::Movable const & movable )

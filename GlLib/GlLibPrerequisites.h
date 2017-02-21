@@ -151,7 +151,6 @@ namespace gl
 	using IVec3 = Vec3T< int >;
 	using IVec4 = Vec4T< int >;
 	using Quaternion = QuaternionT< float >;
-	using Matrix4x4 = Mat4;
 	using RgbaColour = Vec4;
 	using RgbColour = Vec3;
 	using ByteArray = std::vector< uint8_t >;
@@ -239,7 +238,7 @@ namespace gl
 	using Vec2Uniform = Uniform< Vec2 >;
 	using Vec3Uniform = Uniform< Vec3 >;
 	using Vec4Uniform = Uniform< Vec4 >;
-	using Mat4Uniform = Uniform< Matrix4x4 >;
+	using Mat4Uniform = Uniform< Mat4 >;
 	template< typename T >
 	using UniformPtr = std::unique_ptr< Uniform< T > >;
 	using IntUniformPtr = UniformPtr< int >;
@@ -247,7 +246,7 @@ namespace gl
 	using Vec2UniformPtr = UniformPtr< Vec2 >;
 	using Vec3UniformPtr = UniformPtr< Vec3 >;
 	using Vec4UniformPtr = UniformPtr< Vec4 >;
-	using Mat4UniformPtr = UniformPtr< Matrix4x4 >;
+	using Mat4UniformPtr = UniformPtr< Mat4 >;
 	/**@}*/
 	/**
 	*\name Typedefs de variables uniformes de type tableau.
@@ -260,7 +259,7 @@ namespace gl
 	using Vec2ArrayUniform = ArrayUniform< Vec2 >;
 	using Vec3ArrayUniform = ArrayUniform< Vec3 >;
 	using Vec4ArrayUniform = ArrayUniform< Vec4 >;
-	using Mat4ArrayUniform = ArrayUniform< Matrix4x4 >;
+	using Mat4ArrayUniform = ArrayUniform< Mat4 >;
 	template< typename T >
 	using ArrayUniformPtr = std::unique_ptr< ArrayUniform< T > >;
 	using IntArrayUniformPtr = ArrayUniformPtr< int >;
@@ -268,7 +267,7 @@ namespace gl
 	using Vec2ArrayUniformPtr = ArrayUniformPtr< Vec2 >;
 	using Vec3ArrayUniformPtr = ArrayUniformPtr< Vec3 >;
 	using Vec4ArrayUniformPtr = ArrayUniformPtr< Vec4 >;
-	using Mat4ArrayUniformPtr = ArrayUniformPtr< Matrix4x4 >;
+	using Mat4ArrayUniformPtr = ArrayUniformPtr< Mat4 >;
 	/**@}*/
 	/**
 	*\brief

@@ -39,6 +39,20 @@ namespace render
 		: RenderableContainer{}
 		, m_camera{ size }
 	{
+		auto material = m_materials.findElement( "FullAlphaWhite" );
+
+		if ( !material )
+		{
+			gl::RgbColour white{ 1, 1, 1 };
+			material = std::make_shared< Material >();
+			material->ambient( white );
+			material->diffuse( white );
+			material->specular( white );
+			material->emissive( white );
+			material->opacity( 1.0f );
+			m_materials.addElement( "FullAlphaWhite", material );
+		}
+
 #if !defined( NDEBUG )
 
 		m_debug.initialise();

@@ -63,7 +63,7 @@ namespace render
 		*\return
 		*	La matrice de vue.
 		*/
-		inline gl::Matrix4x4 const & view()const noexcept
+		inline gl::Mat4 const & view()const noexcept
 		{
 			return m_transform;
 		}
@@ -71,7 +71,7 @@ namespace render
 		*\return
 		*	La matrice de projection.
 		*/
-		inline gl::Matrix4x4 const & projection()const noexcept
+		inline gl::Mat4 const & projection()const noexcept
 		{
 			return m_viewport.transform();
 		}
@@ -166,7 +166,7 @@ namespace render
 		//! L'orientation de la caméra dans le monde.
 		gl::Quaternion m_orientation;
 		//! La matrice de vue.
-		gl::Matrix4x4 m_transform;
+		gl::Mat4 m_transform;
 		//! Le viewport.
 		Viewport m_viewport;
 		//! Le frustum, dans l'espace vue.

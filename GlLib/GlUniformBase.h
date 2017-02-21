@@ -165,7 +165,7 @@ namespace gl
 		*\param[in] value
 		*	La valeur.
 		*/
-		void doSetValue( Matrix4x4 const & value )const noexcept;
+		void doSetValue( Mat4 const & value )const noexcept;
 		/**
 		*\brief
 		*	Définit la valeur int de la variable uniforme.
@@ -254,7 +254,7 @@ namespace gl
 		*\param[in] count
 		*	Le nombre de valeurs.
 		*/
-		void doSetValues( Matrix4x4 const * values
+		void doSetValues( Mat4 const * values
 			, uint32_t count )const noexcept;
 		/**
 		*\brief
@@ -330,13 +330,13 @@ namespace gl
 		static float * doGetPointer( Vec4 & value )noexcept;
 		/**
 		*\brief
-		*	Récupère le pointeur de la valeur Matrix4x4 donnée.
+		*	Récupère le pointeur de la valeur Mat4 donnée.
 		*\param[in] value
 		*	La valeur.
 		*\return
 		*	Le pointeur.
 		*/
-		static float * doGetPointer( Matrix4x4 & value )noexcept;
+		static float * doGetPointer( Mat4 & value )noexcept;
 		/**
 		*\brief
 		*	Récupère le pointeur de la valeur int donnée.
@@ -411,13 +411,13 @@ namespace gl
 		static float const * doGetPointer( Vec4 const & value )noexcept;
 		/**
 		*\brief
-		*	Récupère le pointeur de la valeur Matrix4x4 donnée.
+		*	Récupère le pointeur de la valeur Mat4 donnée.
 		*\param[in] value
 		*	La valeur.
 		*\return
 		*	Le pointeur.
 		*/
-		static float const * doGetPointer( Matrix4x4 const & value )noexcept;
+		static float const * doGetPointer( Mat4 const & value )noexcept;
 
 	private:
 		//! Le nom de la variable.

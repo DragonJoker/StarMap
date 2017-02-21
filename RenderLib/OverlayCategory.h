@@ -75,21 +75,22 @@ namespace render
 		virtual void render( OverlayRenderer & renderer )const = 0;
 		/**
 		*\return
-		*	La couleur de l'incrustation.
+		*	Le matériau de l'incrustation.
 		*/
-		inline gl::RgbaColour const & colour()const noexcept
+		inline Material const & material()const noexcept
 		{
-			return m_colour;
+			assert( m_material );
+			return *m_material;
 		}
 		/**
 		*\brief
-		*	Définit la couleur de l'incrustation.
-		*\param[in] colour
-		*	La nouvelle couleur.
+		*	Définit le matériau de l'incrustation.
+		*\param[in] material
+		*	La nouvelle valeur.
 		*/
-		inline void colour( gl::RgbaColour const & colour )noexcept
+		inline void material( MaterialPtr material )noexcept
 		{
-			m_colour = colour;
+			m_material = material;
 		}
 		/**
 		*\brief
@@ -130,7 +131,7 @@ namespace render
 		*\return
 		*	La matrice de transformation de l'incrustation.
 		*/
-		inline gl::Matrix4x4 const & transform()const noexcept
+		inline gl::Mat4 const & transform()const noexcept
 		{
 			return m_transform;
 		}
@@ -195,12 +196,10 @@ namespace render
 		gl::IVec2 m_position;
 		//! Dit si la position de cette incrustation a changé.
 		bool m_positionChanged{ true };
-		//! Les données du tampon de sommets.
-		QuadArray m_quads;
-		//! La couleur de l'incrustation.
-		gl::RgbaColour m_colour;
+		//! Le matériau de l'incrustation.
+		MaterialPtr m_material;
 		//! La matrice de transformation de l'incrustation.
-		gl::Matrix4x4 m_transform;
+		gl::Mat4 m_transform;
 		//! Le statut de visibilité.
 		bool m_visible{ true };
 		//! Le Z-index de l'incrustation.

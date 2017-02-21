@@ -321,6 +321,8 @@ namespace render
 		std::string m_currentCaption;
 		//! Le texte précédent de l'incrustation.
 		std::string m_previousCaption;
+		//! Les données du tampon de sommets.
+		QuadArray m_quads;
 		//! Dit si le texte (contenu, mode de découpe, alignements) a changé.
 		bool m_textChanged{ true };
 		//! Le mode d'espacement des lignes.

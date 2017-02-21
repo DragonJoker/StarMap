@@ -94,6 +94,19 @@ private:
 	void doInitialiseFontTexture();
 	/**
 	*\brief
+	*	Crée un matériau depuis une couleur et une opacité.
+	*\param[in] name
+	*	Le nom du matériau.
+	*\param[in] colour
+	*	La couleur du matériau.
+	*\param[in] opacity
+	*	L'opacité du matériau.
+	*/
+	render::MaterialPtr doCreateOverlayMaterial( std::string const & name
+		, gl::RgbColour const & colour
+		, float opacity );
+	/**
+	*\brief
 	*	Met à jour la position et la taille de l'objet sélectionné.
 	*\param[in] movable
 	*	Les informations de position.

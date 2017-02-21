@@ -32,7 +32,7 @@ namespace render
 	{
 		if ( m_positionChanged )
 		{
-			m_transform = gl::Matrix4x4{ 1 };
+			m_transform = gl::Mat4{ 1 };
 			m_transform = gl::translate( m_transform
 				, gl::Vec3{ m_position.x, m_position.y, 0 } );
 			m_positionChanged = false;

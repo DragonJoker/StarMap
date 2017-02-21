@@ -11,11 +11,11 @@ namespace render
 
 	void Movable::update()noexcept
 	{
-		gl::Matrix4x4 translate{ 1.0f };
+		gl::Mat4 translate{ 1.0f };
 		translate = gl::translate( translate, m_position );
-		gl::Matrix4x4 scale{ 1.0f };
+		gl::Mat4 scale{ 1.0f };
 		scale = gl::scale( scale, m_scale );
-		gl::Matrix4x4 rotate = gl::toMat4( m_orientation );
+		gl::Mat4 rotate = gl::toMat4( m_orientation );
 		m_transform = translate * rotate * scale;
 	}
 }

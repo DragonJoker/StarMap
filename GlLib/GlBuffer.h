@@ -39,7 +39,7 @@ namespace gl
 		*/
 		inline Buffer( BufferTarget target
 			, T const * data
-			, size_t count )noexcept
+			, uint32_t count )noexcept
 			: BufferBase{ target, data, uint32_t( count * m_elemSize ) }
 		{
 		}
@@ -53,7 +53,7 @@ namespace gl
 		*/
 		inline Buffer( BufferTarget target
 			, std::vector< T > const & data )noexcept
-			: Buffer{ target, data.data(), data.size() }
+			: Buffer{ target, data.data(), uint32_t( data.size() ) }
 		{
 		}
 		/**
@@ -69,7 +69,7 @@ namespace gl
 		inline Buffer( BufferTarget target
 			, T const * begin
 			, T const * end )noexcept
-			: Buffer{ target, begin, size_t( end - begin ) }
+			: Buffer{ target, begin, uint32_t( end - begin ) }
 		{
 		}
 		/**

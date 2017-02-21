@@ -17,11 +17,12 @@ namespace starmap
 	namespace
 	{
 		static const gl::RgbaColour ConstellationColour{ 0.8, 0.5, 0.8, 0.5 };
-		static const gl::RgbaColour ConstellationTextColour{ 0.5, 0.0, 0.5, 1.0 };
+		static const gl::RgbColour ConstellationTextColour{ 0.5, 0.0, 0.5 };
 		static const gl::RgbColour PickBillboardColour{ 0.0, 0.0, 0.5 };
-		static const gl::RgbaColour PickDescriptionColour{ 1.0, 1.0, 1.0, 1.0 };
-		static const gl::RgbaColour PickDescriptionHolderColour{ 0.0, 0.0, 0.0, 0.5 };
-		static const gl::RgbaColour PickDescriptionHolderBorderColour{ 1.0, 1.0, 1.0, 1.0 };
+		static const gl::RgbColour PickDescriptionColour{ 1.0, 1.0, 1.0 };
+		static const gl::RgbColour PickDescriptionHolderColour{ 0.0, 0.0, 0.0 };
+		static const gl::RgbColour PickDescriptionHolderBorderColour{ 1.0, 1.0, 1.0 };
+		static const float PickDescriptionHolderOpacity{ 0.5 };
 		static const gl::IVec4 PickDescriptionHolderBorderSize{ 3, 3, 3, 3 };
 		static const gl::IVec2 StarNameOffset{ 10, 10 };
 		static const gl::IVec2 ConstellationNameOffset{};
@@ -451,6 +452,25 @@ namespace starmap
 		pickedMat->ambient( PickBillboardColour );
 		pickedMat->diffuse( PickBillboardColour );
 		scene.materials().addElement( "picked", pickedMat );
+		
+		auto pickedDescriptionMat = std::make_shared< render::Material >();
+		pickedDescriptionMat->ambient( PickDescriptionColour );
+		pickedDescriptionMat->diffuse( PickDescriptionColour );
+		scene.materials().addElement( "pickedDescription"
+			, pickedDescriptionMat );
+
+		auto pickedDescriptionHolderMat = std::make_shared< render::Material >();
+		pickedDescriptionHolderMat->ambient( PickDescriptionHolderColour );
+		pickedDescriptionHolderMat->diffuse( PickDescriptionHolderColour );
+		pickedDescriptionHolderMat->opacity( PickDescriptionHolderOpacity );
+		scene.materials().addElement( "pickedDescriptionHolder"
+			, pickedDescriptionHolderMat );
+
+		auto pickedDescriptionHolderBorderMat = std::make_shared< render::Material >();
+		pickedDescriptionHolderBorderMat->ambient( PickDescriptionHolderBorderColour );
+		pickedDescriptionHolderBorderMat->diffuse( PickDescriptionHolderBorderColour );
+		scene.materials().addElement( "pickedDescriptionHolderBorder"
+			, pickedDescriptionHolderBorderMat );
 
 		auto pickedBuffers = std::make_shared< render::BillboardBuffer >( true );
 		pickedBuffers->add( { -1000.0
@@ -466,8 +486,8 @@ namespace starmap
 
 		m_pickDescriptionHolder = std::make_shared< render::BorderPanelOverlay >();
 		m_pickDescriptionHolder->show( false );
-		m_pickDescriptionHolder->colour( PickDescriptionHolderColour );
-		m_pickDescriptionHolder->borderColour( PickDescriptionHolderBorderColour );
+		m_pickDescriptionHolder->material( pickedDescriptionHolderMat );
+		m_pickDescriptionHolder->borderMaterial( pickedDescriptionHolderBorderMat );
 		m_pickDescriptionHolder->borderSize( PickDescriptionHolderBorderSize );
 		m_pickDescriptionHolder->borderPosition( render::BorderPosition::eInternal );
 		m_pickDescriptionHolder->index( 2u );
@@ -476,7 +496,7 @@ namespace starmap
 		m_pickDescription = std::make_shared< render::TextOverlay >();
 		m_pickDescription->fontTexture( *m_fontTextureNames );
 		m_pickDescription->show( false );
-		m_pickDescription->colour( PickDescriptionColour );
+		m_pickDescription->material( pickedDescriptionMat );
 		m_pickDescription->lineSpacingMode( render::TextLineSpacingMode::eMaxFontHeight );
 		m_pickDescription->index( 3u );
 		scene.overlays().addElement( "picked", m_pickDescription );
@@ -506,7 +526,7 @@ namespace starmap
 			std::stringstream stream;
 			stream << "Star_" << i;
 			auto overlay = std::make_shared< render::TextOverlay >();
-			overlay->colour( gl::RgbaColour{ 1.0, 1.0, 1.0, 1.0 } );
+			overlay->material( scene.materials().findElement( "FullAlphaWhite" ) );
 			overlay->fontTexture( *m_fontTextureNames );
 			overlay->show( false );
 			overlay->index( 1u );
@@ -523,11 +543,17 @@ namespace starmap
 		m_constellationNames.resize( m_constellations.size() );
 		uint32_t index{ 0u };
 
+		auto constellationMat = std::make_shared< render::Material >();
+		constellationMat->ambient( ConstellationTextColour );
+		constellationMat->diffuse( ConstellationTextColour );
+		scene.materials().addElement( "ConstellationName"
+			, constellationMat );
+
 		for ( auto const & constellation : m_constellations )
 		{
 			auto overlay = std::make_shared< render::TextOverlay >();
 			overlay->caption( constellation.first );
-			overlay->colour( ConstellationTextColour );
+			overlay->material( constellationMat );
 			overlay->fontTexture( *m_fontTextureNames );
 			overlay->index( 0u );
 			scene.overlays().addElement( constellation.first, overlay );

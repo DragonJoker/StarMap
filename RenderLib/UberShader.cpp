@@ -111,6 +111,23 @@ uniform int nodeIndex;
 )"
 		};
 
+		static std::string const OverlayUniforms
+		{
+			R"(uniform mat4 mtxMP;
+uniform vec4 colour;
+)"
+		};
+
+		static std::string const OverlayUbo
+		{
+			R"(layout( std140 ) uniform Overlay
+{
+	mat4 mtxMP;
+	vec4 colour;
+};
+)"
+		};
+
 		namespace glsl_vtx
 		{
 			static std::string const ObjectShader
@@ -263,11 +280,20 @@ void main()
 			static std::string PanelOverlayShader
 			{
 				R"([attribute] vec2 position;
+#ifdef TEXTURED
+[attribute] vec2 texture;
+#endif
 
-uniform mat4 mtxMP;
+#ifdef TEXTURED
+[varying] vec2 vtx_texture;
+#endif
 
 void main()
 {
+#ifdef TEXTURED
+	vtx_texture = texture;
+#endif
+
 	gl_Position = mtxMP * vec4( position, 0.0, 1.0 );
 }
 )"
@@ -279,8 +305,6 @@ void main()
 [attribute] vec2 texture;
 
 [varying] vec2 vtx_texture;
-
-uniform mat4 mtxMP;
 
 void main()
 {
@@ -346,6 +370,11 @@ void main()
 						ret += PolyLineUbo;
 						break;
 
+					case ObjectType::ePanelOverlay:
+					case ObjectType::eTextOverlay:
+						ret += OverlayUbo;
+						break;
+
 					default:
 						break;
 					}
@@ -366,6 +395,11 @@ void main()
 					case ObjectType::ePolyLine:
 						ret += MtxUniforms;
 						ret += PolyLineUniforms;
+						break;
+
+					case ObjectType::ePanelOverlay:
+					case ObjectType::eTextOverlay:
+						ret += OverlayUniforms;
 						break;
 
 					default:
@@ -627,18 +661,33 @@ void main()
 	}
 #endif
 	[gl_FragColor] = packPixel( drawIndex, nodeIndex, int( vtx_instance + 0.1 ) );
-	//[gl_FragColor] = vec4( drawIndex, nodeIndex, vtx_instance, 1.0 );
 }
 )"
 			};
 
 			static std::string PanelOverlayShader
 			{
-				R"(uniform vec4 colour;
+				R"(#ifdef DIFFUSE_MAP
+uniform sampler2D mapDiffuse;
+#endif
+#ifdef OPACITY_MAP
+uniform sampler2D mapOpacity;
+#endif
+
+#ifdef TEXTURED
+[varying] vec2 vtx_texture;
+#endif
 
 void main()
 {
-	[gl_FragColor] = colour;
+	vec4 pxl_fragColour = colour;
+#ifdef DIFFUSE_MAP
+	pxl_fragColour.xyz = [texture2D]( mapDiffuse, vtx_texture ).rgb;
+#endif
+#ifdef OPACITY_MAP
+	pxl_fragColour.a *= [texture2D]( mapOpacity, vtx_texture ).r;
+#endif
+	[gl_FragColor] = pxl_fragColour;
 }
 )"
 			};
@@ -647,13 +696,13 @@ void main()
 			{
 				R"([varying] vec2 vtx_texture;
 
-uniform sampler2D mapText;
-uniform vec4 colour;
+uniform sampler2D mapOpacity;
 
 void main()
 {
-	float alpha = [texture2D]( mapText, vtx_texture ).r * colour.a;
-	[gl_FragColor] = vec4( colour.xyz, alpha );
+	vec4 pxl_fragColour = colour;
+	pxl_fragColour.a *= [texture2D]( mapOpacity, vtx_texture ).r;
+	[gl_FragColor] = pxl_fragColour;
 }
 )"
 			};
@@ -770,6 +819,11 @@ void main()
 							break;
 						}
 					}
+					else if ( object == ObjectType::ePanelOverlay
+						|| object == ObjectType::eTextOverlay )
+					{
+						ret += OverlayUbo;
+					}
 
 					ret += "out vec4 out_fragColour;\n";
 				}
@@ -800,6 +854,11 @@ void main()
 						default:
 							break;
 						}
+					}
+					else if ( object == ObjectType::ePanelOverlay
+						|| object == ObjectType::eTextOverlay )
+					{
+						ret += OverlayUniforms;
 					}
 				}
 

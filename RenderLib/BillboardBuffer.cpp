@@ -76,11 +76,11 @@ namespace render
 	{
 		if ( gl::OpenGL::checkSupport( gl::FeatureLevel::eGLES3 ) )
 		{
-			m_visible = std::make_unique< StorageES3 >( m_buffer.size() );
+			m_visible = std::make_unique< StorageES3 >( uint32_t( m_buffer.size() ) );
 		}
 		else
 		{
-			m_visible = std::make_unique< StorageES2 >( m_buffer.size() );
+			m_visible = std::make_unique< StorageES2 >( uint32_t( m_buffer.size() ) );
 		}
 	}
 

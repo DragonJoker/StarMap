@@ -19,6 +19,33 @@ namespace render
 {
 	/**
 	*\brief
+	*	Noeud de rendu utilisé pour dessiner une incrustation.
+	*/
+	struct OverlayNode
+	{
+		/**
+		*\brief
+		*	Constructeur.
+		*\param[in] text
+		*	Dit si c'est un programme pour les incrustations texte.
+		*/
+		OverlayNode( bool text );
+
+		//! Le programme sshader utilisé pour dessiner les incrustations.
+		gl::ShaderProgramPtr m_program;
+		//! Le tampon de variables uniformes pour les incrustations.
+		gl::UniformBuffer m_overlayUbo;
+		//! La variable uniforme contenant la matrice modèle - projection.
+		gl::Mat4Uniform * m_mpUniform;
+		//! La variable uniforme contenant la couleur de l'incrustation.
+		gl::Vec4Uniform * m_colour;
+		//! La variable uniforme contenant l'échantillonneur de la texture couleur.
+		gl::IntUniformPtr m_mapColour;
+		//! La variable uniforme contenant l'échantillonneur de la texture d'opacité.
+		gl::IntUniformPtr m_mapOpacity;
+	};
+	/**
+	*\brief
 	*	Le renderer d'incrustations.
 	*/
 	class OverlayRenderer
@@ -78,25 +105,6 @@ namespace render
 		void endRender();
 
 	private:
-		struct OverlayProgram
-		{
-			/**
-			*\brief
-			*	Constructeur.
-			*\param[in] text
-			*	Dit si c'est un programme pour les incrustations texte.
-			*/
-			OverlayProgram( bool text );
-
-			//! Le programme sshader utilisé pour dessiner les incrustations.
-			gl::ShaderProgramPtr m_program;
-			//! La variable uniforme contenant la matrice modèle - projection.
-			gl::Mat4UniformPtr m_mpUniform{ nullptr };
-			//! La variable uniforme contenant l'échantillonneur de la texture.
-			gl::IntUniformPtr m_map;
-			//! La variable uniforme contenant la couleur de l'incrustation.
-			gl::Vec4UniformPtr m_colour;
-		};
 		/**
 		*\brief
 		*	Décrit un tampon de sommets pour les incrustations.
@@ -127,32 +135,14 @@ namespace render
 		*	Le nombre de sommets.
 		*param[in] transform
 		*	La matrice de transformation de l'incrustation.
-		*param[in] colour
-		*	La couleur de l'incrustation.
+		*param[in] material
+		*	Le matériau de l'incrustation.
 		*/
 		void doDrawBuffer( VertexBuffer const & buffer
 			, uint32_t count
-			, gl::Matrix4x4 const & transform
-			, gl::RgbaColour const & colour );
-		/**
-		*brief
-		*	Fonction de dessin d'une incrustation texte.
-		*param[in] buffer
-		*	Le tampon de la géométrie de l'incrustation.
-		*param[in] count
-		*	Le nombre de sommets.
-		*param[in] transform
-		*	La matrice de transformation de l'incrustation.
-		*param[in] colour
-		*	La couleur de l'incrustation.
-		*param[in] texture
-		*	La texture contenant les caractères.
-		*/
-		void doDrawBuffer( VertexBuffer const & buffer
-			, uint32_t count
-			, gl::Matrix4x4 const & transform
-			, gl::RgbaColour const & colour
-			, Texture const & texture );
+			, gl::Mat4 const & transform
+			, Material const & material
+			, OverlayNode const & node );
 		/**
 		*brief
 		*	Remplit un GeometryBuffers d'une partie d'un tableau de sommets
@@ -173,9 +163,9 @@ namespace render
 
 	private:
 		//! Le programme sshader utilisé pour dessiner les incrustations panneau.
-		OverlayProgram m_panelProgram;
+		OverlayNode m_panelNode;
 		//! Le programme sshader utilisé pour dessiner les incrustations texte.
-		OverlayProgram m_textProgram;
+		OverlayNode m_textNode;
 		//! Le pipeline utilisé pour le dessin des incrustations texte.
 		gl::Pipeline m_pipeline;
 		//! Les tampons de sommets utilisés pour rendre les panneaux.
@@ -189,7 +179,7 @@ namespace render
 		//! Dit si les dimension du rendu ont changé.
 		bool m_sizeChanged{ true };
 		//! La matrice de projection.
-		gl::Matrix4x4 m_transform;
+		gl::Mat4 m_transform;
 		//! Le viewport de rendu des incrustations.
 		Viewport m_viewport;
 	};

@@ -66,21 +66,22 @@ namespace render
 		}
 		/**
 		*\brief
-		*	Définit la couleur de la bordure.
-		*\param[in] colour
+		*	Définit le matériau de la bordure.
+		*\param[in] material
 		*	La nouvelle valeur.
 		*/
-		inline void borderColour( gl::RgbaColour const & colour )
+		inline void borderMaterial( MaterialPtr material )
 		{
-			m_borderColour = colour;
+			m_borderMaterial = material;
 		}
 		/**
 		*\return
-		*	La couleur de la bordure.
+		*	Le matériau de la bordure.
 		*/
-		inline gl::RgbaColour const & borderColour()const
+		inline Material const & borderMaterial()const
 		{
-			return m_borderColour;
+			assert( m_borderMaterial );
+			return *m_borderMaterial;
 		}
 		/**
 		*\return
@@ -228,9 +229,9 @@ namespace render
 		void doUpdateBuffer();
 
 	protected:
-		//! La couleur de la bordure
-		gl::RgbaColour m_borderColour;
-		//! La taille de la bordure
+		//! Le matériau de la bordure.
+		MaterialPtr m_borderMaterial;
+		//! La taille de la bordure.
 		gl::IVec4 m_borderSize;
 		//! Le nom du matériau de la bordure.
 		BorderPosition m_borderPosition;

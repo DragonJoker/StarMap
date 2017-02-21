@@ -6,6 +6,7 @@
 
 #include "BorderPanelOverlay.h"
 #include "ElementsList.h"
+#include "Material.h"
 #include "PanelOverlay.h"
 #include "TextOverlay.h"
 #include "UberShader.h"
@@ -65,35 +66,76 @@ namespace render
 
 			return result;
 		}
-	}
+
+
+		void doBindMaterial( OverlayNode const & node
+			, Material const & material )
+		{
+			node.m_colour->value( { material.ambient(), material.opacity() } );
+
+			if ( material.hasDiffuseMap()
+				&& node.m_mapColour->valid() )
+			{
+				node.m_mapColour->value( 0 );
+				node.m_mapColour->bind();
+				material.diffuseMap().bind( 0 );
+			}
+
+			if ( material.hasOpacityMap()
+				&& node.m_mapOpacity->valid() )
+			{
+				node.m_mapOpacity->value( 1 );
+				node.m_mapOpacity->bind();
+				material.opacityMap().bind( 1 );
+			}
+		}
+
+		void doUnbindMaterial( OverlayNode const & node
+			, Material const & material )
+		{
+			if ( material.hasOpacityMap()
+				&& node.m_mapOpacity->valid() )
+			{
+				material.opacityMap().unbind( 1 );
+			}
+
+			if ( material.hasDiffuseMap()
+				&& node.m_mapColour->valid() )
+			{
+				material.diffuseMap().unbind( 0 );
+			}
+		}	}
 
 	//*************************************************************************
 
-	OverlayRenderer::OverlayProgram::OverlayProgram( bool text )
+	OverlayNode::OverlayNode( bool text )
 		: m_program{ UberShader::createShaderProgram( RenderType::eScene
 			, text ? TextureFlag::eOpacity : TextureFlag::eNone
 			, text ? OpacityType::eAlphaTest : OpacityType::eAlphaBlend
 			, text ? ObjectType::eTextOverlay : ObjectType::ePanelOverlay ) }
-		, m_mpUniform{ gl::makeUniform< gl::Matrix4x4 >( "mtxMP", *m_program ) }
-		, m_map{ text ? gl::makeUniform< int >( "mapText", *m_program ) : nullptr }
-		, m_colour{ gl::makeUniform< gl::RgbaColour >( "colour", *m_program ) }
+		, m_overlayUbo{ "Overlay", 0u, *m_program }
+		, m_mpUniform{ &m_overlayUbo.createUniform< gl::Mat4 >( "mtxMP" ) }
+		, m_colour{ &m_overlayUbo.createUniform< gl::RgbaColour >( "colour" ) }
+		, m_mapColour{ gl::makeUniform< int >( "mapColour", *m_program ) }
+		, m_mapOpacity{ gl::makeUniform< int >( "maOpacity", *m_program ) }
 	{
+		m_overlayUbo.initialise();
 	}
 
 	//*************************************************************************
 
 	OverlayRenderer::OverlayRenderer( uint32_t maxCharsPerBuffer )
-		: m_panelProgram{ false }
-		, m_textProgram{ true }
+		: m_panelNode{ false }
+		, m_textNode{ true }
 		, m_pipeline{ true, false, true, true }
 		, m_panelBuffer
 		{
 			gl::makeBuffer( gl::BufferTarget::eArrayBuffer
 				, std::vector< TextOverlay::Quad >( 1u ) ),
-			m_panelProgram.m_program->createAttribute< gl::Vec2 >( "position"
+			m_panelNode.m_program->createAttribute< gl::Vec2 >( "position"
 				, sizeof( TextOverlay::Vertex )
 				, offsetof( TextOverlay::Vertex, coords ) ),
-			m_panelProgram.m_program->createAttribute< gl::Vec2 >( "texture"
+			m_panelNode.m_program->createAttribute< gl::Vec2 >( "texture"
 				, sizeof( TextOverlay::Vertex )
 				, offsetof( TextOverlay::Vertex, text ) )
 		}
@@ -101,10 +143,10 @@ namespace render
 		{
 			gl::makeBuffer( gl::BufferTarget::eArrayBuffer
 				, std::vector< TextOverlay::Quad >( 8u ) ),
-			m_panelProgram.m_program->createAttribute< gl::Vec2 >( "position"
+			m_panelNode.m_program->createAttribute< gl::Vec2 >( "position"
 				, sizeof( TextOverlay::Vertex )
 				, offsetof( TextOverlay::Vertex, coords ) ),
-			m_panelProgram.m_program->createAttribute< gl::Vec2 >( "texture"
+			m_panelNode.m_program->createAttribute< gl::Vec2 >( "texture"
 				, sizeof( TextOverlay::Vertex )
 				, offsetof( TextOverlay::Vertex, text ) )
 		}
@@ -154,35 +196,38 @@ namespace render
 
 	void OverlayRenderer::drawPanel( PanelOverlay const & overlay )
 	{
-		m_panelProgram.m_program->bind();
+		m_panelNode.m_program->bind();
 		m_panelBuffer.m_vbo->bind();
 		m_panelBuffer.m_vbo->upload( 0u, 1u, overlay.panelVertex().data() );
 		m_panelBuffer.m_vbo->unbind();
 		doDrawBuffer( m_panelBuffer
 			, 1u
 			, overlay.transform()
-			, overlay.colour() );
-		m_panelProgram.m_program->unbind();
+			, overlay.material()
+			, m_panelNode );
+		m_panelNode.m_program->unbind();
 	}
 
 	void OverlayRenderer::drawBorderPanel( BorderPanelOverlay const & overlay )
 	{
-		m_panelProgram.m_program->bind();
+		m_panelNode.m_program->bind();
 		m_panelBuffer.m_vbo->bind();
 		m_panelBuffer.m_vbo->upload( 0u, 1u, overlay.panelVertex().data() );
 		m_panelBuffer.m_vbo->unbind();
 		doDrawBuffer( m_panelBuffer
 			, 1u
 			, overlay.transform()
-			, overlay.colour() );
+			, overlay.material()
+			, m_panelNode );
 		m_borderBuffer.m_vbo->bind();
 		m_borderBuffer.m_vbo->upload( 0u, 8u, overlay.borderVertex().data() );
 		m_borderBuffer.m_vbo->unbind();
 		doDrawBuffer( m_borderBuffer
 			, 8u
 			, overlay.transform()
-			, overlay.borderColour() );
-		m_panelProgram.m_program->unbind();
+			, overlay.borderMaterial()
+			, m_panelNode );
+		m_panelNode.m_program->unbind();
 	}
 
 	void OverlayRenderer::drawText( TextOverlay const & overlay )
@@ -212,19 +257,19 @@ namespace render
 		}
 
 		count = uint32_t( quads.size() );
-		m_textProgram.m_program->bind();
+		m_textNode.m_program->bind();
 
 		for ( auto & buffer : buffers )
 		{
 			doDrawBuffer( *buffer
 				, std::min( count, m_maxCharsPerBuffer )
 				, overlay.transform()
-				, overlay.colour()
-				, overlay.fontTexture().texture() );
+				, overlay.material()
+				, m_textNode );
 			count -= m_maxCharsPerBuffer;
 		}
 
-		m_textProgram.m_program->unbind();
+		m_textNode.m_program->unbind();
 	}
 
 	OverlayRenderer::VertexBuffer const & OverlayRenderer::doCreateTextBuffer()
@@ -232,10 +277,10 @@ namespace render
 		auto buffer = std::make_unique< VertexBuffer >();
 		buffer->m_vbo = gl::makeBuffer( gl::BufferTarget::eArrayBuffer
 			, std::vector< TextOverlay::Quad >( m_maxCharsPerBuffer ) );
-		buffer->m_position = m_textProgram.m_program->createAttribute< gl::Vec2 >( "position"
+		buffer->m_position = m_textNode.m_program->createAttribute< gl::Vec2 >( "position"
 			, sizeof( TextOverlay::Vertex )
 			, offsetof( TextOverlay::Vertex, coords ) );
-		buffer->m_texture = m_textProgram.m_program->createAttribute< gl::Vec2 >( "texture"
+		buffer->m_texture = m_textNode.m_program->createAttribute< gl::Vec2 >( "texture"
 			, sizeof( TextOverlay::Vertex )
 			, offsetof( TextOverlay::Vertex, text ) );
 		m_textBuffers.push_back( std::move( buffer ) );
@@ -244,39 +289,17 @@ namespace render
 
 	void OverlayRenderer::doDrawBuffer( VertexBuffer const & buffer
 		, uint32_t count
-		, gl::Matrix4x4 const & transform
-		, gl::RgbaColour const & colour )
+		, gl::Mat4 const & transform
+		, Material const & material
+		, OverlayNode const & node )
 	{
 		buffer.m_vbo->bind();
 		buffer.m_position->bind();
-		m_panelProgram.m_mpUniform->value( m_transform * transform );
-		m_panelProgram.m_colour->value( colour );
-		m_panelProgram.m_mpUniform->bind();
-		m_panelProgram.m_colour->bind();
+		node.m_mpUniform->value( m_transform * transform );
+		doBindMaterial( node, material );
+		node.m_overlayUbo.bind( 0u );
 		glCheckError( glDrawArrays, GL_TRIANGLES, 0, count * 6 );
-		buffer.m_position->unbind();
-		buffer.m_vbo->unbind();
-	}
-
-	void OverlayRenderer::doDrawBuffer( VertexBuffer const & buffer
-		, uint32_t count
-		, gl::Matrix4x4 const & transform
-		, gl::RgbaColour const & colour
-		, Texture const & texture )
-	{
-		buffer.m_vbo->bind();
-		buffer.m_position->bind();
-		buffer.m_texture->bind();
-		m_textProgram.m_mpUniform->value( m_transform * transform );
-		m_textProgram.m_colour->value( colour );
-		m_textProgram.m_map->value( 0 );
-		m_textProgram.m_mpUniform->bind();
-		m_textProgram.m_colour->bind();
-		m_textProgram.m_map->bind();
-		texture.bind( 0 );
-		glCheckError( glDrawArrays, GL_TRIANGLES, 0, count * 6 );
-		texture.unbind( 0 );
-		buffer.m_texture->unbind();
+		doUnbindMaterial( node, material );
 		buffer.m_position->unbind();
 		buffer.m_vbo->unbind();
 	}
