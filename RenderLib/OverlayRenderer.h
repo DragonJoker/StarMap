@@ -11,6 +11,7 @@
 #include "FontTexture.h"
 #include "OverlayCategory.h"
 #include "Viewport.h"
+#include "UberShader.h"
 
 #include <GlLib/GlPipeline.h>
 #include <GlLib/GlUniformBuffer.h>
@@ -29,7 +30,9 @@ namespace render
 		*\param[in] text
 		*	Dit si c'est un programme pour les incrustations texte.
 		*/
-		OverlayNode( bool text );
+		OverlayNode( bool text
+			, OpacityType opacity
+			, TextureFlags textures );
 
 		//! Le programme sshader utilisé pour dessiner les incrustations.
 		gl::ShaderProgramPtr m_program;
@@ -43,7 +46,13 @@ namespace render
 		gl::IntUniformPtr m_mapColour;
 		//! La variable uniforme contenant l'échantillonneur de la texture d'opacité.
 		gl::IntUniformPtr m_mapOpacity;
+		//! L'attribut de position.
+		gl::Vec2AttributePtr m_position;
+		//! L'attribut de coordonnées de texture.
+		gl::Vec2AttributePtr m_texture;
 	};
+	//! Tableau de noeuds de rendu d'incrustations.
+	using OverlayNodeArray = std::array< OverlayNode, size_t( NodeType::eCount ) >;
 	/**
 	*\brief
 	*	Le renderer d'incrustations.
@@ -107,25 +116,10 @@ namespace render
 	private:
 		/**
 		*\brief
-		*	Décrit un tampon de sommets pour les incrustations.
-		*/
-		struct VertexBuffer
-		{
-			//! Le tampon de sommets.
-			gl::BufferPtr< Overlay::Quad > m_vbo;
-			//! L'attribut de position.
-			gl::Vec2AttributePtr m_position;
-			//! L'attribut de coordonnées de texture.
-			gl::Vec2AttributePtr m_texture;
-		};
-		//! Un pointeur sur un VertexBuffer.
-		using VertexBufferPtr = std::unique_ptr< VertexBuffer >;
-		/**
-		*\brief
 		*	Crée un tampon de sommets et ses attrobite pour les incrustations
 		*	texte, et l'ajoute à la liste.
 		*/
-		VertexBuffer const & doCreateTextBuffer();
+		gl::Buffer< Overlay::Quad > const & doCreateTextBuffer();
 		/**
 		*brief
 		*	Fonction de dessin d'une incrustation.
@@ -137,11 +131,35 @@ namespace render
 		*	La matrice de transformation de l'incrustation.
 		*param[in] material
 		*	Le matériau de l'incrustation.
+		*param[in] node
+		*	Le noeud de rendu.
 		*/
-		void doDrawBuffer( VertexBuffer const & buffer
+		void doDrawBuffer( gl::Buffer< Overlay::Quad > const & buffer
 			, uint32_t count
 			, gl::Mat4 const & transform
 			, Material const & material
+			, OverlayNode const & node );
+		/**
+		*brief
+		*	Fonction de dessin d'une incrustation.
+		*param[in] buffer
+		*	Le tampon de la géométrie de l'incrustation.
+		*param[in] count
+		*	Le nombre de sommets.
+		*param[in] transform
+		*	La matrice de transformation de l'incrustation.
+		*param[in] material
+		*	Le matériau de l'incrustation.
+		*param[in] textOpacity
+		*	La texture de police.
+		*param[in] node
+		*	Le noeud de rendu.
+		*/
+		void doDrawBuffer( gl::Buffer< Overlay::Quad > const & buffer
+			, uint32_t count
+			, gl::Mat4 const & transform
+			, Material const & material
+			, Texture const & textOpacity
 			, OverlayNode const & node );
 		/**
 		*brief
@@ -156,24 +174,24 @@ namespace render
 		*return
 		*	Le GeometryBuffers utilisé.
 		*/
-		VertexBuffer const & doFillTextPart( uint32_t count
+		gl::Buffer< Overlay::Quad > const & doFillTextPart( uint32_t count
 			, uint32_t & offset
 			, Overlay::QuadArray::const_iterator & it
 			, uint32_t & index );
 
 	private:
-		//! Le programme sshader utilisé pour dessiner les incrustations panneau.
-		OverlayNode m_panelNode;
-		//! Le programme sshader utilisé pour dessiner les incrustations texte.
+		//! Les programmes shader utilisé pour dessiner les incrustations panneau.
+		OverlayNodeArray m_panelNodes;
+		//! Le programme shader utilisé pour dessiner les incrustations texte.
 		OverlayNode m_textNode;
 		//! Le pipeline utilisé pour le dessin des incrustations texte.
 		gl::Pipeline m_pipeline;
 		//! Les tampons de sommets utilisés pour rendre les panneaux.
-		VertexBuffer m_panelBuffer;
+		gl::BufferPtr< Overlay::Quad > m_panelBuffer;
 		//! Les tampons de sommets utilisés pour rendre les bordures.
-		VertexBuffer m_borderBuffer;
+		gl::BufferPtr< Overlay::Quad > m_borderBuffer;
 		//! Les tampons de sommets utilisés pour rendre les textes.
-		std::vector< VertexBufferPtr > m_textBuffers;
+		std::vector< gl::BufferPtr< Overlay::Quad > > m_textBuffers;
 		//! Le nombre maximal de caractères par tampon de sommets texte.
 		uint32_t m_maxCharsPerBuffer;
 		//! Dit si les dimension du rendu ont changé.

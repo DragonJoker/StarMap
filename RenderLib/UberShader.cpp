@@ -80,6 +80,7 @@ uniform vec2 dimensions;
 		{
 			R"(uniform float lineWidth;
 uniform float lineFeather;
+uniform float lineScale;
 )"
 		};
 
@@ -668,7 +669,7 @@ void main()
 			static std::string PanelOverlayShader
 			{
 				R"(#ifdef DIFFUSE_MAP
-uniform sampler2D mapDiffuse;
+uniform sampler2D mapColour;
 #endif
 #ifdef OPACITY_MAP
 uniform sampler2D mapOpacity;
@@ -682,7 +683,7 @@ void main()
 {
 	vec4 pxl_fragColour = colour;
 #ifdef DIFFUSE_MAP
-	pxl_fragColour.xyz = [texture2D]( mapDiffuse, vtx_texture ).rgb;
+	pxl_fragColour.xyz = [texture2D]( mapColour, vtx_texture ).rgb;
 #endif
 #ifdef OPACITY_MAP
 	pxl_fragColour.a *= [texture2D]( mapOpacity, vtx_texture ).r;

@@ -322,7 +322,7 @@ namespace utils
 		{
 			if ( m_window )
 			{
-				m_window->onDoubleTap( m_doubleTapDetector.result() );
+				m_window->onDoubleTap( gl::IVec2{ m_doubleTapDetector.result() } );
 			}
 			ret = 1;
 		}
@@ -330,7 +330,7 @@ namespace utils
 		{
 			if ( m_window )
 			{
-				m_window->onSingleTap( m_tapDetector.result() );
+				m_window->onSingleTap( gl::IVec2{ m_tapDetector.result() } );
 			}
 
 			ret = 1;
@@ -339,7 +339,7 @@ namespace utils
 		{
 			if ( m_window )
 			{
-				m_window->onSingleMove( m_moveDetector.result() );
+				m_window->onSingleMove( gl::IVec2{ m_moveDetector.result() } );
 			}
 			ret = 1;
 		}
@@ -353,7 +353,8 @@ namespace utils
 
 		if ( m_dblMoveDetector.detect( event ) == utils::ResultType::eMove )
 		{
-			m_window->onDoubleMove( m_dblMoveDetector.result(), m_dblMoveDetector.distanceOffset() );
+			m_window->onDoubleMove( gl::IVec2{ m_dblMoveDetector.result() }
+				, m_dblMoveDetector.distanceOffset() );
 			ret = 1;
 		}
 

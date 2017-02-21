@@ -196,8 +196,8 @@
       <Link StarA="Beta" StarB="Delta"/>
       <Link StarA="Beta" StarB="Epsilon"/>
       <Link StarA="Epsilon" StarB="Zeta"/>
-      <Link StarA="Delta" StarB="Gamma"/>
-      <Link StarA="Zeta" StarB="Gamma"/>
+      <Link StarA="Delta" StarB="Gamma2"/>
+      <Link StarA="Zeta" StarB="Gamma2"/>
     </LinkList>
   </Constellation>
   <Constellation Name="Piscis Austrinus">

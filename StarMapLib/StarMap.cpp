@@ -54,7 +54,7 @@ namespace starmap
 		( [this]( gl::IVec2 const & value )
 		{
 			assert( m_window );
-			m_window->state().velocity( value );
+			m_window->state().velocity( gl::Vec2{ value } );
 		} ) }
 		, m_onSetZoomVelocity{ events.onSetZoomVelocity.connect
 		( [this]( float value )

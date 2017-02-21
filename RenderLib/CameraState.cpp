@@ -43,8 +43,8 @@ namespace render
 		auto scale = m_fovy.percent() + 0.1f;
 		auto angleX = m_angleX;
 		auto angleY = m_angleY;
-		auto rotY = gl::toRadians( m_velocityY.value() ) * scale / 2.0f;
-		auto rotX = gl::toRadians( m_velocityX.value() ) * scale / 2.0f;
+		auto rotY = gl::toRadians( m_velocityY.value() ) * scale / 4.0f;
+		auto rotX = gl::toRadians( m_velocityX.value() ) * scale / 4.0f;
 		m_angleX += rotY;
 		m_angleY += rotX;
 

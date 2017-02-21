@@ -149,7 +149,7 @@ namespace render
 			//! La variable uniforme contenant la plume.
 			gl::FloatUniform * m_lineFeather;
 			//! La variable uniforme contenant l'échelle.
-			gl::Vec2Uniform * m_lineScale;
+			gl::FloatUniform * m_lineScale;
 			//! L'attribut de position
 			gl::Vec3AttributePtr m_position;
 			//! L'attribut de normale

@@ -44,8 +44,8 @@ namespace gl
 	template< typename T >
 	QuaternionT< T >::QuaternionT( Vec3T< RadiansT< T > > const & euler )noexcept
 	{
-		Vec3T< T > c = vectorCall( gl::cos< T >, euler * T{ 0.5 } );
-		Vec3T< T > s = vectorCall( gl::sin< T >, euler * T{ 0.5 } );
+		Vec3T< T > c{ vectorCall( gl::cos< T >, euler * T{ 0.5 } ) };
+		Vec3T< T > s{ vectorCall( gl::sin< T >, euler * T{ 0.5 } ) };
 		
 		w = c.x * c.y * c.z + s.x * s.y * s.z;
 		x = s.x * c.y * c.z - c.x * s.y * s.z;

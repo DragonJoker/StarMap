@@ -64,7 +64,7 @@ namespace gl
 		*\param[in] v
 		*	La valeur des composantes.
 		*/
-		constexpr Vec3T( T const & v )noexcept;
+		explicit constexpr Vec3T( T const & v )noexcept;
 		/**
 		*\brief
 		*	Constructeur.
@@ -90,7 +90,7 @@ namespace gl
 		*	Le point à convertir.
 		*/
 		template< typename U >
-		Vec3T( Vec3T< U > const & rhs )noexcept;
+		explicit Vec3T( Vec3T< U > const & rhs )noexcept;
 		/**
 		*\brief
 		*	Opérateur d'affectation par conversion.

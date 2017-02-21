@@ -196,7 +196,7 @@ namespace render
 			m_quads.reserve( m_previousCaption.size() );
 
 			DisplayableLineArray lines = doPrepareText();
-			gl::Vec2 texDim = m_fontTexture->texture().dimensions();
+			gl::Vec2 texDim{ m_fontTexture->texture().dimensions() };
 
 			for ( auto const & line : lines )
 			{

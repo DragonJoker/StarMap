@@ -160,16 +160,18 @@ void Window::onCreate()
 	lines->material( linesMat );
 	scene.add( lines );
 
+	auto coinMat = doCreateOverlayMaterial( "coin", gl::RgbColour{ 0, 1, 0 }, 1 );
 	auto overlay = std::make_shared< render::TextOverlay >();
 	overlay->position( gl::IVec2{ 200, 200 } );
-	overlay->colour( gl::RgbaColour{ 0.0, 1.0, 0.0, 1.0 } );
+	overlay->material( coinMat );
 	overlay->caption( "coin !!" );
 	overlay->fontTexture( *m_fontTexture );
 	scene.overlays().addElement( "coin", overlay );
 
+	auto glopMat = doCreateOverlayMaterial( "glop", gl::RgbColour{ 1, 0, 0 }, 1 );
 	overlay = std::make_shared< render::TextOverlay >();
 	overlay->position( gl::IVec2{ 400, 200 } );
-	overlay->colour( gl::RgbaColour{ 1.0, 0.0, 0.0, 1.0 } );
+	overlay->material( glopMat );
 	overlay->caption( "glop !!" );
 	overlay->fontTexture( *m_fontTexture );
 	scene.overlays().addElement( "glop", overlay );
@@ -241,7 +243,7 @@ void Window::onSingleMove( gl::IVec2 const & position )
 {
 	if ( m_renderWindow )
 	{
-		m_renderWindow->state().velocity( position );
+		m_renderWindow->state().velocity( gl::Vec2{ position } );
 	}
 }
 
@@ -291,7 +293,7 @@ void Window::doUpdatePicked( render::Object const & object )
 {
 	m_picked->moveTo( object.position() - gl::Vec3{ 0, 0, object.boundaries().z + 0.2 } );
 	doUpdatePicked( static_cast< render::Movable const & >( object ) );
-	m_picked->dimensions( gl::toVec2( object.boundaries() ) );
+	m_picked->dimensions( gl::IVec2{ gl::toVec2( object.boundaries() ) } );
 	m_picked->buffer().at( 0u, { -1000.0f, gl::Vec3{ 0, 0, 0 }, gl::Vec2{ 1, 1 } } );
 	auto percent = m_renderWindow->state().zoomBounds().invpercent( m_renderWindow->state().zoom() );
 	m_picked->cull( m_renderWindow->scene().camera(), 2.0f - 2.0f * percent );
@@ -309,6 +311,27 @@ void Window::doUpdatePicked( render::Billboard const & billboard
 	m_picked->buffer().at( 0u
 		, { -1000.0f, data.center, gl::Vec2{ scale, scale } } );
 	m_picked->cull( m_renderWindow->scene().camera(), 2.0f - 2.0f * percent );
+}
+
+render::MaterialPtr Window::doCreateOverlayMaterial( std::string const & name
+	, gl::RgbColour const & colour
+	, float opacity )
+{
+	auto & scene = m_renderWindow->scene();
+	render::MaterialPtr result = scene.materials().findElement( name );
+
+	if ( !result )
+	{
+		result = std::make_unique< render::Material >();
+		result->ambient( colour );
+		result->diffuse( colour );
+		result->specular( colour );
+		result->emissive( colour );
+		result->opacity( opacity );
+		scene.materials().addElement( name, result );
+	}
+
+	return result;
 }
 
 //*****************************************************************************

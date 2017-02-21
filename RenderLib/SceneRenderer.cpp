@@ -170,7 +170,7 @@ namespace render
 		, m_lineUbo{ "PolyLine", 2u, *m_program }
 		, m_lineWidth{ &m_lineUbo.createUniform< float >( "lineWidth" ) }
 		, m_lineFeather{ &m_lineUbo.createUniform< float >( "lineFeather" ) }
-		, m_lineScale{ &m_lineUbo.createUniform< gl::Vec2 >( "lineScale" ) }
+		, m_lineScale{ &m_lineUbo.createUniform< float >( "lineScale" ) }
 		, m_position{ m_program->createAttribute< gl::Vec3 >( "position"
 			, sizeof( PolyLine::Vertex )
 			, offsetof( PolyLine::Vertex, m_position ) ) }
@@ -394,7 +394,7 @@ namespace render
 					&& billboard->buffer().count() )
 				{
 					node.m_mtxModel->value( billboard->transform() );
-					node.m_dimensions->value( { billboard->dimensions() } );
+					node.m_dimensions->value( gl::Vec2{ billboard->dimensions() } );
 					doBindMaterial( node, billboard->material() );
 					node.m_mtxUbo.bind( 0u );
 					node.m_matUbo.bind( 1u );

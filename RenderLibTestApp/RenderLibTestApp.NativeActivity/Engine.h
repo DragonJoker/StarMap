@@ -102,6 +102,19 @@ private:
 	*/
 	void doUpdatePicked( render::Billboard const & billboard
 		, uint32_t index );
+	/**
+	*\brief
+	*	Crée un matériau depuis une couleur et une opacité.
+	*\param[in] name
+	*	Le nom du matériau.
+	*\param[in] colour
+	*	La couleur du matériau.
+	*\param[in] opacity
+	*	L'opacité du matériau.
+	*/
+	render::MaterialPtr doCreateOverlayMaterial( std::string const & name
+		, gl::RgbColour const & colour
+		, float opacity );
 
 private:
 	render::RenderWindowPtr m_renderWindow;
