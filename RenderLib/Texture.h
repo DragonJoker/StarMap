@@ -37,7 +37,7 @@ namespace render
 		*	Les filtres de minification et magnification.
 		*/
 		void image( gl::PixelFormat format
-			, gl::Size2D const & size
+			, gl::IVec2 const & size
 			, ByteArray const & data
 			, gl::WrapMode wrapS = gl::WrapMode::eClampToEdge
 			, gl::WrapMode wrapT = gl::WrapMode::eClampToEdge
@@ -74,14 +74,14 @@ namespace render
 		*\return
 		*	Les dimensions de la texture.
 		*/
-		inline gl::Size2D const & dimensions()const noexcept
+		inline gl::IVec2 const & dimensions()const noexcept
 		{
 			return m_size;
 		}
 
 	private:
 		//! Les dimensions de l'image.
-		gl::Size2D m_size;
+		gl::IVec2 m_size;
 		//! Le format des données de l'image.
 		gl::PixelFormat m_format{ gl::PixelFormat::eR8G8B8 };
 		//! La texture OpenGL.

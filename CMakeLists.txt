@@ -57,6 +57,10 @@ macro( source_add_forced_include _FILE ) #ARGN: _FILES
 	endif ()
 endmacro( source_add_forced_include )
 
+if ( MSVC )
+	string( REGEX REPLACE "/Zi" "/ZI" CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG} )
+endif ()
+
 add_subdirectory( GlLib )
 add_subdirectory( RenderLib )
 add_subdirectory( FreeType )

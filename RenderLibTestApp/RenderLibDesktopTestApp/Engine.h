@@ -34,7 +34,7 @@ public:
 	*\brief
 	*	Initialisation de la fenêtre.
 	*/
-	void onResize( gl::Size2D const & event )override;
+	void onResize( gl::IVec2 const & event )override;
 	/**
 	*\brief
 	*	Déplacement de la souris.

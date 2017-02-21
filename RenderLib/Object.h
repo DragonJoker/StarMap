@@ -54,7 +54,7 @@ namespace render
 		*\return
 		*	Les dimensions de l'objet.
 		*/
-		inline gl::Vector3D const & boundaries()const noexcept
+		inline gl::Vec3 const & boundaries()const noexcept
 		{
 			return m_mesh->boundaries();
 		}

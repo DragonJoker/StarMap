@@ -54,7 +54,7 @@ namespace utils
 					{
 						if ( m_downPointerID == AMotionEvent_getPointerId( event, 0 ) )
 						{
-							gl::Vector2D position
+							gl::Vec2 position
 							{
 								AMotionEvent_getX( event, 0 ),
 								AMotionEvent_getY( event, 0 ),
@@ -101,7 +101,7 @@ namespace utils
 
 					if ( eventTime - m_lastTapTime <= DOUBLE_TAP_TIMEOUT )
 					{
-						gl::Vector2D position
+						gl::Vec2 position
 						{
 							AMotionEvent_getX( event, 0 ),
 							AMotionEvent_getY( event, 0 ),
@@ -204,7 +204,7 @@ namespace utils
 			if ( main != ResultType::eNone
 				&& second != ResultType::eNone )
 			{
-				gl::Vector2D diff{ ( m_secondary.position() - m_main.position() ) * m_dpFactor };
+				gl::Vec2 diff{ ( m_secondary.position() - m_main.position() ) * m_dpFactor };
 				float distance{ gl::length( diff ) };
 
 				if ( main == ResultType::eMove
@@ -219,7 +219,7 @@ namespace utils
 				}
 				else if ( second == ResultType::eDown )
 				{
-					m_result = gl::Vector2D{};
+					m_result = gl::Vec2{};
 					m_offset = 0.0f;
 					ret = ResultType::eDown;
 				}

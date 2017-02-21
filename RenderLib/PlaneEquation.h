@@ -36,9 +36,9 @@ namespace render
 		*\param[in] p3
 		*	Le troisième point appartenant au plan.
 		*/
-		PlaneEquation(gl::Vector3D const & p1
-			, gl::Vector3D const & p2
-			, gl::Vector3D const & p3 );
+		PlaneEquation(gl::Vec3 const & p1
+			, gl::Vec3 const & p2
+			, gl::Vec3 const & p3 );
 		/**
 		*\brief
 		*	Constructeur.
@@ -47,8 +47,8 @@ namespace render
 		*\param[in] point
 		*	Un point appartenant au plan.
 		*/
-		PlaneEquation( gl::Vector3D const & normal
-			, gl::Vector3D const & point );
+		PlaneEquation( gl::Vec3 const & normal
+			, gl::Vec3 const & point );
 		/**
 		*\brief
 		*	Destructeur.
@@ -64,9 +64,9 @@ namespace render
 		*\param[in] p3
 		*	Le troisième point appartenant au plan.
 		*/
-		void set( gl::Vector3D const & p1
-			, gl::Vector3D const & p2
-			, gl::Vector3D const & p3 );
+		void set( gl::Vec3 const & p1
+			, gl::Vec3 const & p2
+			, gl::Vec3 const & p3 );
 		/**
 		*\brief
 		*	Définit l'équation du plan.
@@ -75,8 +75,8 @@ namespace render
 		*\param[in] point
 		*	Un point appartenant au plan.
 		*/
-		void set( gl::Vector3D const & normal
-			, gl::Vector3D const & point );
+		void set( gl::Vec3 const & normal
+			, gl::Vec3 const & point );
 		/**
 		*\brief
 		*	Vérifie si ce plan est parallèle à un autre, id est leurs normales sont
@@ -94,7 +94,7 @@ namespace render
 		*	La distance, positive si le point est du même côté que la normale
 		*	du plan.
 		*/
-		float distance( gl::Vector3D const & point )const;
+		float distance( gl::Vec3 const & point )const;
 		/**
 		*\brief
 		*	Récupère la projection d'un point sur ce plan.
@@ -103,7 +103,7 @@ namespace render
 		*\return
 		*	Le résultat de la projection.
 		*/
-		gl::Vector3D project( gl::Vector3D const & point )const;
+		gl::Vec3 project( gl::Vec3 const & point )const;
 		/**
 		*\brief
 		*	Vérifie si ce plan en croise un autre, donne la ligne
@@ -129,12 +129,12 @@ namespace render
 		*/
 		bool intersects( PlaneEquation const & plane1
 			, PlaneEquation const & plane2
-			, gl::Vector3D & intersection )const;
+			, gl::Vec3 & intersection )const;
 		/**
 		*\return
 		*	La normale du plan.
 		*/
-		inline gl::Vector3D const & normal()const
+		inline gl::Vec3 const & normal()const
 		{
 			return m_normal;
 		}
@@ -142,16 +142,16 @@ namespace render
 		*\return
 		*	Le point de référence du plan.
 		*/
-		inline gl::Vector3D const & point()const
+		inline gl::Vec3 const & point()const
 		{
 			return m_point;
 		}
 
 	private:
 		//! La normale du plan.
-		gl::Vector3D m_normal;
+		gl::Vec3 m_normal;
 		//! Le point de référence du plan.
-		gl::Vector3D m_point;
+		gl::Vec3 m_point;
 		//! Le coefficient.
 		float m_d;
 

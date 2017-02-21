@@ -47,22 +47,22 @@ private:
 	*\brief
 	*	Gestion d'un évènement de type tap.
 	*/
-	void onSingleTap( gl::Position2D const & position )override;
+	void onSingleTap( gl::IVec2 const & position )override;
 	/**
 	*\brief
 	*	Gestion d'un évènement de type double tap.
 	*/
-	void onDoubleTap( gl::Position2D const & position )override;
+	void onDoubleTap( gl::IVec2 const & position )override;
 	/**
 	*\brief
 	*	Gestion d'un évènement de type déplacement avec un pointeur.
 	*/
-	void onSingleMove( gl::Position2D const & position )override;
+	void onSingleMove( gl::IVec2 const & position )override;
 	/**
 	*\brief
 	*	Gestion d'un évènement de type déplacement avec deux pointeur.
 	*/
-	void onDoubleMove( gl::Position2D const & posDiff, int distDiff )override;
+	void onDoubleMove( gl::IVec2 const & posDiff, int distDiff )override;
 	/**
 	*\brief
 	*	Gestion du signal de sélection d'objet.

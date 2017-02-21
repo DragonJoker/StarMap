@@ -57,7 +57,7 @@ void Engine::onDestroy()
 	doCleanup3DElements();
 }
 
-void Engine::onResize( gl::Size2D const & event )
+void Engine::onResize( gl::IVec2 const & event )
 {
 	if ( m_window )
 	{
@@ -138,7 +138,7 @@ void Engine::doInitialise3DElements()
 
 	// Initialise the render window
 	utils::FontLoader loader{ "arial.ttf" };
-	m_window = std::make_unique< render::RenderWindow >( gl::Size2D{ width
+	m_window = std::make_unique< render::RenderWindow >( gl::IVec2{ width
 			, height }
 		, loader
 		, true );
@@ -158,7 +158,7 @@ void Engine::doInitialise3DElements()
 			, scene.materials()
 			, scene.textures()
 			, scene.meshes() );
-		object->moveTo( gl::Vector3D{ 0.0, 0.0, 52.0 } );
+		object->moveTo( gl::Vec3{ 0.0, 0.0, 52.0 } );
 		scene.add( object );
 	}
 
@@ -189,7 +189,7 @@ void Engine::doInitialise3DElements()
 	scene.materials().addElement( "picked", pickedMat );
 
 	auto pickedBuffers = std::make_shared< render::BillboardBuffer >( false );
-	pickedBuffers->add( { -1000.0f, gl::Vector3D{ 0, 0, 0 }, gl::Vector2D{ 1, 1 } } );
+	pickedBuffers->add( { -1000.0f, gl::Vec3{ 0, 0, 0 }, gl::Vec2{ 1, 1 } } );
 	scene.addBillboardBuffer( "picked", pickedBuffers );
 	m_picked = std::make_shared< render::Billboard >( "picked", *pickedBuffers );
 	m_picked->material( pickedMat );
@@ -204,15 +204,15 @@ void Engine::doInitialise3DElements()
 	billboardMat->emissive( gl::RgbColour{ 1.0, 0.0, 0.5 } );
 	scene.materials().addElement( "billboard", billboardMat );
 	auto billboardBuffers = std::make_shared< render::BillboardBuffer >( false );
-	billboardBuffers->add( { -100.0f, gl::Vector3D{ 1, 0, 0 }, gl::Vector2D{ 1, 1 } } );
-	billboardBuffers->add( { -100.0f, gl::Vector3D{ 0, 1, 0 }, gl::Vector2D{ 1, 0.5 } } );
-	billboardBuffers->add( { -100.0f, gl::Vector3D{ -1, 0, 0 }, gl::Vector2D{ 0.5, 1 } } );
-	billboardBuffers->add( { -100.0f, gl::Vector3D{ 0, -1, 0 }, gl::Vector2D{ 1.5, 1.5 } } );
+	billboardBuffers->add( { -100.0f, gl::Vec3{ 1, 0, 0 }, gl::Vec2{ 1, 1 } } );
+	billboardBuffers->add( { -100.0f, gl::Vec3{ 0, 1, 0 }, gl::Vec2{ 1, 0.5 } } );
+	billboardBuffers->add( { -100.0f, gl::Vec3{ -1, 0, 0 }, gl::Vec2{ 0.5, 1 } } );
+	billboardBuffers->add( { -100.0f, gl::Vec3{ 0, -1, 0 }, gl::Vec2{ 1.5, 1.5 } } );
 	scene.addBillboardBuffer( "billboard", billboardBuffers );
 	auto billboard = std::make_shared< render::Billboard >( "billboard", *billboardBuffers );
-	billboard->dimensions( gl::Size2D{ 1, 1 } );
-	billboard->moveTo( gl::Vector3D{ 0, 0, 50 } );
-	billboard->scale( gl::Vector3D{ 1.5, 1.5, 1.5 } );
+	billboard->dimensions( gl::IVec2{ 1, 1 } );
+	billboard->moveTo( gl::Vec3{ 0, 0, 50 } );
+	billboard->scale( gl::Vec3{ 1.5, 1.5, 1.5 } );
 	billboard->material( billboardMat );
 	scene.add( billboard );
 
@@ -230,19 +230,19 @@ void Engine::doInitialise3DElements()
 	halosMat->emissive( gl::RgbColour{ 1.0, 1.0, 0.5 } );
 	scene.materials().addElement( "halos", halosMat );
 	auto starsBuffers = std::make_shared< render::BillboardBuffer >( false );
-	starsBuffers->add( { 50.0f, gl::Vector3D{ -1, 1, 0 }, gl::Vector2D{ 1, 1 } } );
-	starsBuffers->add( { 50.0f, gl::Vector3D{ 1, 1, 0 }, gl::Vector2D{ 1, 0.5 } } );
-	starsBuffers->add( { 50.0f, gl::Vector3D{ 1, -1, 0 }, gl::Vector2D{ 0.5, 1 } } );
-	starsBuffers->add( { 50.0f, gl::Vector3D{ -1, -1, 0 }, gl::Vector2D{ 1.5, 1.5 } } );
+	starsBuffers->add( { 50.0f, gl::Vec3{ -1, 1, 0 }, gl::Vec2{ 1, 1 } } );
+	starsBuffers->add( { 50.0f, gl::Vec3{ 1, 1, 0 }, gl::Vec2{ 1, 0.5 } } );
+	starsBuffers->add( { 50.0f, gl::Vec3{ 1, -1, 0 }, gl::Vec2{ 0.5, 1 } } );
+	starsBuffers->add( { 50.0f, gl::Vec3{ -1, -1, 0 }, gl::Vec2{ 1.5, 1.5 } } );
 	scene.addBillboardBuffer( "stars", starsBuffers );
 	auto stars = std::make_shared< render::Billboard >( "stars", *starsBuffers );
-	stars->dimensions( gl::Size2D{ 1, 1 } );
-	stars->moveTo( gl::Vector3D{ 0, 0, 50 } );
+	stars->dimensions( gl::IVec2{ 1, 1 } );
+	stars->moveTo( gl::Vec3{ 0, 0, 50 } );
 	stars->material( starsMat );
 	scene.add( stars );
 	auto halos = std::make_shared< render::Billboard >( "halos", *starsBuffers );
-	halos->dimensions( gl::Size2D{ 2, 2 } );
-	halos->moveTo( gl::Vector3D{ 0, 0, 50 } );
+	halos->dimensions( gl::IVec2{ 2, 2 } );
+	halos->moveTo( gl::Vec3{ 0, 0, 50 } );
 	halos->material( halosMat );
 	scene.add( halos );
 
@@ -252,24 +252,24 @@ void Engine::doInitialise3DElements()
 	linesMat->emissive( gl::RgbColour{ 1.0, 1.0, 0.5 } );
 	scene.materials().addElement( "lines", linesMat );
 	auto lines = std::make_shared< render::PolyLine >( "lines" );
-	lines->add( { gl::Vector3D{ -1, 1, 0 }, gl::Vector3D{ 1, 1, 0 } } );
-	lines->add( { gl::Vector3D{ 1, 1, 0 }, gl::Vector3D{ 1, -1, 0 } } );
-	lines->add( { gl::Vector3D{ 1, -1, 0 }, gl::Vector3D{ -1, -1, 0 } } );
-	lines->add( { gl::Vector3D{ -1, -1, 0 }, gl::Vector3D{ -1, 1, 0 } } );
-	lines->moveTo( gl::Vector3D{ 0, 0, 50 } );
+	lines->add( { gl::Vec3{ -1, 1, 0 }, gl::Vec3{ 1, 1, 0 } } );
+	lines->add( { gl::Vec3{ 1, 1, 0 }, gl::Vec3{ 1, -1, 0 } } );
+	lines->add( { gl::Vec3{ 1, -1, 0 }, gl::Vec3{ -1, -1, 0 } } );
+	lines->add( { gl::Vec3{ -1, -1, 0 }, gl::Vec3{ -1, 1, 0 } } );
+	lines->moveTo( gl::Vec3{ 0, 0, 50 } );
 	lines->material( linesMat );
 	scene.add( lines );
 
 	doInitialiseFontTexture();
 	auto overlay = std::make_shared< render::TextOverlay >();
-	overlay->position( gl::Position2D{ 200, 200 } );
+	overlay->position( gl::IVec2{ 200, 200 } );
 	overlay->colour( gl::RgbaColour{ 0.0, 1.0, 0.0, 1.0 } );
 	overlay->caption( "coin !!" );
 	overlay->fontTexture( *m_fontTexture );
 	scene.overlays().addElement( "coin", overlay );
 
 	overlay = std::make_shared< render::TextOverlay >();
-	overlay->position( gl::Position2D{ 400, 200 } );
+	overlay->position( gl::IVec2{ 400, 200 } );
 	overlay->colour( gl::RgbaColour{ 1.0, 0.0, 0.0, 1.0 } );
 	overlay->caption( "glop !!" );
 	overlay->fontTexture( *m_fontTexture );
@@ -319,10 +319,10 @@ void Engine::doUpdatePicked( render::Movable const & movable )
 
 void Engine::doUpdatePicked( render::Object const & object )
 {
-	m_picked->moveTo( object.position() - gl::Vector3D{ 0, 0, object.boundaries().z + 0.1 } );
+	m_picked->moveTo( object.position() - gl::Vec3{ 0, 0, object.boundaries().z + 0.1 } );
 	doUpdatePicked( static_cast< render::Movable const & >( object ) );
 	m_picked->dimensions( gl::toVec2(  object.boundaries() ) );
-	m_picked->buffer().at( 0u, { -1000.0f, gl::Vector3D{ 0, 0, 0 }, gl::Vector2D{ 1, 1 } } );
+	m_picked->buffer().at( 0u, { -1000.0f, gl::Vec3{ 0, 0, 0 }, gl::Vec2{ 1, 1 } } );
 }
 
 void Engine::doUpdatePicked( render::Billboard const & billboard
@@ -334,12 +334,12 @@ void Engine::doUpdatePicked( render::Billboard const & billboard
 	}
 	else
 	{
-		m_picked->moveTo( billboard.position() - gl::Vector3D{ 0, 0, 0.2 } );
+		m_picked->moveTo( billboard.position() - gl::Vec3{ 0, 0, 0.2 } );
 		doUpdatePicked( static_cast< render::Movable const & >( billboard ) );
 		m_picked->dimensions( billboard.dimensions() );
 		auto data = billboard.buffer()[index];
 		auto scale = 0.1f + m_window->state().zoomBounds().percent( m_window->state().zoom() );
 		m_picked->buffer().at( 0u
-			, { -1000.0f, data.center, gl::Vector2D{ scale, scale } } );
+			, { -1000.0f, data.center, gl::Vec2{ scale, scale } } );
 	}
 }

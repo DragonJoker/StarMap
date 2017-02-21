@@ -35,13 +35,13 @@ namespace starmap
 	using ConstellationMap = std::unordered_map< std::string, ConstellationPtr >;
 	using ConstellationStarArray = std::vector< ConstellationStar >;
 
-	using OnScreenTap = render::Signal< std::function< void( gl::Position2D const & ) > >;
-	using OnScreenDoubleTap = render::Signal< std::function< void( gl::Position2D const & ) > >;
-	using OnScreenSingleMove = render::Signal< std::function< void( gl::Position2D const & ) > >;
-	using OnScreenDoubleMove = render::Signal< std::function< void( gl::Position2D const &, float ) > >;
-	using OnPick = render::Signal< std::function< void( gl::Position2D const & ) > >;
+	using OnScreenTap = render::Signal< std::function< void( gl::IVec2 const & ) > >;
+	using OnScreenDoubleTap = render::Signal< std::function< void( gl::IVec2 const & ) > >;
+	using OnScreenSingleMove = render::Signal< std::function< void( gl::IVec2 const & ) > >;
+	using OnScreenDoubleMove = render::Signal< std::function< void( gl::IVec2 const &, float ) > >;
+	using OnPick = render::Signal< std::function< void( gl::IVec2 const & ) > >;
 	using OnReset = render::Signal< std::function< void() > >;
-	using OnSetVelocity = render::Signal< std::function< void( gl::Offset2D const & ) > >;
+	using OnSetVelocity = render::Signal< std::function< void( gl::IVec2 const & ) > >;
 	using OnSetZoomVelocity = render::Signal< std::function< void( float ) > >;
 
 	using StarMapPtr = std::unique_ptr< StarMap >;

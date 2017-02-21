@@ -111,9 +111,9 @@ namespace render
 
 	PickingRenderer::ObjectNode::ObjectNode( gl::ShaderProgramPtr && program )
 		: RenderNode{ std::move( program ) }
-		, m_position{ m_program->createAttribute< gl::Vector3D >( "position" ) }
-		, m_normal{ m_program->createAttribute< gl::Vector3D >( "normal" ) }
-		, m_texture{ m_program->createAttribute< gl::Vector2D >( "texture" ) }
+		, m_position{ m_program->createAttribute< gl::Vec3 >( "position" ) }
+		, m_normal{ m_program->createAttribute< gl::Vec3 >( "normal" ) }
+		, m_texture{ m_program->createAttribute< gl::Vec2 >( "texture" ) }
 		, m_scale{ gl::makeUniform< float >( "scale", *m_program ) }
 	{
 	}
@@ -123,15 +123,15 @@ namespace render
 	PickingRenderer::BillboardNode::BillboardNode( gl::ShaderProgramPtr && program )
 		: RenderNode{ std::move( program ) }
 		, m_billboardUbo{ "Billboard", 2u, *m_program }
-		, m_dimensions{ &m_billboardUbo.createUniform< gl::Vector2D >( "dimensions" ) }
-		, m_camera{ &m_billboardUbo.createUniform< gl::Vector3D >( "camera" ) }
-		, m_position{ m_program->createAttribute< gl::Vector3D >( "position"
+		, m_dimensions{ &m_billboardUbo.createUniform< gl::Vec2 >( "dimensions" ) }
+		, m_camera{ &m_billboardUbo.createUniform< gl::Vec3 >( "camera" ) }
+		, m_position{ m_program->createAttribute< gl::Vec3 >( "position"
 			, sizeof( BillboardBuffer::Vertex )
 			, offsetof( BillboardData, center ) ) }
-		, m_scale{ m_program->createAttribute< gl::Vector2D >( "scale"
+		, m_scale{ m_program->createAttribute< gl::Vec2 >( "scale"
 			, sizeof( BillboardBuffer::Vertex )
 			, offsetof( BillboardData, scale ) ) }
-		, m_texture{ m_program->createAttribute< gl::Vector2D >( "texture"
+		, m_texture{ m_program->createAttribute< gl::Vec2 >( "texture"
 			, sizeof( BillboardBuffer::Vertex )
 			, offsetof( BillboardBuffer::Vertex, texture ) ) }
 		, m_id{ m_program->createAttribute< float >( "id"
@@ -346,7 +346,7 @@ namespace render
 		{
 			gl::Matrix4x4 const & projection = camera.projection();
 			gl::Matrix4x4 const & view = camera.view();
-			gl::Vector3D const & position = camera.position();
+			gl::Vec3 const & position = camera.position();
 			node.m_program->bind();
 			node.m_mtxProjection->value( projection );
 			node.m_mtxView->value( view );

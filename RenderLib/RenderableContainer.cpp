@@ -41,9 +41,11 @@ namespace render
 		m_renderer.cleanup();
 	}
 
-	void RenderableContainer::doDraw( Camera const & camera )const
+	void RenderableContainer::doDraw( Camera const & camera
+		, float zoomScale )const
 	{
 		m_renderer.draw( camera
+			, zoomScale
 			, m_renderObjects
 			, m_renderBillboards
 			, m_lines );

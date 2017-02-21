@@ -135,7 +135,7 @@ namespace utils
 		m_context = NULL;
 	}
 
-	void MsWindow::doResize( gl::Size2D const & size )
+	void MsWindow::doResize( gl::IVec2 const & size )
 	{
 		if ( m_size != size )
 		{

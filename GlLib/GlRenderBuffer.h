@@ -34,7 +34,7 @@ namespace gl
 		*	Les dimensions voulues pour le tampon.
 		*/
 		RenderBuffer( PixelFormat format
-			, Size2D const & size )noexcept;
+			, IVec2 const & size )noexcept;
 		/**
 		*\brief
 		*	Destructeur.
@@ -52,7 +52,7 @@ namespace gl
 		*\return
 		*	Les dimensions de la texture.
 		*/
-		inline Size2D const & dimensions()const noexcept
+		inline IVec2 const & dimensions()const noexcept
 		{
 			return m_size;
 		}
@@ -63,7 +63,7 @@ namespace gl
 		//! Le format des pixels du tampon.
 		uint32_t m_format;
 		//! Les dimensions du tampon.
-		Size2D m_size;
+		IVec2 m_size;
 
 	};
 }

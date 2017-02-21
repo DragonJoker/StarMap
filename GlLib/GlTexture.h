@@ -34,7 +34,7 @@ namespace gl
 		*	Les dimensions voulues pour la texture.
 		*/
 		Texture( PixelFormat format
-			, Size2D const & size )noexcept;
+			, IVec2 const & size )noexcept;
 		/**
 		*\brief
 		*	Constructeur.
@@ -46,7 +46,7 @@ namespace gl
 		*	Les données de la texture.
 		*/
 		Texture( PixelFormat format
-			, Size2D const & size
+			, IVec2 const & size
 			, ByteArray const & data )noexcept;
 		/**
 		*\brief
@@ -104,7 +104,7 @@ namespace gl
 		*\return
 		*	Les dimensions de la texture.
 		*/
-		inline Size2D const & dimensions()const noexcept
+		inline IVec2 const & dimensions()const noexcept
 		{
 			return m_size;
 		}
@@ -117,7 +117,7 @@ namespace gl
 		//! Le format des pixels
 		uint32_t m_format;
 		//! Les dimensions de la texture.
-		Size2D m_size;
+		IVec2 m_size;
 		//! Debug: dit si le tampon est activé.
 		GlLib_DebugBool( m_bound, false );
 	};

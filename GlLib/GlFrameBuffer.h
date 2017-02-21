@@ -134,7 +134,7 @@ namespace gl
 		//! Le nom OpenGL du frame buffer.
 		uint32_t m_name{ GL_INVALID_INDEX };
 		//! Les dimensions du frame buffer, déterminées au premier objet attaché.
-		mutable gl::Size2D m_size;
+		mutable gl::IVec2 m_size;
 		//! Debug: dit si le tampon est activé.
 		GlLib_DebugBool( m_bound, false );
 	};

@@ -148,6 +148,8 @@ namespace render
 			gl::FloatUniform * m_lineWidth;
 			//! La variable uniforme contenant la plume.
 			gl::FloatUniform * m_lineFeather;
+			//! La variable uniforme contenant l'échelle.
+			gl::Vec2Uniform * m_lineScale;
 			//! L'attribut de position
 			gl::Vec3AttributePtr m_position;
 			//! L'attribut de normale
@@ -179,6 +181,8 @@ namespace render
 		*	Dessine les objets de la scène, à travers la vue de la caméra.
 		*\param[in] camera
 		*	La caméra.
+		*\param[in] zoomScale
+		*	L'échelle calculée par rapport au zoom.
 		*\param[in] objects
 		*	Les objets à dessiner.
 		*\param[in] billboards
@@ -187,6 +191,7 @@ namespace render
 		*	Les polylignes à dessiner.
 		*/
 		void draw( Camera const & camera
+			, float zoomScale
 			, RenderSubmeshArray const & objects
 			, RenderBillboardArray const & billboards
 			, PolyLineArray const & lines )const;
@@ -252,12 +257,15 @@ namespace render
 		*	Dessine une liste de lignes.
 		*\param[in] camera
 		*	La caméra.
+		*\param[in] zoomScale
+		*	L'échelle calculée par rapport au zoom.
 		*\param[in] node
 		*	Le noeud de rendu.
 		*\param[in] lines
 		*	Les billboards à dessiner.
 		*/
 		void doRenderLines( Camera const & camera
+			, float zoomScale
 			, PolyLineNode const & node
 			, PolyLineArray const & lines )const;
 

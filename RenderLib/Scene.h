@@ -45,7 +45,7 @@ namespace render
 		*\param[in] size
 		*	La taille initiale de la zone de rendu.
 		*/
-		Scene( gl::Size2D const & size );
+		Scene( gl::IVec2 const & size );
 		/**
 		*\brief
 		*	Destructeur.
@@ -72,7 +72,7 @@ namespace render
 		*\param[in] size
 		*	Les nouvelles dimensions.
 		*/
-		void resize( gl::Size2D const & size )noexcept;
+		void resize( gl::IVec2 const & size )noexcept;
 		/**
 		*\brief
 		*	Ajoute un objet à la scène.
@@ -273,6 +273,24 @@ namespace render
 		}
 		/**
 		*\return
+		*	Le seuil d'affichage courant.
+		*/
+		inline float threshold()const noexcept
+		{
+			return m_currentThreshold;
+		}
+		/**
+		*\brief
+		*	Définit le seuil d'affichage.
+		*\param[in] threshold
+		*	La nouvelle valeur.
+		*/
+		inline void threshold( float threshold )noexcept
+		{
+			m_currentThreshold = threshold;
+		}
+		/**
+		*\return
 		*	Les tampons de billboards.
 		*/
 		inline BillboardList const & billboardsBuffers()const noexcept
@@ -309,6 +327,10 @@ namespace render
 		OverlayList m_overlays;
 		//! La couleur du fond.
 		gl::RgbaColour m_backgroundColour;
+		//! Le seuil précédent d'affichage des objets.
+		float m_previousThreshold{ 0.0f };
+		//! Le seuil courant d'affichage des objets.
+		float m_currentThreshold{ 0.0f };
 		//! Le seuil d'affichage des objets.
 		RangedValue< float > m_threshold
 		{

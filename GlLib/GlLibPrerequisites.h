@@ -140,7 +140,7 @@
 namespace gl
 {
 	/**
-	*\name Remplacement des noms de glm.
+	*\name Typedefs généralistes.
 	*/
 	/**@{*/
 	using Vec2 = Vec2T< float >;
@@ -150,26 +150,15 @@ namespace gl
 	using IVec2 = Vec2T< int >;
 	using IVec3 = Vec3T< int >;
 	using IVec4 = Vec4T< int >;
-	using Vector2D = Vec2;
-	using Vector3D = Vec3;
-	using Vector4D = Vec4;
 	using Quaternion = QuaternionT< float >;
 	using Matrix4x4 = Mat4;
-	/**@}*/
-	/**
-	*\name Typedefs généralistes.
-	*/
-	/**@{*/
-	using RgbaColour = Vector4D;
-	using RgbColour = Vector3D;
-	using Size2D = Vec2T< int >;
-	using Position2D = Vec2T< int >;
-	using Offset2D = Vec2T< int >;
+	using RgbaColour = Vec4;
+	using RgbColour = Vec3;
 	using ByteArray = std::vector< uint8_t >;
 	using UInt16Array = std::vector< uint16_t >;
 	using UInt32Array = std::vector< uint32_t >;
-	using Vec3Array = std::vector< Vector3D >;
-	using Vec2Array = std::vector< Vector2D >;
+	using Vec3Array = std::vector< Vec3 >;
+	using Vec2Array = std::vector< Vec2 >;
 	using StringArray = std::vector< std::string >;
 	/**@}*/
 	/**
@@ -211,16 +200,16 @@ namespace gl
 	class Buffer;
 	using UInt8Buffer = Buffer< uint8_t >;
 	using UInt16Buffer = Buffer< uint16_t >;
-	using Vec2Buffer = Buffer< Vector2D >;
-	using Vec3Buffer = Buffer< Vector3D >;
-	using Vec4Buffer = Buffer< Vector4D >;
+	using Vec2Buffer = Buffer< Vec2 >;
+	using Vec3Buffer = Buffer< Vec3 >;
+	using Vec4Buffer = Buffer< Vec4 >;
 	template< typename T >
 	using BufferPtr = std::unique_ptr< Buffer< T > >;
 	using UInt8BufferPtr = BufferPtr< uint8_t >;
 	using UInt16BufferPtr = BufferPtr< uint16_t >;
-	using Vec2BufferPtr = BufferPtr< Vector2D >;
-	using Vec3BufferPtr = BufferPtr< Vector3D >;
-	using Vec4BufferPtr = BufferPtr< Vector4D >;
+	using Vec2BufferPtr = BufferPtr< Vec2 >;
+	using Vec3BufferPtr = BufferPtr< Vec3 >;
+	using Vec4BufferPtr = BufferPtr< Vec4 >;
 	/**@}*/
 	/**
 	*\name Typedefs d'attributs de sommets.
@@ -229,15 +218,15 @@ namespace gl
 	template< typename T >
 	class Attribute;
 	using FloatAttribute = Attribute< float >;
-	using Vec2Attribute = Attribute< Vector2D >;
-	using Vec3Attribute = Attribute< Vector3D >;
-	using Vec4Attribute = Attribute< Vector4D >;
+	using Vec2Attribute = Attribute< Vec2 >;
+	using Vec3Attribute = Attribute< Vec3 >;
+	using Vec4Attribute = Attribute< Vec4 >;
 	template< typename T >
 	using AttributePtr = std::unique_ptr< Attribute< T > >;
 	using FloatAttributePtr = AttributePtr< float >;
-	using Vec2AttributePtr = AttributePtr< Vector2D >;
-	using Vec3AttributePtr = AttributePtr< Vector3D >;
-	using Vec4AttributePtr = AttributePtr< Vector4D >;
+	using Vec2AttributePtr = AttributePtr< Vec2 >;
+	using Vec3AttributePtr = AttributePtr< Vec3 >;
+	using Vec4AttributePtr = AttributePtr< Vec4 >;
 	/**@}*/
 	/**
 	*\name Typedefs de variables uniformes.
@@ -247,17 +236,17 @@ namespace gl
 	class Uniform;
 	using IntUniform = Uniform< int >;
 	using FloatUniform = Uniform< float >;
-	using Vec2Uniform = Uniform< Vector2D >;
-	using Vec3Uniform = Uniform< Vector3D >;
-	using Vec4Uniform = Uniform< Vector4D >;
+	using Vec2Uniform = Uniform< Vec2 >;
+	using Vec3Uniform = Uniform< Vec3 >;
+	using Vec4Uniform = Uniform< Vec4 >;
 	using Mat4Uniform = Uniform< Matrix4x4 >;
 	template< typename T >
 	using UniformPtr = std::unique_ptr< Uniform< T > >;
 	using IntUniformPtr = UniformPtr< int >;
 	using FloatUniformPtr = UniformPtr< float >;
-	using Vec2UniformPtr = UniformPtr< Vector2D >;
-	using Vec3UniformPtr = UniformPtr< Vector3D >;
-	using Vec4UniformPtr = UniformPtr< Vector4D >;
+	using Vec2UniformPtr = UniformPtr< Vec2 >;
+	using Vec3UniformPtr = UniformPtr< Vec3 >;
+	using Vec4UniformPtr = UniformPtr< Vec4 >;
 	using Mat4UniformPtr = UniformPtr< Matrix4x4 >;
 	/**@}*/
 	/**
@@ -268,17 +257,17 @@ namespace gl
 	class ArrayUniform;
 	using IntArrayUniform = ArrayUniform< int >;
 	using FloatArrayUniform = ArrayUniform< float >;
-	using Vec2ArrayUniform = ArrayUniform< Vector2D >;
-	using Vec3ArrayUniform = ArrayUniform< Vector3D >;
-	using Vec4ArrayUniform = ArrayUniform< Vector4D >;
+	using Vec2ArrayUniform = ArrayUniform< Vec2 >;
+	using Vec3ArrayUniform = ArrayUniform< Vec3 >;
+	using Vec4ArrayUniform = ArrayUniform< Vec4 >;
 	using Mat4ArrayUniform = ArrayUniform< Matrix4x4 >;
 	template< typename T >
 	using ArrayUniformPtr = std::unique_ptr< ArrayUniform< T > >;
 	using IntArrayUniformPtr = ArrayUniformPtr< int >;
 	using FloatArrayUniformPtr = ArrayUniformPtr< float >;
-	using Vec2ArrayUniformPtr = ArrayUniformPtr< Vector2D >;
-	using Vec3ArrayUniformPtr = ArrayUniformPtr< Vector3D >;
-	using Vec4ArrayUniformPtr = ArrayUniformPtr< Vector4D >;
+	using Vec2ArrayUniformPtr = ArrayUniformPtr< Vec2 >;
+	using Vec3ArrayUniformPtr = ArrayUniformPtr< Vec3 >;
+	using Vec4ArrayUniformPtr = ArrayUniformPtr< Vec4 >;
 	using Mat4ArrayUniformPtr = ArrayUniformPtr< Matrix4x4 >;
 	/**@}*/
 	/**

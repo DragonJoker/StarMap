@@ -61,7 +61,7 @@ namespace render
 		*param[in] value
 		*	La nouvelle valeur.
 		*/
-		inline void velocity( gl::Vector2D const & value )noexcept
+		inline void velocity( gl::Vec2 const & value )noexcept
 		{
 			m_velocityX = gl::Degrees{ value.x };
 			m_velocityY = gl::Degrees{ value.y };
@@ -136,7 +136,7 @@ namespace render
 		RangedValue< gl::Angle > m_fovy
 		{
 			gl::Angle{ 45.0_degrees },
-			makeRange( gl::Angle{ 0.1_degrees }, gl::Angle{ 90.0_degrees } )
+			makeRange( gl::Angle{ 0.1_degrees }, gl::Angle{ 45.0_degrees } )
 		};
 	};
 }

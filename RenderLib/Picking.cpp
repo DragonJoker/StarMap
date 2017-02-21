@@ -51,7 +51,7 @@ namespace render
 		static int constexpr PickingOffset = PickingWidth / 2;
 	}
 
-	Picking::Picking( gl::Size2D const & size )
+	Picking::Picking( gl::IVec2 const & size )
 		: m_renderer{}
 		, m_size{ size }
 		, m_colour{ std::make_unique< gl::Texture >
@@ -78,7 +78,7 @@ namespace render
 		m_fbo->unbind();
 	}
 
-	Picking::NodeType Picking::pick( gl::Position2D const & position
+	Picking::NodeType Picking::pick( gl::IVec2 const & position
 		, Camera const & camera
 		, float zoomPercent
 		, RenderSubmeshArray const & objects
@@ -104,7 +104,7 @@ namespace render
 #endif
 	}
 
-	Picking::Pixel Picking::doFboPick( gl::Position2D const & position
+	Picking::Pixel Picking::doFboPick( gl::IVec2 const & position
 		, Camera const & camera
 		, float zoomPercent
 		, RenderSubmeshArray const & objects
@@ -121,7 +121,7 @@ namespace render
 			, billboards );
 		m_fbo->unbind();
 		memset( m_buffer.data(), 0xFF, m_buffer.size() * sizeof( Pixel ) );
-		gl::Offset2D offset
+		gl::IVec2 offset
 		{
 			m_size.x - position.x - PickingOffset,
 			m_size.y - position.y - PickingOffset

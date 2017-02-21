@@ -46,9 +46,9 @@ namespace render
 		*\param[in] scale
 		*	Le vecteur représentant la mise à l'échelle à appliquer.
 		*/
-		inline void scale( gl::Vector3D const & scale )noexcept
+		inline void scale( gl::Vec3 const & scale )noexcept
 		{
-			static const gl::Vector3D noChangeScale{ 1, 1, 1 };
+			static const gl::Vec3 noChangeScale{ 1, 1, 1 };
 
 			if ( scale != noChangeScale )
 			{
@@ -62,7 +62,7 @@ namespace render
 		*\param[in] scale
 		*	Le vecteur représentant la mise à l'échelle à appliquer.
 		*/
-		inline void rescale( gl::Vector3D const & scale )noexcept
+		inline void rescale( gl::Vec3 const & scale )noexcept
 		{
 			if ( scale != m_scale )
 			{
@@ -76,9 +76,9 @@ namespace render
 		*\param[in] translate
 		*	Le vecteur représentant la translation à appliquer.
 		*/
-		inline void translate( gl::Vector3D const & translate )noexcept
+		inline void translate( gl::Vec3 const & translate )noexcept
 		{
-			static const gl::Vector3D noChangeTranslate;
+			static const gl::Vec3 noChangeTranslate;
 
 			if ( translate != noChangeTranslate )
 			{
@@ -92,7 +92,7 @@ namespace render
 		*\param[in] position
 		*	La nouvelle position.
 		*/
-		inline void moveTo( gl::Vector3D const & position )noexcept
+		inline void moveTo( gl::Vec3 const & position )noexcept
 		{
 			if ( position != m_position )
 			{
@@ -134,7 +134,7 @@ namespace render
 		*\return
 		*	La position de l'objet.
 		*/
-		inline gl::Vector3D const & position()const noexcept
+		inline gl::Vec3 const & position()const noexcept
 		{
 			return m_position;
 		}
@@ -142,7 +142,7 @@ namespace render
 		*\return
 		*	L'échelle de l'objet.
 		*/
-		inline gl::Vector3D const & scale()const noexcept
+		inline gl::Vec3 const & scale()const noexcept
 		{
 			return m_scale;
 		}
@@ -192,9 +192,9 @@ namespace render
 	protected:
 
 		//! La position de l'objet dans le monde.
-		gl::Vector3D m_position{ 0, 0, 0 };
+		gl::Vec3 m_position{ 0, 0, 0 };
 		//! L'échelle de l'objet dans le monde.
-		gl::Vector3D m_scale{ 1, 1, 1 };
+		gl::Vec3 m_scale{ 1, 1, 1 };
 		//! L'orientation de l'objet dans le monde.
 		gl::Quaternion m_orientation;
 		//! La matrice de transformation de l'objet.

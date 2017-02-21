@@ -30,22 +30,22 @@ namespace starmap
 	{
 	}
 
-	void ScreenEvents::onScreenTap( gl::Position2D const & coord )
+	void ScreenEvents::onScreenTap( gl::IVec2 const & coord )
 	{
 		onPick( coord );
 	}
 
-	void ScreenEvents::onScreenDoubleTap( gl::Position2D const & coord )
+	void ScreenEvents::onScreenDoubleTap( gl::IVec2 const & coord )
 	{
 		onReset();
 	}
 
-	void ScreenEvents::onScreenSingleMove( gl::Position2D const & diff )
+	void ScreenEvents::onScreenSingleMove( gl::IVec2 const & diff )
 	{
 		onSetVelocity( diff );
 	}
 
-	void ScreenEvents::onScreenDoubleMove( gl::Position2D const & diff
+	void ScreenEvents::onScreenDoubleMove( gl::IVec2 const & diff
 		, float distanceOffset )
 	{
 		onSetZoomVelocity( -distanceOffset );

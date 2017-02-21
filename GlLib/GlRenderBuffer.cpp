@@ -31,7 +31,7 @@ namespace gl
 	}
 
 	RenderBuffer::RenderBuffer( PixelFormat format
-		, Size2D const & size )noexcept
+		, IVec2 const & size )noexcept
 		: m_format{ doGetFormat( format ) }
 		, m_size{ size }
 	{

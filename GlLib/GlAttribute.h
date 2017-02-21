@@ -136,7 +136,7 @@ namespace gl
 	*	Structure de traits définissant les informations d'un attribut, en
 	*	fonction de son type.
 	*\remarks
-	*	Spécialisation pour gl::Vector3D.
+	*	Spécialisation pour gl::Vec3.
 	*/
 	template<>
 	struct AttributeTraits< gl::Vec3 >
@@ -150,7 +150,7 @@ namespace gl
 	*	Structure de traits définissant les informations d'un attribut, en
 	*	fonction de son type.
 	*\remarks
-	*	Spécialisation pour gl::Vector4D.
+	*	Spécialisation pour gl::Vec4.
 	*/
 	template<>
 	struct AttributeTraits< gl::Vec4 >

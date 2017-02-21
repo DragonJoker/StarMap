@@ -83,7 +83,7 @@ namespace render
 			}
 
 			texture.image( format
-				, gl::Size2D{ x, y }
+				, gl::IVec2{ x, y }
 				, ByteArray{ data, data + n * x * y } );
 			stbi_image_free( data );
 		}
@@ -143,7 +143,7 @@ namespace render
 			}
 
 			texture.image( format
-				, gl::Size2D{ x, y }
+				, gl::IVec2{ x, y }
 			, buffer );
 			stbi_image_free( data );
 		}

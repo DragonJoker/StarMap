@@ -58,7 +58,7 @@ namespace starmap
 		*\param[in] loader
 		*	Le loader de police.
 		*/
-		void initialise( gl::Size2D const & size
+		void initialise( gl::IVec2 const & size
 			, render::ByteArray const & opacityMap
 			, render::FontLoader & loader );
 		/**
@@ -72,7 +72,7 @@ namespace starmap
 		*\param[in] size
 		*	Les nouvelles dimensions.
 		*/
-		void resize( gl::Size2D const & size );
+		void resize( gl::IVec2 const & size );
 		/**
 		*\brief
 		*	Démarre le dessin d'une image.
@@ -275,8 +275,8 @@ namespace starmap
 		*/
 		void doUpdateOverlay( render::Overlay & overlay
 			, render::Camera const & camera
-			, gl::Vector3D const & position
-			, gl::Offset2D const & offset );
+			, gl::Vec3 const & position
+			, gl::IVec2 const & offset );
 		/**
 		*\brief
 		*	Met à jour la position d'une incrustation texte par rapport à la
@@ -289,8 +289,8 @@ namespace starmap
 		*	L'offset 2D donné à la position écran de l'incrustation.
 		*/
 		void doUpdateOverlay( render::Overlay & overlay
-			, gl::Vector3D const & position
-			, gl::Offset2D const & offset );
+			, gl::Vec3 const & position
+			, gl::IVec2 const & offset );
 		/**
 		*\brief
 		*	Affiche ou cache les constellations.

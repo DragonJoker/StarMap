@@ -23,14 +23,14 @@ namespace starmap
 		static const gl::RgbaColour PickDescriptionHolderColour{ 0.0, 0.0, 0.0, 0.5 };
 		static const gl::RgbaColour PickDescriptionHolderBorderColour{ 1.0, 1.0, 1.0, 1.0 };
 		static const gl::IVec4 PickDescriptionHolderBorderSize{ 3, 3, 3, 3 };
-		static const gl::Offset2D StarNameOffset{ 10, 10 };
-		static const gl::Offset2D ConstellationNameOffset{};
+		static const gl::IVec2 StarNameOffset{ 10, 10 };
+		static const gl::IVec2 ConstellationNameOffset{};
 	}
 
 	StarMap::StarMap( ScreenEvents & events
 		, uint32_t maxDisplayedStarNames )
 		: m_onPick{ events.onPick.connect
-		( [this]( gl::Position2D const & coord )
+		( [this]( gl::IVec2 const & coord )
 		{
 			assert( m_window );
 
@@ -50,7 +50,7 @@ namespace starmap
 			m_window->state().reset();
 		} ) }
 		, m_onSetVelocity{ events.onSetVelocity.connect
-		( [this]( gl::Offset2D const & value )
+		( [this]( gl::IVec2 const & value )
 		{
 			assert( m_window );
 			m_window->state().velocity( value );
@@ -76,7 +76,7 @@ namespace starmap
 		state = m_window->state();
 	}
 
-	void StarMap::initialise( gl::Size2D const & size
+	void StarMap::initialise( gl::IVec2 const & size
 		, render::ByteArray const & opacityMap
 		, render::FontLoader & loader )
 	{
@@ -102,7 +102,7 @@ namespace starmap
 		{
 			auto range = render::makeRange( m_stars.begin()->magnitude()
 				, m_stars.rbegin()->magnitude() );
-			m_window->scene().thresholdBounds( 0.0f, 3.0f );
+			m_window->scene().thresholdBounds( 4.0f, 21.0f );
 
 			for ( auto & star : m_stars )
 			{
@@ -147,7 +147,7 @@ namespace starmap
 		m_window.reset();
 	}
 
-	void StarMap::resize( gl::Size2D const & size )
+	void StarMap::resize( gl::IVec2 const & size )
 	{
 		if ( m_window )
 		{
@@ -284,11 +284,11 @@ namespace starmap
 			+ gl::IVec2{ 10, 10 } );
 
 		m_pickBillboard->moveTo( object.position()
-			- gl::Vector3D{ 0, 0, object.boundaries().z + 0.2 } );
+			- gl::Vec3{ 0, 0, object.boundaries().z + 0.2 } );
 		doUpdatePicked( static_cast< render::Movable const & >( object ) );
-		m_pickBillboard->dimensions( gl::Size2D{ gl::toVec2( object.boundaries() * 2.0f ) } );
+		m_pickBillboard->dimensions( gl::IVec2{ gl::toVec2( object.boundaries() * 2.0f ) } );
 		m_pickBillboard->buffer().at( 0u
-			, { -1000.0f, gl::Vector3D{ 0, 0, 0 }, gl::Vector2D{ 1, 1 } } );
+			, { -1000.0f, gl::Vec3{ 0, 0, 0 }, gl::Vec2{ 1, 1 } } );
 		auto percent = m_window->state().zoomBounds().percent( m_window->state().zoom() );
 		m_pickBillboard->cull( m_window->scene().camera(), 2.0f * percent );
 	}
@@ -309,11 +309,14 @@ namespace starmap
 					return pair.second->findStar( star.name() );
 				} );
 
+			std::stringstream stream;
+			stream << star.name() << "\n"
+				<< "Magnitude : " << star.magnitude();
+
 			if ( it != std::end( m_constellations ) )
 			{
 				auto csStar = it->second->findStar( star.name() );
-				std::stringstream stream;
-				stream << star.name() << "\n"
+				stream << "\n"
 					<< "Constellation : " << csStar->constellation().name() << "\n"
 					<< "Bayer : " << csStar->letter() << "\n"
 					<< "ID : " << csStar->id();
@@ -321,16 +324,16 @@ namespace starmap
 			}
 			else
 			{
-				m_pickDescription->caption( star.name() );
+				m_pickDescription->caption( stream.str() );
 			}
 
 			doUpdatePickDescription();
-			m_pickBillboard->moveTo( billboard.position() - gl::Vector3D{ 0, 0, 0.02 } );
+			m_pickBillboard->moveTo( billboard.position() - gl::Vec3{ 0, 0, 0.02 } );
 			doUpdatePicked( static_cast< render::Movable const & >( billboard ) );
 			auto & data = billboard.buffer()[index];
 			auto percent = m_window->state().zoomBounds().percent( m_window->state().zoom() );
 			m_pickBillboard->buffer().at( 0u
-				, { -1000.0f, data.center, gl::Vector2D{ 1.0, 1.0 } } );
+				, { -1000.0f, data.center, gl::Vec2{ 1.0, 1.0 } } );
 			m_pickBillboard->cull( m_window->scene().camera(), 2.0f * percent );
 		}
 	}
@@ -381,13 +384,13 @@ namespace starmap
 
 			auto stars = std::make_shared< render::Billboard >( sstars
 				, *holder.m_buffer );
-			stars->dimensions( gl::Size2D{ 1, 1 } );
+			stars->dimensions( gl::IVec2{ 1, 1 } );
 			stars->material( starsMat );
 			scene.add( stars );
 
 			//auto halos = std::make_shared< render::Billboard >( shalos
 			//	, *holder.m_buffer );
-			//halos->dimensions( gl::Size2D{ 2, 2 } );
+			//halos->dimensions( gl::IVec2{ 2, 2 } );
 			//halos->material( halosMat );
 			//scene.add( halos );
 
@@ -405,7 +408,7 @@ namespace starmap
 		holder.m_stars.push_back( &star );
 		holder.m_buffer->add( { star.magnitude()
 			, star.position()
-			, gl::Vector2D{ scale, scale } } );
+			, gl::Vec2{ scale, scale } } );
 		doInitialiseHolder( holder );
 	}
 
@@ -451,8 +454,8 @@ namespace starmap
 
 		auto pickedBuffers = std::make_shared< render::BillboardBuffer >( true );
 		pickedBuffers->add( { -1000.0
-			, gl::Vector3D{ 0, 0, 0 }
-			, gl::Vector2D{ 1, 1 } } );
+			, gl::Vec3{ 0, 0, 0 }
+			, gl::Vec2{ 1, 1 } } );
 		scene.addBillboardBuffer( "picked", pickedBuffers );
 		m_pickBillboard = std::make_shared< render::Billboard >( "picked"
 			, *pickedBuffers );
@@ -466,6 +469,7 @@ namespace starmap
 		m_pickDescriptionHolder->colour( PickDescriptionHolderColour );
 		m_pickDescriptionHolder->borderColour( PickDescriptionHolderBorderColour );
 		m_pickDescriptionHolder->borderSize( PickDescriptionHolderBorderSize );
+		m_pickDescriptionHolder->borderPosition( render::BorderPosition::eInternal );
 		m_pickDescriptionHolder->index( 2u );
 		scene.overlays().addElement( "picked_holder", m_pickDescriptionHolder );
 
@@ -541,7 +545,31 @@ namespace starmap
 				, m_window->scene().camera()
 				, m_pickedStar->position()
 				, StarNameOffset );
-			m_pickDescription->position( m_pickDescriptionHolder->position()
+
+			auto const & camera = m_window->scene().camera();
+			auto const & viewport = camera.viewport();
+			auto position = m_pickDescriptionHolder->position();
+
+			if ( position.x < 0 )
+			{
+				position.x = 0;
+			}
+			else if ( position.x + m_pickDescriptionHolder->size().x > viewport.size().x )
+			{
+				position.x = viewport.size().x - m_pickDescriptionHolder->size().x;
+			}
+
+			if ( position.y < 0 )
+			{
+				position.y = 0;
+			}
+			else if ( position.y + m_pickDescriptionHolder->size().y > viewport.size().y )
+			{
+				position.y = viewport.size().y - m_pickDescriptionHolder->size().y;
+			}
+
+			m_pickDescriptionHolder->position( position );
+			m_pickDescription->position( position
 				+ gl::IVec2{ 10, 10 } );
 			m_pickDescription->show( m_pickDescriptionHolder->visible() );
 		}
@@ -573,8 +601,8 @@ namespace starmap
 			it != m_starNames.end();
 			++it )
 		{
-			m_starNames[index].m_element = nullptr;
-			m_starNames[index].m_overlay->show( false );
+			it->m_element = nullptr;
+			it->m_overlay->show( false );
 		}
 	}
 
@@ -595,8 +623,8 @@ namespace starmap
 
 	void StarMap::doUpdateOverlay( render::Overlay & overlay
 		, render::Camera const & camera
-		, gl::Vector3D const & position
-		, gl::Offset2D const & offset )
+		, gl::Vec3 const & position
+		, gl::IVec2 const & offset )
 	{
 		if ( camera.visible( position ) )
 		{
@@ -609,8 +637,8 @@ namespace starmap
 	}
 
 	void StarMap::doUpdateOverlay( render::Overlay & overlay
-		, gl::Vector3D const & position
-		, gl::Offset2D const & offset )
+		, gl::Vec3 const & position
+		, gl::IVec2 const & offset )
 	{
 		auto const & camera = m_window->scene().camera();
 		auto const & viewport = camera.viewport();
@@ -619,9 +647,10 @@ namespace starmap
 		auto projected = gl::project( position
 			, view
 			, projection
-			, gl::Vector4D{ 0, 0, viewport.size().x, viewport.size().y } );
-		overlay.position( offset + gl::Offset2D{ viewport.size().x - projected.x
-			, viewport.size().y - projected.y } );
+			, gl::Vec4{ 0, 0, viewport.size().x, viewport.size().y } );
+		auto ovPosition = offset + gl::IVec2{ viewport.size().x - projected.x
+			, viewport.size().y - projected.y };
+		overlay.position( ovPosition );
 		overlay.show( true );
 	}
 

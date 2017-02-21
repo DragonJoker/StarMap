@@ -89,6 +89,7 @@ uniform float lineFeather;
 {
 	float lineWidth;
 	float lineFeather;
+	float lineScale;
 };
 )"
 		};
@@ -250,7 +251,7 @@ void main()
 void main()
 {
 	vec4 mPosition = mtxModel * vec4( position.xyz, 1.0 );
-	vec4 delta = vec4( normal.xy * lineWidth, 0.0, 0.0 );
+	vec4 delta = vec4( normal.xy * lineWidth * lineScale, 0.0, 0.0 );
 	mPosition += delta;
 	vec4 mvPosition = mtxView * mPosition;
 	gl_Position = mtxProjection * mvPosition;

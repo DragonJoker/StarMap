@@ -59,7 +59,7 @@ namespace render
 		*\param[in] size
 		*	La nouvelle valeur.
 		*/
-		inline void size( gl::Size2D const & size )noexcept
+		inline void size( gl::IVec2 const & size )noexcept
 		{
 			m_sizeChanged |= ( size != m_size );
 			m_size = size;
@@ -211,6 +211,9 @@ namespace render
 		{
 			return m_borderQuads;
 		}
+
+	public:
+		using Overlay::size;
 
 	protected:
 		/**

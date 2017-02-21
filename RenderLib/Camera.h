@@ -26,7 +26,7 @@ namespace render
 		*\param[in] size
 		*	La taille initiale de la zone de rendu.
 		*/
-		Camera( gl::Size2D const & size );
+		Camera( gl::IVec2 const & size );
 		/**
 		*\brief
 		*	Met à jour la matrice de vue.
@@ -40,7 +40,7 @@ namespace render
 		*\param[in] size
 		*	Les nouvelles dimensions.
 		*/
-		void resize( gl::Size2D const & size )noexcept;
+		void resize( gl::IVec2 const & size )noexcept;
 		/**
 		*\brief
 		*	Vérifie si le point donné est visible par la caméra.
@@ -50,12 +50,12 @@ namespace render
 		*	\p false si la position est dans le frustum du viewport orienté
 		*	par la vue de la caméra.
 		*/
-		bool visible( gl::Vector3D const & position )const;
+		bool visible( gl::Vec3 const & position )const;
 		/**
 		*\return
 		*	La position de la caméra.
 		*/
-		inline gl::Vector3D const & position()const noexcept
+		inline gl::Vec3 const & position()const noexcept
 		{
 			return m_position;
 		}
@@ -81,10 +81,10 @@ namespace render
 		*\param[in] translate
 		*	Le vecteur représentant la translation à appliquer.
 		*/
-		inline void translate( gl::Vector3D const & translate )noexcept
+		inline void translate( gl::Vec3 const & translate )noexcept
 		{
 			m_position += translate;
-			m_changed |= translate != gl::Vector3D{};
+			m_changed |= translate != gl::Vec3{};
 		}
 		/**
 		*\brief
@@ -92,7 +92,7 @@ namespace render
 		*\param[in] position
 		*	La nouvelle position.
 		*/
-		inline void moveTo( gl::Vector3D const & position )noexcept
+		inline void moveTo( gl::Vec3 const & position )noexcept
 		{
 			m_changed |= position != m_position;
 			m_position = position;
@@ -162,7 +162,7 @@ namespace render
 
 	private:
 		//! La position de la caméra dans le monde.
-		gl::Vector3D m_position;
+		gl::Vec3 m_position;
 		//! L'orientation de la caméra dans le monde.
 		gl::Quaternion m_orientation;
 		//! La matrice de vue.

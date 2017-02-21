@@ -65,22 +65,22 @@ void Window::onRestore( render::ByteArray const & state )
 	m_starmap.restore( *reinterpret_cast< render::CameraState const * >( state.data() ) );
 }
 
-void Window::onSingleTap( gl::Position2D const & position )
+void Window::onSingleTap( gl::IVec2 const & position )
 {
 	m_onScreenTap( position );
 }
 
-void Window::onDoubleTap( gl::Position2D const & position )
+void Window::onDoubleTap( gl::IVec2 const & position )
 {
 	m_onScreenDoubleTap( position );
 }
 
-void Window::onSingleMove( gl::Position2D const & position )
+void Window::onSingleMove( gl::IVec2 const & position )
 {
 	m_onScreenSingleMove( position );
 }
 
-void Window::onDoubleMove( gl::Position2D const & posDiff, int distDiff )
+void Window::onDoubleMove( gl::IVec2 const & posDiff, int distDiff )
 {
 	m_onScreenDoubleMove( posDiff, distDiff );
 }

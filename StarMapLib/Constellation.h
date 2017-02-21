@@ -106,7 +106,7 @@ namespace starmap
 		*\param[in] position
 		*	La nouvelle valeur.
 		*/
-		inline void position( gl::Vector3D const & position )noexcept
+		inline void position( gl::Vec3 const & position )noexcept
 		{
 			m_position = position;
 		}
@@ -114,7 +114,7 @@ namespace starmap
 		*\return
 		*	La position de la constellation.
 		*/
-		inline gl::Vector3D const & position()const noexcept
+		inline gl::Vec3 const & position()const noexcept
 		{
 			return m_position;
 		}
@@ -127,7 +127,7 @@ namespace starmap
 		//! Les liens entre les étoiles, formant la constellation.
 		LinkArray m_links;
 		//! La position de la constellation, fonction des étoiles qui la composent.
-		gl::Vector3D m_position;
+		gl::Vec3 m_position;
 	};
 }
 

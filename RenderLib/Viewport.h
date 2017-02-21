@@ -25,14 +25,14 @@ namespace render
 		*\param[in] size
 		*	Les dimensions du viewport.
 		*/
-		Viewport( gl::Size2D const & size )noexcept;
+		Viewport( gl::IVec2 const & size )noexcept;
 		/**
 		*\brief
 		*	Redimensionne le viewport.
 		*\param[in] size
 		*	Les dimensions du viewport.
 		*/
-		void resize( gl::Size2D const & size )noexcept;
+		void resize( gl::IVec2 const & size )noexcept;
 		/**
 		*\brief
 		*	Définit le viewport en tant que projection orthographique.
@@ -75,7 +75,7 @@ namespace render
 		*\return
 		*	Les dimensions du viewport.
 		*/
-		inline gl::Size2D const & size()const noexcept
+		inline gl::IVec2 const & size()const noexcept
 		{
 			return m_size;
 		}
@@ -100,7 +100,7 @@ namespace render
 
 	private:
 		//! Les dimensions du viewport.
-		gl::Size2D m_size;
+		gl::IVec2 m_size;
 		//! La matrice de projection.
 		gl::Matrix4x4 m_projection;
 		//! L'angle d'ouverture verticale.

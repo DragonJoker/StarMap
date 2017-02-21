@@ -36,8 +36,8 @@ namespace render
 		*	Contient les données de la glyphe.
 		*/
 		inline Glyph( char c
-			, gl::Size2D const & size
-			, gl::Offset2D const & bearing
+			, gl::IVec2 const & size
+			, gl::IVec2 const & bearing
 			, uint32_t advance
 			, ByteArray const & bitmap )
 			: m_bearing{ bearing }
@@ -61,7 +61,7 @@ namespace render
 		*\return
 		*	Les dimensions de la glyphe.
 		*/
-		inline gl::Size2D const & size()const
+		inline gl::IVec2 const & size()const
 		{
 			return m_size;
 		}
@@ -69,7 +69,7 @@ namespace render
 		*\return
 		*	La position de la glyphe par rapport au curseur.
 		*/
-		inline gl::Offset2D const & bearing()const
+		inline gl::IVec2 const & bearing()const
 		{
 			return m_bearing;
 		}
@@ -100,9 +100,9 @@ namespace render
 
 	private:
 		//! Position de la glyphe par rapport au curseur.
-		gl::Offset2D const m_bearing;
+		gl::IVec2 const m_bearing;
 		//! Dimensions de la glyphe.
-		gl::Size2D const m_size;
+		gl::IVec2 const m_size;
 		//! Nombre de pixels pour placer le caractère suivant.
 		uint32_t const m_advance;
 		//! Caractère de la glyphe.

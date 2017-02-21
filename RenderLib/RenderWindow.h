@@ -40,9 +40,9 @@ namespace render
 		struct Vertex
 		{
 			//! Une position en 2D.
-			gl::Vector2D position;
+			gl::Vec2 position;
 			//! Les coordonnées de texture.
-			gl::Vector2D texture;
+			gl::Vec2 texture;
 		};
 
 	public:
@@ -56,7 +56,7 @@ namespace render
 		*\param[in] loader
 		*	Le loader de police.
 		*/
-		RenderWindow( gl::Size2D const & dimensions
+		RenderWindow( gl::IVec2 const & dimensions
 			, render::FontLoader & loader
 			, bool debug );
 		/**
@@ -94,7 +94,7 @@ namespace render
 		*\param[in] size
 		*	Les dimensions du viewport.
 		*/
-		void resize( gl::Size2D const & size )noexcept;
+		void resize( gl::IVec2 const & size )noexcept;
 		/**
 		*\return
 		*	La scène.
@@ -157,7 +157,7 @@ namespace render
 		*\param[in] position
 		*	La position de la souris.
 		*/
-		inline void pick( gl::Position2D const & position )
+		inline void pick( gl::IVec2 const & position )
 		{
 			m_pickPosition = position;
 			m_pick = true;
@@ -178,7 +178,7 @@ namespace render
 		//! La scène qui sera dessinée.
 		Scene m_scene;
 		//! Les dimensions de la fenêtre.
-		gl::Size2D m_size;
+		gl::IVec2 m_size;
 		//! L'échantillonneur de la texture de la cible de rendu.
 		gl::SamplerPtr m_sampler;
 		//! Le programme shader utilisé pour le rendu dans la fenêtre.
@@ -196,7 +196,7 @@ namespace render
 		//! Le renderer d'incrustations
 		OverlayRendererPtr m_overlayRenderer;
 		//! La position voulue pour le picking.
-		gl::Position2D m_pickPosition;
+		gl::IVec2 m_pickPosition;
 		//! L'instance de picking.
 		Picking m_picking;
 		//! Dit si on doit exécuter le picking lors du dessin de la prochaine frame.

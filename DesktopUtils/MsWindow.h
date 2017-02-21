@@ -48,7 +48,7 @@ namespace utils
 		*\return
 		*	Les dimensions de la fenêtre.
 		*/
-		inline gl::Size2D size()const
+		inline gl::IVec2 size()const
 		{
 			return m_size;
 		}
@@ -73,7 +73,7 @@ namespace utils
 		*\brief
 		*	Redimensionnement de la fenêtre.
 		*/
-		virtual void onResize( gl::Size2D const & event ) = 0;
+		virtual void onResize( gl::IVec2 const & event ) = 0;
 		/**
 		*\brief
 		*	D�placement de la souris.
@@ -110,7 +110,7 @@ namespace utils
 	private:
 		void doCreate();
 		void doDestroy();
-		void doResize( gl::Size2D const & size );
+		void doResize( gl::IVec2 const & size );
 		bool doPrepareDC( HDC hdc );
 		HGLRC doCreateContext( HDC hdc );
 		void doRegisterClass( HINSTANCE hInstance
@@ -132,7 +132,7 @@ namespace utils
 		HWND m_hwnd{ nullptr };
 		HDC m_hdc{ NULL };
 		HGLRC m_context{ NULL };
-		gl::Size2D m_size;
+		gl::IVec2 m_size;
 		int m_timer{ -1 };
 		static std::map< HWND, MsWindow * > sm_instances;
 	};

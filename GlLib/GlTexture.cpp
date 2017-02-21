@@ -3,13 +3,13 @@
 namespace gl
 {
 	Texture::Texture( PixelFormat format
-		, Size2D const & size )noexcept
+		, IVec2 const & size )noexcept
 		: Texture{ format, size, ByteArray{} }
 	{
 	}
 
 	Texture::Texture( PixelFormat format
-		, Size2D const & size
+		, IVec2 const & size
 		, ByteArray const & data )noexcept
 		: m_type{ glType( format ) }
 		, m_format{ glFormat( format ) }

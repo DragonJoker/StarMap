@@ -40,9 +40,9 @@ namespace render
 		struct Vertex
 		{
 			//! Sa position.
-			gl::Vector2D coords;
+			gl::Vec2 coords;
 			//! Ses coordonnées de texture.
-			gl::Vector2D text;
+			gl::Vec2 text;
 		};
 		//! Un quad permettant d'afficher un caractère.
 		using Quad = std::array< Vertex, 6 >;
@@ -97,7 +97,7 @@ namespace render
 		*\param[in] position
 		*	La nouvelle valeur.
 		*/
-		inline void position( gl::Position2D const & position )noexcept
+		inline void position( gl::IVec2 const & position )noexcept
 		{
 			m_position = position;
 			m_positionChanged = true;
@@ -106,7 +106,7 @@ namespace render
 		*\return
 		*	La position de l'incrustation.
 		*/
-		inline gl::Position2D const & position()const noexcept
+		inline gl::IVec2 const & position()const noexcept
 		{
 			return m_position;
 		}
@@ -114,7 +114,7 @@ namespace render
 		*\return
 		*	La taille de l'incrustation.
 		*/
-		inline gl::Size2D const & size()const noexcept
+		inline gl::IVec2 const & size()const noexcept
 		{
 			return m_size;
 		}
@@ -190,9 +190,9 @@ namespace render
 		//! Le type d'incrustation
 		Type m_type;
 		//! La taille en pixels.
-		gl::Size2D m_size;
+		gl::IVec2 m_size;
 		//! La position en pixels.
-		gl::Position2D m_position;
+		gl::IVec2 m_position;
 		//! Dit si la position de cette incrustation a changé.
 		bool m_positionChanged{ true };
 		//! Les données du tampon de sommets.

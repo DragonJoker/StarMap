@@ -8,7 +8,7 @@
 
 namespace render
 {
-	RenderTarget::RenderTarget( gl::Size2D const & dimensions
+	RenderTarget::RenderTarget( gl::IVec2 const & dimensions
 		, gl::PixelFormat format )
 		: m_size{ dimensions }
 		, m_framebuffer{ std::make_unique< gl::FrameBuffer >() }

@@ -142,7 +142,7 @@ namespace starmap
 					auto dec = doParseFloat( values[index.decrad] );
 					auto ci = doParseFloat( values[index.ci] );
 					auto colour = bvToRgb( ci );
-					starmap.add( Star{ name, magnitude,gl::Vector2D{ ra, dec },colour } );
+					starmap.add( Star{ name, magnitude,gl::Vec2{ ra, dec },colour } );
 					line.clear();
 				} );
 		}

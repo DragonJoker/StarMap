@@ -71,7 +71,7 @@ void Window::onDestroy()
 	m_starmap.cleanup();
 }
 
-void Window::onResize( gl::Size2D const & event )
+void Window::onResize( gl::IVec2 const & event )
 {
 	m_starmap.resize( event );
 }

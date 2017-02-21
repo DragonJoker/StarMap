@@ -106,8 +106,11 @@ namespace render
 		*	Dessine les objets de la scène, à travers la vue de la caméra.
 		*\param[in] camera
 		*	La caméra.
+		*\param[in] zoomScale
+		*	L'échelle calculée par rapport au zoom.
 		*/
-		void doDraw( Camera const & camera )const;
+		void doDraw( Camera const & camera
+			, float zoomScale )const;
 		/**
 		*\brief
 		*	Ajoute un objet à la scène.

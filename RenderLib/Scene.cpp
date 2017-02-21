@@ -35,7 +35,7 @@ namespace render
 		}
 	}
 
-	Scene::Scene( gl::Size2D const & size )
+	Scene::Scene( gl::IVec2 const & size )
 		: RenderableContainer{}
 		, m_camera{ size }
 	{
@@ -77,10 +77,12 @@ namespace render
 	void Scene::draw()const
 	{
 		m_camera.viewport().apply();
-		doDraw( m_camera );
+		auto percent = m_state.zoomBounds().percent( m_state.zoom() );
+		doDraw( m_camera
+			, 2.0f * percent + ( 1.0f - percent ) / 100.0f );
 	}
 
-	void Scene::resize( gl::Size2D const & size )noexcept
+	void Scene::resize( gl::IVec2 const & size )noexcept
 	{
 		m_camera.resize( size );
 	}
@@ -153,24 +155,22 @@ namespace render
 		static float constexpr offset = 1.0f;
 		static LogarithmicRange< 2, float > threshRange{ 0 + offset, 1 + offset };
 		auto percent = m_state.zoomBounds().invpercent( m_state.zoom() );
-		//percent = threshRange.value( percent + offset ) - offset;
-		auto threshold = m_threshold.range().value( percent );
-		
+		m_currentThreshold = m_threshold.range().value( percent );
 		// First, initialise the billboards that need to be.
 		for ( auto & billboard : m_newBillboardBuffers )
 		{
 			billboard->initialise();
 		}
 
-		if ( m_threshold.value() != threshold )
+		if ( m_currentThreshold != m_previousThreshold )
 		{
 			// Threshold has changed, so update all the billboards buffers.
-			m_threshold = threshold;
+			m_previousThreshold = m_currentThreshold;
 			m_cameraChanged = true;
 
 			for ( auto & billboard : m_billboardsBuffers )
 			{
-				billboard.second->update( m_threshold.value() );
+				billboard.second->update( m_previousThreshold );
 			}
 		}
 		else
@@ -178,7 +178,7 @@ namespace render
 			// Threshold has not changed, so update the new billboards buffers.
 			for ( auto & billboard : m_newBillboardBuffers )
 			{
-				billboard->update( m_threshold.value() );
+				billboard->update( m_previousThreshold );
 			}
 		}
 

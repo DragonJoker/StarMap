@@ -21,8 +21,8 @@ namespace render
 
 	void PolyLine::add( Points const & line )
 	{
-		static constexpr gl::Vector3D down{ 0, 0, -1 };
-		gl::Vector3D slope{ gl::normalize( line.m_b - line.m_a ) };
+		static constexpr gl::Vec3 down{ 0, 0, -1 };
+		gl::Vec3 slope{ gl::normalize( line.m_b - line.m_a ) };
 		auto normal = gl::cross( slope, down );
 		m_buffer.push_back( LineQuad
 		{

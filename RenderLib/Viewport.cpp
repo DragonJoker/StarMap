@@ -4,12 +4,12 @@
 
 namespace render
 {
-	Viewport::Viewport( gl::Size2D const & size )noexcept
+	Viewport::Viewport( gl::IVec2 const & size )noexcept
 		: m_size{ size }
 	{
 	}
 
-	void Viewport::resize( gl::Size2D const & size )noexcept
+	void Viewport::resize( gl::IVec2 const & size )noexcept
 	{
 		m_size = size;
 	}

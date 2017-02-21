@@ -12,7 +12,7 @@ namespace render
 			uint32_t const count = uint32_t( std::ceil( std::distance
 				( font.begin()
 				, font.end() ) / 16.0 ) );
-			gl::Size2D size{ maxWidth * 16, maxHeight * count };
+			gl::IVec2 size{ maxWidth * 16, maxHeight * count };
 			auto it = font.begin();
 			uint32_t const totalWidth = size.x;
 			uint32_t offsetY = size.y - maxHeight;
@@ -27,7 +27,7 @@ namespace render
 				for ( uint32_t x = 0; x < 16 && it != font.end(); ++x )
 				{
 					render::Glyph & glyph = *it;
-					gl::Size2D const & glyphSize = glyph.size();
+					gl::IVec2 const & glyphSize = glyph.size();
 					ByteArray const & glyphBitmap = glyph.bitmap();
 					uint32_t const dstLineIndex = ( totalWidth * offsetY ) + offsetX;
 					uint8_t * dstLineBuffer = &buffer[dstLineIndex];
@@ -68,7 +68,7 @@ namespace render
 		uint32_t const count = uint32_t( std::ceil( std::distance
 			( m_font->begin()
 			, m_font->end() ) / 16.0 ) );
-		gl::Size2D size{ maxWidth * 16, maxHeight * count };
+		gl::IVec2 size{ maxWidth * 16, maxHeight * count };
 		auto it = m_font->begin();
 		uint32_t offsetY = size.y - maxHeight;
 
@@ -93,7 +93,7 @@ namespace render
 	{
 	}
 
-	gl::Position2D const & FontTexture::glyphPosition( char c )const
+	gl::IVec2 const & FontTexture::glyphPosition( char c )const
 	{
 		auto it = m_glyphsPositions.find( c );
 

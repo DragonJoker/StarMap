@@ -4,7 +4,7 @@ namespace starmap
 {
 	namespace
 	{
-		gl::Vector3D doSphericalToCartesian( gl::Vector2D const & coord
+		gl::Vec3 doSphericalToCartesian( gl::Vec2 const & coord
 			, float distance = 100.0f )
 		{
 			auto const & ra = coord.x;
@@ -13,7 +13,7 @@ namespace starmap
 			auto const cosra = cos( ra );
 			auto const sindec = sin( dec );
 			auto const cosdec = cos( dec );
-			return gl::Vector3D
+			return gl::Vec3
 			{
 				distance * cosdec * cosra,
 				distance * cosdec * sinra,
@@ -24,7 +24,7 @@ namespace starmap
 
 	Star::Star( std::string const & name
 		, float magnitude
-		, gl::Vector2D const & position
+		, gl::Vec2 const & position
 		, gl::RgbColour const & colour )
 		: m_id{ std::hash< std::string >()( name ) }
 		, m_name{ name }
@@ -36,7 +36,7 @@ namespace starmap
 
 	Star::Star( std::string const & name
 		, float magnitude
-		, gl::Vector3D const & position
+		, gl::Vec3 const & position
 		, gl::RgbColour const & colour )
 		: m_id{ std::hash< std::string >()( name ) }
 		, m_name{ name }

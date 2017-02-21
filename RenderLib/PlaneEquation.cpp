@@ -7,16 +7,16 @@ namespace render
 	{
 	}
 
-	PlaneEquation::PlaneEquation( gl::Vector3D const & p1
-		, gl::Vector3D const & p2
-		, gl::Vector3D const & p3 )
+	PlaneEquation::PlaneEquation( gl::Vec3 const & p1
+		, gl::Vec3 const & p2
+		, gl::Vec3 const & p3 )
 		: m_d{ 0 }
 	{
 		set( p1, p2, p3 );
 	}
 
-	PlaneEquation::PlaneEquation( gl::Vector3D const & normal
-		, gl::Vector3D const & point )
+	PlaneEquation::PlaneEquation( gl::Vec3 const & normal
+		, gl::Vec3 const & point )
 		: m_normal{ normal }
 		, m_d{ 0 }
 	{
@@ -27,19 +27,19 @@ namespace render
 	{
 	}
 
-	void PlaneEquation::set( gl::Vector3D const & p1
-		, gl::Vector3D const & p2
-		, gl::Vector3D const & p3 )
+	void PlaneEquation::set( gl::Vec3 const & p1
+		, gl::Vec3 const & p2
+		, gl::Vec3 const & p3 )
 	{
-		gl::Vector3D v{ p2 - p1 };
-		gl::Vector3D w{ p3 - p1 };
+		gl::Vec3 v{ p2 - p1 };
+		gl::Vec3 w{ p3 - p1 };
 		m_normal = gl::normalize( gl::cross( w, v ) );
 		m_point = ( p1 + p2 + p3 ) / float( 3 );
 		m_d = -gl::dot( m_point, m_normal );
 	}
 
-	void PlaneEquation::set( gl::Vector3D const & normal
-		, gl::Vector3D const & point )
+	void PlaneEquation::set( gl::Vec3 const & normal
+		, gl::Vec3 const & point )
 	{
 		m_normal = gl::normalize( normal );
 		m_point = point;
@@ -55,12 +55,12 @@ namespace render
 			   && ratioA == ratioC;
 	}
 
-	float PlaneEquation::distance( gl::Vector3D const & point )const
+	float PlaneEquation::distance( gl::Vec3 const & point )const
 	{
 		return gl::dot( m_normal, point ) + m_d;
 	}
 
-	gl::Vector3D PlaneEquation::project( gl::Vector3D const & point )const
+	gl::Vec3 PlaneEquation::project( gl::Vec3 const & point )const
 	{
 		return point - ( m_normal * distance( point ) );
 	}
@@ -82,7 +82,7 @@ namespace render
 
 			if ( b1 != def && div != def )
 			{
-				gl::Vector3D point;
+				gl::Vec3 point;
 				point[2] = ( ( b2 * d1 ) - ( b1 * d2 ) ) / div;
 				point[1] = ( ( -c1 * point[2] ) - d1 ) / b1;
 				point[0] = 0;
@@ -96,7 +96,7 @@ namespace render
 
 	bool PlaneEquation::intersects( PlaneEquation const & plane1
 		, PlaneEquation const & plane2
-		, gl::Vector3D & intersection )const
+		, gl::Vec3 & intersection )const
 	{
 		bool result = false;
 

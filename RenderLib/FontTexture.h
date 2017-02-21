@@ -50,7 +50,7 @@ namespace render
 		 *\return
 		 *	La position.
 		 */
-		gl::Position2D const & glyphPosition( char c )const;
+		gl::IVec2 const & glyphPosition( char c )const;
 		/**
 		*\return
 		*	La texture.
@@ -69,7 +69,7 @@ namespace render
 		}
 
 	private:
-		using GlyphPositionMap = std::map< char, gl::Position2D >;
+		using GlyphPositionMap = std::map< char, gl::IVec2 >;
 
 		//! La texture qui recevra les glyphes.
 		Texture m_texture;

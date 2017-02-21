@@ -85,7 +85,7 @@ namespace render
 		*\param[in] size
 		*	La taille voulue pour le FBO.
 		 */
-		Picking( gl::Size2D const & size );
+		Picking( gl::IVec2 const & size );
 		/**
 		*\brief
 		*	Destructeur.
@@ -107,7 +107,7 @@ namespace render
 		*\return
 		*	Picking::NodeType::eNone si rien n'a été pické.
 		*/
-		NodeType pick( gl::Position2D const & position
+		NodeType pick( gl::IVec2 const & position
 			, Camera const & camera
 			, float zoomPercent
 			, RenderSubmeshArray const & objects
@@ -147,7 +147,7 @@ namespace render
 		*\return
 		*	La couleur de la sélection.
 		*/
-		Pixel doFboPick( gl::Position2D const & position
+		Pixel doFboPick( gl::IVec2 const & position
 			, Camera const & camera
 			, float zoomPercent
 			, RenderSubmeshArray const & objects
@@ -208,7 +208,7 @@ namespace render
 		//! Le renderer.
 		PickingRenderer m_renderer;
 		//! Les dimensions de l'image.
-		gl::Size2D m_size;
+		gl::IVec2 m_size;
 		//! La texture recevant le rendu couleur.
 		gl::TexturePtr m_colour;
 		//! Le tampon recevant le rendu profondeur.

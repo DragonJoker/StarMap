@@ -36,7 +36,7 @@ namespace starmap
 		*/
 		Star( std::string const & name
 			, float magnitude
-			, gl::Vector2D const & position
+			, gl::Vec2 const & position
 			, gl::RgbColour const & colour );
 		/**
 		*\brief
@@ -53,7 +53,7 @@ namespace starmap
 		*/
 		Star( std::string const & name
 			, float magnitude
-			, gl::Vector3D const & position
+			, gl::Vec3 const & position
 			, gl::RgbColour const & colour );
 		/**
 		*\return
@@ -83,7 +83,7 @@ namespace starmap
 		*\return
 		*	La position de l'étoile, en coordonnées cartésiennes.
 		*/
-		inline gl::Vector3D const & position()const noexcept
+		inline gl::Vec3 const & position()const noexcept
 		{
 			return m_position;
 		}
@@ -100,7 +100,7 @@ namespace starmap
 		size_t m_id;
 		std::string m_name;
 		float m_magnitude;
-		gl::Vector3D m_position;
+		gl::Vec3 m_position;
 		gl::RgbColour m_colour;
 	};
 	/**

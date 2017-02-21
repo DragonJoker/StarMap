@@ -25,13 +25,13 @@ namespace render
 				, tex );
 		}
 
-		gl::Vector3D min
+		gl::Vec3 min
 		{
 			std::numeric_limits< float >::max(),
 			std::numeric_limits< float >::max(),
 			std::numeric_limits< float >::max()
 		};
-		gl::Vector3D max
+		gl::Vec3 max
 		{
 			std::numeric_limits< float >::lowest(),
 			std::numeric_limits< float >::lowest(),

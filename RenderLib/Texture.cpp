@@ -7,7 +7,7 @@
 namespace render
 {
 	void Texture::image( gl::PixelFormat format
-		, gl::Size2D const & size
+		, gl::IVec2 const & size
 		, ByteArray const & data
 		, gl::WrapMode wrapS
 		, gl::WrapMode wrapT

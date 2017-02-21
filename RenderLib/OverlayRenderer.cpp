@@ -90,10 +90,10 @@ namespace render
 		{
 			gl::makeBuffer( gl::BufferTarget::eArrayBuffer
 				, std::vector< TextOverlay::Quad >( 1u ) ),
-			m_panelProgram.m_program->createAttribute< gl::Vector2D >( "position"
+			m_panelProgram.m_program->createAttribute< gl::Vec2 >( "position"
 				, sizeof( TextOverlay::Vertex )
 				, offsetof( TextOverlay::Vertex, coords ) ),
-			m_panelProgram.m_program->createAttribute< gl::Vector2D >( "texture"
+			m_panelProgram.m_program->createAttribute< gl::Vec2 >( "texture"
 				, sizeof( TextOverlay::Vertex )
 				, offsetof( TextOverlay::Vertex, text ) )
 		}
@@ -101,10 +101,10 @@ namespace render
 		{
 			gl::makeBuffer( gl::BufferTarget::eArrayBuffer
 				, std::vector< TextOverlay::Quad >( 8u ) ),
-			m_panelProgram.m_program->createAttribute< gl::Vector2D >( "position"
+			m_panelProgram.m_program->createAttribute< gl::Vec2 >( "position"
 				, sizeof( TextOverlay::Vertex )
 				, offsetof( TextOverlay::Vertex, coords ) ),
-			m_panelProgram.m_program->createAttribute< gl::Vector2D >( "texture"
+			m_panelProgram.m_program->createAttribute< gl::Vec2 >( "texture"
 				, sizeof( TextOverlay::Vertex )
 				, offsetof( TextOverlay::Vertex, text ) )
 		}
@@ -129,7 +129,7 @@ namespace render
 		}
 	}
 
-	void OverlayRenderer::beginRender( gl::Size2D const & size )
+	void OverlayRenderer::beginRender( gl::IVec2 const & size )
 	{
 		if ( m_viewport.size() != size )
 		{
@@ -232,10 +232,10 @@ namespace render
 		auto buffer = std::make_unique< VertexBuffer >();
 		buffer->m_vbo = gl::makeBuffer( gl::BufferTarget::eArrayBuffer
 			, std::vector< TextOverlay::Quad >( m_maxCharsPerBuffer ) );
-		buffer->m_position = m_textProgram.m_program->createAttribute< gl::Vector2D >( "position"
+		buffer->m_position = m_textProgram.m_program->createAttribute< gl::Vec2 >( "position"
 			, sizeof( TextOverlay::Vertex )
 			, offsetof( TextOverlay::Vertex, coords ) );
-		buffer->m_texture = m_textProgram.m_program->createAttribute< gl::Vector2D >( "texture"
+		buffer->m_texture = m_textProgram.m_program->createAttribute< gl::Vec2 >( "texture"
 			, sizeof( TextOverlay::Vertex )
 			, offsetof( TextOverlay::Vertex, text ) );
 		m_textBuffers.push_back( std::move( buffer ) );

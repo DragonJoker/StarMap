@@ -70,21 +70,21 @@ namespace starmap
 		*\param[in] coord
 		*	La coordonnée.
 		*/
-		void onScreenTap( gl::Position2D const & coord );
+		void onScreenTap( gl::IVec2 const & coord );
 		/**
 		*\brief
 		*	Traitement de l'évènement de "double clic" sur l'écran.
 		*\param[in] coord
 		*	La coordonnée.
 		*/
-		void onScreenDoubleTap( gl::Position2D const & coord );
+		void onScreenDoubleTap( gl::IVec2 const & coord );
 		/**
 		*\brief
 		*	Traitement de l'évènement de déplacement avec un doigt.
 		*\param[in] diff
 		*	La valeur du déplacement.
 		*/
-		void onScreenSingleMove( gl::Position2D const & diff );
+		void onScreenSingleMove( gl::IVec2 const & diff );
 		/**
 		*\brief
 		*	Traitement de l'évènement de déplacement avec deux doigts.
@@ -94,7 +94,7 @@ namespace starmap
 		*	La différence de distance entre les deux doigts, entre les
 		*	déplacements.
 		*/
-		void onScreenDoubleMove( gl::Position2D const & diff
+		void onScreenDoubleMove( gl::IVec2 const & diff
 			, float distanceOffset );
 
 	private:

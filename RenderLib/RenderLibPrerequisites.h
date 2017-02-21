@@ -240,19 +240,19 @@ namespace render
 	*\name Opérateurs de flux.
 	*/
 	/**@{*/
-	inline std::ostream & operator<<( std::ostream & stream, gl::Vector2D const & value )
+	inline std::ostream & operator<<( std::ostream & stream, gl::Vec2 const & value )
 	{
 		stream << value.x << ", " << value.y;
 		return stream;
 	}
 
-	inline std::ostream & operator<<( std::ostream & stream, gl::Vector3D const & value )
+	inline std::ostream & operator<<( std::ostream & stream, gl::Vec3 const & value )
 	{
 		stream << value.x << ", " << value.y << ", " << value.z;
 		return stream;
 	}
 
-	inline std::ostream & operator<<( std::ostream & stream, gl::Vector4D const & value )
+	inline std::ostream & operator<<( std::ostream & stream, gl::Vec4 const & value )
 	{
 		stream << value.x << ", " << value.y << ", " << value.z << ", " << value.w;
 		return stream;

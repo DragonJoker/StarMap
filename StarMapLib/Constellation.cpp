@@ -18,7 +18,7 @@ namespace starmap
 
 	void Constellation::fill( StarSet & stars )
 	{
-		gl::Vector3D position;
+		gl::Vec3 position;
 		uint32_t count{ 0u };
 
 		for ( auto & star : m_stars )

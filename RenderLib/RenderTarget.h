@@ -30,7 +30,7 @@ namespace render
 		*\param[in] format
 		*	Le format des pixels de la texture recevant le rendu.
 		*/
-		RenderTarget( gl::Size2D const & dimensions
+		RenderTarget( gl::IVec2 const & dimensions
 			, gl::PixelFormat format );
 		/**
 		*\brief
@@ -46,7 +46,7 @@ namespace render
 		*\return
 		*	Les dimensions de la cible.
 		*/
-		inline gl::Size2D const & dimensions()const noexcept
+		inline gl::IVec2 const & dimensions()const noexcept
 		{
 			return m_size;
 		}
@@ -62,7 +62,7 @@ namespace render
 
 	private:
 		//! Les dimensions de la cible.
-		gl::Size2D m_size;
+		gl::IVec2 m_size;
 		//! Le frame buffer de la cible.
 		gl::FrameBufferPtr m_framebuffer;
 		//! La texture recevant le rendu couleurs.

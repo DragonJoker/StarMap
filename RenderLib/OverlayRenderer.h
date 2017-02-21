@@ -70,7 +70,7 @@ namespace render
 		*param[in] size
 		*	Les dimensions de la fenêtre de rendu.
 		*/
-		void beginRender( gl::Size2D const & size );
+		void beginRender( gl::IVec2 const & size );
 		/**
 		*brief
 		*	Termine le rendu des incrustations.

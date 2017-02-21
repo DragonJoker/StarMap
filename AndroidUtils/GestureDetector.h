@@ -64,7 +64,7 @@ namespace utils
 		*	Le résultat de l'évènement détecté, dépend du type d'évènement
 		*	souhaité.
 		*/
-		inline gl::Vector2D const & result()const noexcept
+		inline gl::Vec2 const & result()const noexcept
 		{
 			return m_result;
 		}
@@ -73,7 +73,7 @@ namespace utils
 		//! Le facteur de DPI.
 		float m_dpFactor{ 1.0f };
 		//! Le résultat de l'évènement, au cas où il a été détecté.
-		gl::Vector2D m_result;
+		gl::Vec2 m_result;
 	};
 	/**
 	*\brief
@@ -106,7 +106,7 @@ namespace utils
 		//! L'identifiant du pointeur appuyé.
 		int32_t m_downPointerID;
 		//! La position du curseur lorsque l'appui a été détecté.
-		gl::Vector2D m_down;
+		gl::Vec2 m_down;
 	};
 	/**
 	*\brief
@@ -142,7 +142,7 @@ namespace utils
 		//! L'index de temps lors du tap.
 		int64_t m_lastTapTime;
 		//! La position lors du tap.
-		gl::Vector2D m_lastTap;
+		gl::Vec2 m_lastTap;
 	};
 	/**
 	*\brief
@@ -178,7 +178,7 @@ namespace utils
 		*\return
 		*	La position finale du curseur tracké.
 		*/
-		inline gl::Vector2D const & position()const noexcept
+		inline gl::Vec2 const & position()const noexcept
 		{
 			return m_down;
 		}
@@ -187,7 +187,7 @@ namespace utils
 		//! L'identifiant du pointeur tracké.
 		int32_t m_downPointerID;
 		//! La position du curseur lorsque l'appui a été détecté.
-		gl::Vector2D m_down;
+		gl::Vec2 m_down;
 		//! L'indice du pointeur tracké.
 		uint32_t m_index;
 	};
@@ -233,7 +233,7 @@ namespace utils
 		//! Le second détecteur de mouvements.
 		MoveDetector m_secondary;
 		//! La différence de position entre les curseur lorsque l'appui a été détecté.
-		gl::Vector2D m_down;
+		gl::Vec2 m_down;
 		//! La distance entre les curseurs lorsque l'appui a été détecté.
 		float m_distance{ 0.0f };
 		//! La différence de distance entre les curseurs.

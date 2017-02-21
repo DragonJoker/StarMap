@@ -63,10 +63,10 @@ namespace render
 		*\param[in] z
 		*	Le vecteur Z.
 		*/
-		void update( gl::Vector3D const & position
-			, gl::Vector3D const & x
-			, gl::Vector3D const & y
-			, gl::Vector3D const & z );
+		void update( gl::Vec3 const & position
+			, gl::Vec3 const & x
+			, gl::Vec3 const & y
+			, gl::Vec3 const & z );
 		/**
 		*\brief
 		*	Vérifie si le point donné est dans le frustum de vue.
@@ -75,7 +75,7 @@ namespace render
 		*\return
 		*	\p false si le point en dehors du frustum de vue.
 		*/
-		bool visible( gl::Vector3D const & point )const;
+		bool visible( gl::Vec3 const & point )const;
 
 	private:
 		//! Le viewport.

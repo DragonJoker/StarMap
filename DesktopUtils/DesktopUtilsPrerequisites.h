@@ -46,7 +46,7 @@ namespace utils
 	struct SizeEvent
 	{
 		//! Les nouvelle dimensions
-		gl::Size2D size;
+		gl::IVec2 size;
 		//! Dit si la fenêtre est maximisée.
 		bool maximized;
 		//! Dit si la fenêtre est minimisée.
@@ -61,7 +61,7 @@ namespace utils
 	struct MouseEvent
 	{
 		//! La position actuelle de la souris.
-		gl::Position2D position;
+		gl::IVec2 position;
 		//! \p true si le bouton gauche de la souris est enfoncé.
 		bool ldown;
 		//! \p true si le bouton milieu de la souris est enfoncé.

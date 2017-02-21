@@ -34,7 +34,7 @@ public:
 	*\brief
 	*	Initialisation de la fenêtre.
 	*/
-	void onResize( gl::Size2D const & event )override;
+	void onResize( gl::IVec2 const & event )override;
 	/**
 	*\brief
 	*	Déplacement de la souris.
@@ -83,7 +83,7 @@ private:
 	std::streambuf * m_cerr;
 	std::streambuf * m_clog;
 
-	gl::Position2D m_mouse;
+	gl::IVec2 m_mouse;
 	render::CameraState m_handler;
 
 	//! Le signal émis lorsque l'on "clique" sur l'écran.

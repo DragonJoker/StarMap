@@ -169,9 +169,9 @@ namespace render
 		struct DisplayableChar
 		{
 			//! La position du caractère, relative à sa ligne.
-			gl::Position2D m_position;
+			gl::IVec2 m_position;
 			//! Les dimensions du caractère.
-			gl::Size2D m_size;
+			gl::IVec2 m_size;
 			//! Le caractère à afficher.
 			Glyph const & m_glyph;
 			/**
@@ -184,8 +184,8 @@ namespace render
 			*\param[in] glyph
 			*	La glyphe du caractère.
 			*/
-			DisplayableChar( gl::Position2D const & position
-				, gl::Size2D const & size
+			DisplayableChar( gl::IVec2 const & position
+				, gl::IVec2 const & size
 				, Glyph const & glyph )
 				: m_position{ position }
 				, m_size{ size }
@@ -252,7 +252,7 @@ namespace render
 		struct DisplayableLine
 		{
 			//! La position de la ligne.
-			gl::Position2D m_position;
+			gl::IVec2 m_position;
 			//! La largeur de la ligne.
 			uint32_t m_width;
 			//! La hauteur de la ligne.

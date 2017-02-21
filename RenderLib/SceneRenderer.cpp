@@ -137,9 +137,9 @@ namespace render
 
 	SceneRenderer::ObjectNode::ObjectNode( gl::ShaderProgramPtr && program )
 		: RenderNode{ std::move( program ) }
-		, m_position{ m_program->createAttribute< gl::Vector3D >( "position" ) }
-		, m_normal{ m_program->createAttribute< gl::Vector3D >( "normal" ) }
-		, m_texture{ m_program->createAttribute< gl::Vector2D >( "texture" ) }
+		, m_position{ m_program->createAttribute< gl::Vec3 >( "position" ) }
+		, m_normal{ m_program->createAttribute< gl::Vec3 >( "normal" ) }
+		, m_texture{ m_program->createAttribute< gl::Vec2 >( "texture" ) }
 	{
 	}
 
@@ -148,15 +148,15 @@ namespace render
 	SceneRenderer::BillboardNode::BillboardNode( gl::ShaderProgramPtr && program )
 		: RenderNode{ std::move( program ) }
 		, m_billboardUbo{ "Billboard", 2u, *m_program }
-		, m_dimensions{ &m_billboardUbo.createUniform< gl::Vector2D >( "dimensions" ) }
-		, m_camera{ &m_billboardUbo.createUniform< gl::Vector3D >( "camera" ) }
-		, m_position{ m_program->createAttribute< gl::Vector3D >( "position"
+		, m_dimensions{ &m_billboardUbo.createUniform< gl::Vec2 >( "dimensions" ) }
+		, m_camera{ &m_billboardUbo.createUniform< gl::Vec3 >( "camera" ) }
+		, m_position{ m_program->createAttribute< gl::Vec3 >( "position"
 			, sizeof( BillboardBuffer::Vertex )
 			, offsetof( BillboardData, center ) ) }
-		, m_scale{ m_program->createAttribute< gl::Vector2D >( "scale"
+		, m_scale{ m_program->createAttribute< gl::Vec2 >( "scale"
 			, sizeof( BillboardBuffer::Vertex )
 			, offsetof( BillboardData, scale ) ) }
-		, m_texture{ m_program->createAttribute< gl::Vector2D >( "texture"
+		, m_texture{ m_program->createAttribute< gl::Vec2 >( "texture"
 			, sizeof( BillboardBuffer::Vertex )
 			, offsetof( BillboardBuffer::Vertex, texture ) ) }
 	{
@@ -170,10 +170,11 @@ namespace render
 		, m_lineUbo{ "PolyLine", 2u, *m_program }
 		, m_lineWidth{ &m_lineUbo.createUniform< float >( "lineWidth" ) }
 		, m_lineFeather{ &m_lineUbo.createUniform< float >( "lineFeather" ) }
-		, m_position{ m_program->createAttribute< gl::Vector3D >( "position"
+		, m_lineScale{ &m_lineUbo.createUniform< gl::Vec2 >( "lineScale" ) }
+		, m_position{ m_program->createAttribute< gl::Vec3 >( "position"
 			, sizeof( PolyLine::Vertex )
 			, offsetof( PolyLine::Vertex, m_position ) ) }
-		, m_normal{ m_program->createAttribute< gl::Vector3D >( "normal"
+		, m_normal{ m_program->createAttribute< gl::Vec3 >( "normal"
 			, sizeof( PolyLine::Vertex )
 			, offsetof( PolyLine::Vertex, m_normal ) ) }
 	{
@@ -235,6 +236,7 @@ namespace render
 	}
 
 	void SceneRenderer::draw( Camera const & camera
+		, float zoomScale
 		, RenderSubmeshArray const & objects
 		, RenderBillboardArray const & billboards
 		, PolyLineArray const & lines )const
@@ -258,6 +260,7 @@ namespace render
 			, billboards[size_t( NodeType::eOpaqueDiff )] );
 		m_pipelineAlphaBlend.apply();
 		doRenderLines( camera
+			, zoomScale
 			, *m_lineNode
 			, lines );
 		m_pipelineOpaque.apply();
@@ -268,9 +271,6 @@ namespace render
 			, billboards
 			, lines );
 		m_pipelineAlphaBlend.apply();
-		doRenderLines( camera
-			, *m_lineNode
-			, lines );
 		doRenderTransparent( camera
 			, NodeType::eAlphaBlend
 			, OpacityType::eAlphaBlend
@@ -382,7 +382,7 @@ namespace render
 		{
 			gl::Matrix4x4 const & projection = camera.projection();
 			gl::Matrix4x4 const & view = camera.view();
-			gl::Vector3D const & position = camera.position();
+			gl::Vec3 const & position = camera.position();
 			node.m_program->bind();
 			node.m_mtxProjection->value( projection );
 			node.m_mtxView->value( view );
@@ -420,6 +420,7 @@ namespace render
 	}
 
 	void SceneRenderer::doRenderLines( Camera const & camera
+		, float zoomScale
 		, PolyLineNode const & node
 		, PolyLineArray const & lines )const
 	{
@@ -430,6 +431,7 @@ namespace render
 			node.m_program->bind();
 			node.m_mtxProjection->value( projection );
 			node.m_mtxView->value( view );
+			node.m_lineScale->value( zoomScale );
 
 			for ( auto & line : lines )
 			{

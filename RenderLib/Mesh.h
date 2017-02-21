@@ -91,7 +91,7 @@ namespace render
 		*\return
 		*	Les dimensions du maillage.
 		*/
-		inline gl::Vector3D const & boundaries()const noexcept
+		inline gl::Vec3 const & boundaries()const noexcept
 		{
 			return m_boundaries;
 		}
@@ -106,7 +106,7 @@ namespace render
 		//! Les sous-maillages.
 		SubmeshArray m_submeshes;
 		//! Les dimensions du maillage.
-		gl::Vector3D m_boundaries;
+		gl::Vec3 m_boundaries;
 	};
 }
 

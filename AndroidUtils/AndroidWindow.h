@@ -99,21 +99,21 @@ namespace utils
 		*\param[in] position
 		*	La position du curseur.
 		*/
-		virtual void onSingleTap( gl::Position2D const & position ) = 0;
+		virtual void onSingleTap( gl::IVec2 const & position ) = 0;
 		/**
 		*\brief
 		*	Gestion d'un évènement de type double tap.
 		*\param[in] position
 		*	La position du curseur.
 		*/
-		virtual void onDoubleTap( gl::Position2D const & position ) = 0;
+		virtual void onDoubleTap( gl::IVec2 const & position ) = 0;
 		/**
 		*\brief
 		*	Gestion d'un évènement de type déplacement avec un curseur.
 		*\param[in] diff
 		*	La différence de position du curseur..
 		*/
-		virtual void onSingleMove( gl::Offset2D const & diff ) = 0;
+		virtual void onSingleMove( gl::IVec2 const & diff ) = 0;
 		/**
 		*\brief
 		*	Gestion d'un évènement de type déplacement avec deux curseurs.
@@ -122,12 +122,12 @@ namespace utils
 		*\param[in] distDiff
 		*	La différence de distance entre les curseur.
 		*/
-		virtual void onDoubleMove( gl::Position2D const & posDiff, int distDiff ) = 0;
+		virtual void onDoubleMove( gl::IVec2 const & posDiff, int distDiff ) = 0;
 		/**
 		*\return
 		*	Les dimensions de la fenêtre.
 		*/
-		inline gl::Size2D const & dimensions()const noexcept
+		inline gl::IVec2 const & dimensions()const noexcept
 		{
 			return m_size;
 		}
@@ -193,7 +193,7 @@ namespace utils
 		//! Le contexte de rendu OpenGL.
 		EGLContext m_context{ EGL_NO_CONTEXT };
 		//! Les dimensions de la fenêtre.
-		gl::Size2D m_size{ 0, 0 };
+		gl::IVec2 m_size{ 0, 0 };
 	};
 }
 
