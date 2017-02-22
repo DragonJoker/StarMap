@@ -67,7 +67,7 @@ namespace starmap
 		*\param[in] stars
 		*	Les étoiles de la carte du ciel.
 		*/
-		void fill( StarSet & stars );
+		void fill( StarArray const & stars );
 		/**
 		*\brief
 		*	Ajoute un lien entre 2 étoiles appartenant à la constellation.
@@ -76,6 +76,13 @@ namespace starmap
 		*/
 		void addLink( std::string const & a
 			, std::string const & b );
+		/**
+		*\brief
+		*	Ajoute un lien entre 2 étoiles appartenant à la constellation.
+		*\param[in] a, b
+		*	L'indice des 2 étoiles, dans la constellation.
+		*/
+		void addLink( uint32_t a, uint32_t b );
 		/**
 		*\return
 		*	Le nom de l'étoile.
@@ -117,7 +124,7 @@ namespace starmap
 		inline gl::Vec3 const & position()const noexcept
 		{
 			return m_position;
-		}
+		};
 
 	private:
 		//! Le nom de la constellation.

@@ -16,7 +16,7 @@ namespace starmap
 		m_stars.emplace_back( id, letter, name, *this );
 	}
 
-	void Constellation::fill( StarSet & stars )
+	void Constellation::fill( StarArray const & stars )
 	{
 		gl::Vec3 position;
 		uint32_t count{ 0u };
@@ -78,6 +78,46 @@ namespace starmap
 			{
 				return star.letter() == b;
 			} );
+
+		if ( ita != m_stars.end()
+			&& itb != m_stars.end() )
+		{
+			m_links.push_back( { &( *ita ), &( *itb ) } );
+		}
+		else if ( ita == m_stars.end() )
+		{
+			std::cerr << "Star [" << a << "] not found in constellation [" << m_name << "], can't create a link." << std::endl;
+
+			for ( auto & star : m_stars )
+			{
+				std::cerr << star.letter() << " - " << star.name() << std::endl;
+			}
+		}
+		else
+		{
+			std::cerr << "Star [" << b << "] not found in constellation [" << m_name << "], can't create a link." << std::endl;
+
+			for ( auto & star : m_stars )
+			{
+				std::cerr << star.letter() << " - " << star.name() << std::endl;
+			}
+		}
+	}
+
+	void Constellation::addLink( uint32_t a, uint32_t b )
+	{
+		auto ita = std::find_if( std::begin( m_stars )
+			, std::end( m_stars )
+			, [&a]( ConstellationStar const & star )
+		{
+			return star.id() == a;
+		} );
+		auto itb = std::find_if( std::begin( m_stars )
+			, std::end( m_stars )
+			, [&b]( ConstellationStar const & star )
+		{
+			return star.id() == b;
+		} );
 
 		if ( ita != m_stars.end()
 			&& itb != m_stars.end() )

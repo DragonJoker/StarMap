@@ -43,6 +43,9 @@
     <ClInclude Include="ConstellationStar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StarHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

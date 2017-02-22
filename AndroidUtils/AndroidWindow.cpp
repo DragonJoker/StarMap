@@ -79,14 +79,14 @@ namespace utils
 
 					glCheckError( glEnable, GL_TEXTURE_2D );
 					glCheckError( glFrontFace, GL_CCW );
-					
-					onCreate();
 
 					if ( !m_state.empty() )
 					{
 						onRestore( m_state );
 						m_state.clear();
 					}
+
+					onCreate();
 
 					draw();
 				}

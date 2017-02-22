@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "GlSampler.h"
 
 namespace gl

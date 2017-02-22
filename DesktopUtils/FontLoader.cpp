@@ -177,11 +177,11 @@ namespace utils
 				{
 					FT_BitmapGlyph const bmpGlyph = FT_BitmapGlyph( glyph );
 					FT_Bitmap const & bitmap = bmpGlyph->bitmap;
-					uint32_t const pitch( std::abs( bitmap.pitch ) );
+					uint32_t const pitch( abs( bitmap.pitch ) );
 					size = { pitch, uint32_t( bitmap.rows ) };
 					bearing = { bmpGlyph->left, bmpGlyph->top };
 					buffer.resize( size.x * size.y );
-					advance = uint32_t( std::abs( glyph->advance.x ) / 65536.0 );
+					advance = uint32_t( abs( glyph->advance.x ) / 65536.0 );
 
 					if ( advance < uint32_t( size[0] ) )
 					{

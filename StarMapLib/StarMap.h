@@ -8,7 +8,7 @@
 #define ___StarMapLib_StarMap_HPP___
 #pragma once
 
-#include "StarMapState.h"
+#include "StarHolder.h"
 
 #include <RenderLib/Debug.h>
 #include <RenderLib/RenderWindow.h>
@@ -40,14 +40,14 @@ namespace starmap
 		*\param[in] state
 		*	L'état à récupérer.
 		*/
-		void restore( render::CameraState const & state );
+		void restore( StarMapState const & state );
 		/**
 		*\brief
 		*	Sauvegarde l'état de la carte du ciel.
 		*\param[out] state
 		*	Reçoit l'état actuel.
 		*/
-		void save( render::CameraState & state );
+		void save( StarMapState & state );
 		/**
 		*\brief
 		*	Initialise les données GPU.
@@ -301,6 +301,11 @@ namespace starmap
 		*	Affiche ou cache les étoiles.
 		*/
 		void doFilterStars( bool show );
+		/**
+		*\brief
+		*	Trie les étoiles par magnitude.
+		*/
+		void doSortStars();
 
 	private:
 		//! La connexion à la notification d'objet sélectionné.
@@ -346,7 +351,9 @@ namespace starmap
 		//! La fenêtre où s'effectue le rendu.
 		render::RenderWindowPtr m_window;
 		//! Les étoiles.
-		StarSet m_stars;
+		StarArray m_stars;
+		//! Dit si les étoiles sont triées.
+		bool m_sorted{ false };
 		//! Les constellations.
 		ConstellationMap m_constellations;
 		//! L'objet sélectionné.

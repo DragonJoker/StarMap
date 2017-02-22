@@ -30,7 +30,6 @@ namespace starmap
 	using ConstellationPtr = std::unique_ptr< Constellation >;
 	using StarArray = std::vector< Star >;
 	using StarPtrArray = std::vector< Star const * >;
-	using StarSet = std::multiset< Star >;
 	using StarPtrMap = std::map< std::string, Star const * >;
 	using ConstellationMap = std::unordered_map< std::string, ConstellationPtr >;
 	using ConstellationStarArray = std::vector< ConstellationStar >;

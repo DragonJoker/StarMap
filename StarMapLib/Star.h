@@ -65,6 +65,24 @@ namespace starmap
 		}
 		/**
 		*\return
+		*	L'index de l'étoile.
+		*/
+		inline uint32_t index()const noexcept
+		{
+			return m_index;
+		}
+		/**
+		*\brief
+		*	Définit l'index de l'étoile.
+		*\param[in] value
+		*	La nouvelle valeur.
+		*/
+		inline void index( uint32_t value )noexcept
+		{
+			m_index = value;
+		}
+		/**
+		*\return
 		*	Le nom de l'étoile.
 		*/
 		inline std::string const & name()const noexcept
@@ -97,10 +115,17 @@ namespace starmap
 		}
 
 	private:
+		//! L'identifiant de l'étoile.
 		size_t m_id;
+		//! L'index de l'étoile dans le tableau trié par magnitude.
+		uint32_t m_index;
+		//! Le nom de l'étoile.
 		std::string m_name;
+		//! La magnitude de l'étoile.
 		float m_magnitude;
+		//! La position de l'étoile.
 		gl::Vec3 m_position;
+		//! La couleur de l'étoile.
 		gl::RgbColour m_colour;
 	};
 	/**

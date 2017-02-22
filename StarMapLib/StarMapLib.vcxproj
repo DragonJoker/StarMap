@@ -187,6 +187,7 @@
     <ClInclude Include="rapidxml\rapidxml_utils.hpp" />
     <ClInclude Include="ScreenEvents.h" />
     <ClInclude Include="Star.h" />
+    <ClInclude Include="StarHolder.h" />
     <ClInclude Include="StarMap.h" />
     <ClInclude Include="StarMapLibPrerequisites.h" />
     <ClInclude Include="StarMapState.h" />

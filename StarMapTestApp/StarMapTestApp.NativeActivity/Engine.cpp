@@ -4,6 +4,7 @@
 #include <AndroidUtils/FontLoader.h>
 
 #include <StarMapLib/CsvReader.h>
+#include <StarMapLib/StarMapState.h>
 #include <StarMapLib/XmlReader.h>
 
 //*****************************************************************************
@@ -18,10 +19,13 @@ Window::Window( utils::AndroidApp const & parent
 		, m_onScreenDoubleMove }
 	, m_starmap{ m_events, 5u }
 {
-	starmap::loadStarsFromXml( m_starmap
-		, m_parent.getFileTextContent( "stars.xml", true ) );
-	starmap::loadConstellationsFromXml( m_starmap
-		, m_parent.getFileTextContent( "constellations.xml", true ) );
+	if ( state.empty() )
+	{
+		starmap::loadStarsFromXml( m_starmap
+			, m_parent.getFileTextContent( "stars.xml", true ) );
+		starmap::loadConstellationsFromXml( m_starmap
+			, m_parent.getFileTextContent( "constellations.xml", true ) );
+	}
 }
 
 Window::~Window()
@@ -55,14 +59,14 @@ void Window::onDraw()
 
 void Window::onSave( render::ByteArray & state )
 {
-	state.resize( sizeof( render::CameraState ) );
-	m_starmap.save( *reinterpret_cast< render::CameraState * >( state.data() ) );
+	state.resize( sizeof( starmap::StarMapState ) );
+	m_starmap.save( *reinterpret_cast< starmap::StarMapState * >( state.data() ) );
 }
 
 void Window::onRestore( render::ByteArray const & state )
 {
-	assert( state.size() == sizeof( render::CameraState ) );
-	m_starmap.restore( *reinterpret_cast< render::CameraState const * >( state.data() ) );
+	assert( state.size() == sizeof( starmap::StarMapState ) );
+	m_starmap.restore( *reinterpret_cast< starmap::StarMapState const * >( state.data() ) );
 }
 
 void Window::onSingleTap( gl::IVec2 const & position )

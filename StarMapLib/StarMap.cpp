@@ -2,6 +2,7 @@
 
 #include "ConstellationStar.h"
 #include "ScreenEvents.h"
+#include "StarMapState.h"
 
 #include <RenderLib/Billboard.h>
 #include <RenderLib/BorderPanelOverlay.h>
@@ -67,14 +68,68 @@ namespace starmap
 		events.starMap( this );
 	}
 
-	void StarMap::restore( render::CameraState const & state )
+	void StarMap::restore( StarMapState const & state )
 	{
-		m_window->state() = state;
+		for ( auto & star : state.m_stars )
+		{
+			m_stars.push_back( star );
+		}
+
+		for ( auto & info : state.m_constellations )
+		{
+			Constellation constellation{ info.m_name };
+
+			for ( auto & star : info.m_stars )
+			{
+				constellation.addStar( star.m_id
+					, star.m_letter
+					, m_stars[star.m_index].name() );
+			}
+
+			for ( auto & link : info.m_links )
+			{
+				constellation.addLink( link.m_a, link.m_b );
+			}
+
+			add( constellation );
+		}
+
+		m_window->state() = state.m_state;
+		m_sorted = true;
 	}
 
-	void StarMap::save( render::CameraState & state )
+	void StarMap::save( StarMapState & state )
 	{
-		state = m_window->state();
+		state.m_state = m_window->state();
+		state.m_stars.reserve( m_stars.size() );
+
+		for ( auto & star : m_stars )
+		{
+			state.m_stars.push_back( star );
+		}
+
+		for ( auto & it : m_constellations )
+		{
+			auto & constellation = it.second;
+			ConstellationInfo info;
+			info.m_stars.reserve( constellation->stars().size() );
+			info.m_links.reserve( constellation->links().size() );
+
+			for ( auto & star : constellation->stars() )
+			{
+				info.m_stars.push_back( { star.star().index()
+					, star.id()
+					, star.letter() } );
+			}
+
+			for ( auto & link : constellation->links() )
+			{
+				info.m_links.push_back( { link.m_a->id()
+					, link.m_b->id() } );
+			}
+
+			state.m_constellations.push_back( info );
+		}
 	}
 
 	void StarMap::initialise( gl::IVec2 const & size
@@ -101,6 +156,7 @@ namespace starmap
 
 		if ( !m_stars.empty() )
 		{
+			doSortStars();
 			auto range = render::makeRange( m_stars.begin()->magnitude()
 				, m_stars.rbegin()->magnitude() );
 			m_window->scene().thresholdBounds( 4.0f, 21.0f );
@@ -178,7 +234,7 @@ namespace starmap
 
 	void StarMap::add( Star const & star )
 	{
-		m_stars.insert( star );
+		m_stars.push_back( star );
 	}
 
 	void StarMap::add( StarArray const & stars )
@@ -191,6 +247,7 @@ namespace starmap
 
 	void StarMap::add( Constellation const & constellation )
 	{
+		doSortStars();
 		auto it = m_constellations.find( constellation.name() );
 
 		if ( it == m_constellations.end() )
@@ -713,6 +770,28 @@ namespace starmap
 					return &billboard->buffer() == holder.m_buffer.get();
 				} );
 			}
+		}
+	}
+
+	void StarMap::doSortStars()
+	{
+		if ( !m_sorted )
+		{
+			std::sort( std::begin( m_stars )
+				, std::end( m_stars )
+				, []( Star const & lhs, Star const & rhs )
+			{
+				return lhs.magnitude() < rhs.magnitude();
+			} );
+
+			uint32_t index{ 0u };
+
+			for ( auto & star : m_stars )
+			{
+				star.index( index++ );
+			}
+
+			m_sorted = true;
 		}
 	}
 }

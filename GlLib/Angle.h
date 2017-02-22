@@ -185,7 +185,7 @@ namespace gl
 		inline void doNormalise()noexcept
 		{
 			static RadiansT< T > zero{ T { 0 } };
-			m_radians = RadiansT< T >{ T( T( m_radians ) - PiMult2 * std::floor( T( m_radians ) / PiMult2 ) ) };
+			m_radians = RadiansT< T >{ T( T( m_radians ) - PiMult2 * floor( T( m_radians ) / PiMult2 ) ) };
 
 			if ( T( m_radians ) >= PiMult2 )
 			{
@@ -287,55 +287,55 @@ namespace gl
 	template< typename T >
 	inline T cos( RadiansT< T > const & angle )noexcept
 	{
-		return std::cos( T( angle ) );
+		return ::cos( T( angle ) );
 	}
 
 	template< typename T >
 	inline T sin( RadiansT< T > const & angle )noexcept
 	{
-		return std::sin( T( angle ) );
+		return ::sin( T( angle ) );
 	}
 
 	template< typename T >
 	inline T tan( RadiansT< T > const & angle )noexcept
 	{
-		return std::tan( T( angle ) );
+		return ::tan( T( angle ) );
 	}
 
 	template< typename T >
 	inline T cosh( RadiansT< T > const & angle )noexcept
 	{
-		return std::cosh( T( angle ) );
+		return ::cosh( T( angle ) );
 	}
 
 	template< typename T >
 	inline T sinh( RadiansT< T > const & angle )noexcept
 	{
-		return std::sinh( T( angle ) );
+		return ::sinh( T( angle ) );
 	}
 
 	template< typename T >
 	inline T tanh( RadiansT< T > const & angle )noexcept
 	{
-		return std::tanh( T( angle ) );
+		return ::tanh( T( angle ) );
 	}
 
 	template< typename T >
 	inline RadiansT< T > acos( T value )noexcept
 	{
-		return RadiansT< T >{ std::acos( value ) };
+		return RadiansT< T >{ ::acos( value ) };
 	}
 
 	template< typename T >
 	inline RadiansT< T > asin( T value )noexcept
 	{
-		return RadiansT< T >{ std::asin( value ) };
+		return RadiansT< T >{ ::asin( value ) };
 	}
 
 	template< typename T >
 	inline RadiansT< T > atan( T value )noexcept
 	{
-		return RadiansT< T >{ std::atan( value) };
+		return RadiansT< T >{ ::atan( value) };
 	}
 	/**@}*/
 	using Angle = AngleT< float >;

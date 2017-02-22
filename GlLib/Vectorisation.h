@@ -17,7 +17,7 @@ namespace gl
 	*	Appelle une fonction sur chaque composante du vecteur donné.
 	*\remarks
 	*	Permet d'appeler, par exemple, des fonctions mathématiques telles que
-	*	std::abs, std::cos... sur les composantes d'un vecteur, ce en un seul
+	*	abs, cos... sur les composantes d'un vecteur, ce en un seul
 	*	appel, et de stocker le résultat dans un vecteur.
 	*\param[in] func
 	*	La fonction.
@@ -33,7 +33,7 @@ namespace gl
 	*	Appelle une fonction sur chaque composante du vecteur donné.
 	*\remarks
 	*	Permet d'appeler, par exemple, des fonctions mathématiques telles que
-	*	std::abs, std::cos... sur les composantes d'un vecteur, ce en un seul
+	*	abs, cos... sur les composantes d'un vecteur, ce en un seul
 	*	appel, et de stocker le résultat dans un vecteur.
 	*	Version pour les fonctions prenant en paramètre une référence constante
 	*	(comme gl::cos, par exemple).
