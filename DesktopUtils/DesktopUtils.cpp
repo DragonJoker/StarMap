@@ -80,7 +80,7 @@ namespace utils
 
 		if ( file )
 		{
-			file << timeStamp << " - " << log << std::endl;
+			file << timeStamp << " - " << log;
 		}
 	}
 }

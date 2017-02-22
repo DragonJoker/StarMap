@@ -210,4 +210,271 @@
       <Link StarA="Beta" StarB="Gamma"/>
     </LinkList>
   </Constellation>
+  <Constellation Name="Phoenix">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Gamma"/>
+      <Link StarA="Gamma" StarB="Delta"/>
+      <Link StarA="Delta" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Alpha"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Vulpecula">
+    <LinkList>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Leo Minor">
+    <LinkList>
+      <Link StarA="Beta" StarB="46"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Leo Minor">
+    <LinkList>
+      <Link StarA="Beta" StarB="46"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Canis Minor">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Beta"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Equuleus">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Delta"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Perseus">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Beta"/>
+      <Link StarA="Alpha" StarB="Gamma"/>
+      <Link StarA="Alpha" StarB="Delta"/>
+      <Link StarA="Delta" StarB="Epsilon"/>
+      <Link StarA="Epsilon" StarB="Xi"/>
+      <Link StarA="Xi" StarB="Zeta"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Pictor">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Gamma"/>
+      <Link StarA="Gamma" StarB="Beta"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Pegasus">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Gamma"/>
+      <Link StarA="Alpha" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Eta"/>
+      <Link StarA="Alpha" StarB="Zeta"/> <!-- Not entirely true, Alpha and Zeta are linked to an unnamed object -->
+      <Link StarA="Zeta" StarB="Theta"/>
+      <Link StarA="Theta" StarB="Epsilon"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Pavo">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Delta"/>
+      <Link StarA="Delta" StarB="Lambda"/>
+      <Link StarA="Lambda" StarB="Eta"/>
+      <Link StarA="Eta" StarB="Zeta"/>
+      <Link StarA="Zeta" StarB="Epsilon"/>
+      <Link StarA="Epsilon" StarB="Beta"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Orion">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Zeta"/>
+      <Link StarA="Zeta" StarB="Kappa"/>
+      <Link StarA="Gamma" StarB="Delta"/>
+      <Link StarA="Delta" StarB="Tau"/>
+      <Link StarA="Tau" StarB="Beta"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Ophiuchus">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Zeta"/>
+      <Link StarA="Zeta" StarB="Kappa"/>
+      <Link StarA="Gamma" StarB="Delta"/>
+      <Link StarA="Delta" StarB="Tau"/>
+      <Link StarA="Tau" StarB="Beta"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Apus">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Delta1"/>
+      <Link StarA="Beta" StarB="Gamma"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Apus">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Delta1"/>
+      <Link StarA="Beta" StarB="Gamma"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Octant">
+    <LinkList>
+      <Link StarA="Nu" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Delta"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Musca">
+    <LinkList>
+      <Link StarA="Beta" StarB="Delta"/>
+      <Link StarA="Delta" StarB="Gamma"/>
+      <Link StarA="Gamma" StarB="Alpha"/>
+      <Link StarA="Alpha" StarB="Epsilon"/>
+      <Link StarA="Epsilon" StarB="Lambda"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Microscopium">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Iota"/>
+      <Link StarA="Iota" StarB="Theta1"/>
+      <Link StarA="Theta1" StarB="Epsilon"/>
+      <Link StarA="Epsilon" StarB="Gamma"/>
+      <Link StarA="Gamma" StarB="Alpha"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Antlia">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Iota"/>
+      <Link StarA="Alpha" StarB="Epsilon"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Lynx">
+    <LinkList>
+      <Link StarA="Alpha" StarB="38"/>
+      <Link StarA="38" StarB="10 UMa"/>
+      <Link StarA="10 UMa" StarB="31"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Lupus">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Delta"/>
+      <Link StarA="Delta" StarB="Psi1"/>
+      <Link StarA="Delta" StarB="Gamma"/>
+      <Link StarA="Gamma" StarB="Eta"/>
+      <Link StarA="Gamma" StarB="Epsilon"/>
+      <Link StarA="Epsilon" StarB="Kappa1"/>
+      <Link StarA="Kappa1" StarB="Zeta"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Leo">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Eta"/>
+      <Link StarA="Eta" StarB="Gamma1"/>
+      <Link StarA="Gamma1" StarB="Zeta"/>
+      <Link StarA="Zeta" StarB="Mu"/>
+      <Link StarA="Mu" StarB="Epsilon"/>
+      <Link StarA="Gamma1" StarB="Delta"/>
+      <Link StarA="Delta" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Theta"/>
+      <Link StarA="Theta" StarB="Alpha"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Lepus">
+    <LinkList>
+      <Link StarA="Epsilon" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Gamma"/>
+      <Link StarA="Gamma" StarB="Delta"/>
+      <Link StarA="Beta" StarB="Alpha"/>
+      <Link StarA="Alpha" StarB="Zeta"/>
+      <Link StarA="Zeta" StarB="Eta"/>
+      <Link StarA="Alpha" StarB="Mu"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Monoceros">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Delta"/>
+      <Link StarA="Delta" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Gamma"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Lacerta">
+    <LinkList>
+      <Link StarA="Beta" StarB="Alpha"/>
+      <Link StarA="Alpha" StarB="4"/>
+      <Link StarA="4" StarB="5"/>
+      <Link StarA="5" StarB="2"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Indus">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Eta"/>
+      <Link StarA="Eta" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Alpha Pavo"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Hydrus">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Gamma"/>
+      <Link StarA="Gamma" StarB="Beta"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Hydra">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Iota"/>
+      <Link StarA="Iota" StarB="Theta"/>
+      <Link StarA="Theta" StarB="Zeta"/>
+      <Link StarA="Zeta" StarB="Epsilon"/>
+      <Link StarA="Alpha" StarB="Upsilon1"/>
+      <Link StarA="Upsilon1" StarB="Lambda"/>
+      <Link StarA="Lambda" StarB="Nu"/>
+      <Link StarA="Pi" StarB="Gamma"/>
+      <Link StarA="Gamma" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Xi"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Horologium">
+    <LinkList>
+      <Link StarA="Alpha" StarB="Iota"/>
+      <Link StarA="Iota" StarB="Eta"/>
+      <Link StarA="Eta" StarB="Zeta"/>
+      <Link StarA="Zeta" StarB="Mu"/>
+      <Link StarA="Mu" StarB="Beta"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Hercules">
+    <LinkList>
+      <Link StarA="Gamma" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Zeta"/>
+      <Link StarA="Zeta" StarB="Epsilon"/>
+      <Link StarA="Epsilon" StarB="Pi"/>
+      <Link StarA="Pi" StarB="Eta"/>
+      <Link StarA="Eta" StarB="Zeta"/>
+      <Link StarA="Eta" StarB="Sigma"/>
+      <Link StarA="Sigma" StarB="Tau"/>
+      <Link StarA="Pi" StarB="Rho"/>
+      <Link StarA="Rho" StarB="Theta"/>
+      <Link StarA="Epsilon" StarB="Delta"/>
+      <Link StarA="Delta" StarB="Mu"/>
+      <Link StarA="Mu" StarB="Xi"/>
+      <Link StarA="Xi" StarB="Omicron"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Grus">
+    <LinkList>
+      <Link StarA="Gamma" StarB="Lambda"/>
+      <Link StarA="Lambda" StarB="Mu1"/>
+      <Link StarA="Mu1" StarB="Delta1"/>
+      <Link StarA="Delta1" StarB="Alpha"/>
+      <Link StarA="Delta1" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Epsilon"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Camelopardalis">
+    <LinkList>
+      <Link StarA="Beta" StarB="Alpha"/>
+    </LinkList>
+  </Constellation>
+  <Constellation Name="Gemini">
+    <LinkList>
+      <Link StarA="Eta" StarB="Mu"/>
+      <Link StarA="Mu" StarB="Epsilon"/>
+      <Link StarA="Epsilon" StarB="Alpha"/>
+      <Link StarA="Alpha" StarB="Beta"/>
+      <Link StarA="Beta" StarB="Delta"/>
+      <Link StarA="Delta" StarB="Zeta"/>
+      <Link StarA="Zeta" StarB="Gamma"/>
+    </LinkList>
+  </Constellation>
 </ConstellationList>

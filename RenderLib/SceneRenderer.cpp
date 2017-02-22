@@ -171,6 +171,7 @@ namespace render
 		, m_lineWidth{ &m_lineUbo.createUniform< float >( "lineWidth" ) }
 		, m_lineFeather{ &m_lineUbo.createUniform< float >( "lineFeather" ) }
 		, m_lineScale{ &m_lineUbo.createUniform< float >( "lineScale" ) }
+		, m_camera{ &m_lineUbo.createUniform< gl::Vec3 >( "camera" ) }
 		, m_position{ m_program->createAttribute< gl::Vec3 >( "position"
 			, sizeof( PolyLine::Vertex )
 			, offsetof( PolyLine::Vertex, m_position ) ) }
@@ -428,10 +429,12 @@ namespace render
 		{
 			gl::Mat4 const & projection = camera.projection();
 			gl::Mat4 const & view = camera.view();
+			gl::Vec3 const & position = camera.position();
 			node.m_program->bind();
 			node.m_mtxProjection->value( projection );
 			node.m_mtxView->value( view );
 			node.m_lineScale->value( zoomScale );
+			node.m_camera->value( position );
 
 			for ( auto & line : lines )
 			{
@@ -448,7 +451,7 @@ namespace render
 					node.m_position->bind( line->buffer().data()->data() );
 					node.m_normal->bind( line->buffer().data()->data() );
 					glCheckError( glDrawArrays
-						, GL_TRIANGLES
+						, GL_LINES
 						, 0
 						, GLsizei( line->buffer().size() * 6 ) );
 					node.m_normal->unbind();

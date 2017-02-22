@@ -81,6 +81,7 @@ uniform vec2 dimensions;
 			R"(uniform float lineWidth;
 uniform float lineFeather;
 uniform float lineScale;
+uniform vec3 camera;
 )"
 		};
 
@@ -91,6 +92,7 @@ uniform float lineScale;
 	float lineWidth;
 	float lineFeather;
 	float lineScale;
+	vec3 camera;
 };
 )"
 		};
@@ -238,13 +240,8 @@ void main()
 void main()
 {
 	vec4 mPosition = mtxModel * vec4( position, 1.0 );
-	vec3 front = camera - mPosition.xyz;
-	front = normalize( front );
-	vec3 up = vec3( 0.0, 1.0, 0.0 );
-	vec3 right = cross( up, front );
-	up = cross( front, right );
-	//vec3 right = vec3( mtxView[0][0], mtxView[1][0], mtxView[2][0] );
-	//vec3 up = -vec3( mtxView[0][1], mtxView[1][1], mtxView[2][1] );
+	vec3 right = vec3( mtxView[0][0], mtxView[1][0], mtxView[2][0] );
+	vec3 up = -vec3( mtxView[0][1], mtxView[1][1], mtxView[2][1] );
 	float width = dimensions.x;
 	float height = dimensions.y;
 	mPosition.xyz += ( right * texture.x * width * scale.x )
@@ -269,8 +266,8 @@ void main()
 void main()
 {
 	vec4 mPosition = mtxModel * vec4( position.xyz, 1.0 );
-	vec4 delta = vec4( normal.xy * lineWidth * lineScale, 0.0, 0.0 );
-	mPosition += delta;
+	vec2 delta = normal.xy * lineWidth * lineScale;
+	//mPosition.xy += delta;
 	vec4 mvPosition = mtxView * mPosition;
 	gl_Position = mtxProjection * mvPosition;
 	vtx_normal = normal;

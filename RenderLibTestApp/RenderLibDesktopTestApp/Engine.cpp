@@ -70,7 +70,7 @@ void Engine::onMouseMove( utils::MouseEvent const & event )
 	if ( event.ldown )
 	{
 		auto diff = event.position - m_mouse;
-		m_window->state().velocity( diff );
+		m_window->state().velocity( gl::Vec2{ diff } );
 		m_mouse = event.position;
 	}
 }
@@ -343,7 +343,7 @@ void Engine::doUpdatePicked( render::Object const & object )
 {
 	m_picked->moveTo( object.position() - gl::Vec3{ 0, 0, object.boundaries().z + 0.1 } );
 	doUpdatePicked( static_cast< render::Movable const & >( object ) );
-	m_picked->dimensions( gl::toVec2(  object.boundaries() ) );
+	m_picked->dimensions( gl::IVec2{ gl::toVec2( object.boundaries() ) } );
 	m_picked->buffer().at( 0u, { -1000.0f, gl::Vec3{ 0, 0, 0 }, gl::Vec2{ 1, 1 } } );
 }
 

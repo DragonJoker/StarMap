@@ -150,6 +150,8 @@ namespace render
 			gl::FloatUniform * m_lineFeather;
 			//! La variable uniforme contenant l'échelle.
 			gl::FloatUniform * m_lineScale;
+			//! La variable uniforme contenant la position de la caméra.
+			gl::Vec3Uniform * m_camera;
 			//! L'attribut de position
 			gl::Vec3AttributePtr m_position;
 			//! L'attribut de normale

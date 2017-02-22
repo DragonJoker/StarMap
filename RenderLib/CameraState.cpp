@@ -32,7 +32,7 @@ namespace render
 
 	void CameraState::update()
 	{
-#if !defined( NDEBUG )
+#if 1//!defined( NDEBUG )
 
 		m_angleRange = makeRange( gl::Radians( -gl::PiMult2 ), gl::Radians( gl::PiMult2 ) );
 		m_angleX.updateRange( m_angleRange );
