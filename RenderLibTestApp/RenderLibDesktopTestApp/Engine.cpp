@@ -57,6 +57,18 @@ void Engine::onDestroy()
 	doCleanup3DElements();
 }
 
+void Engine::onMinimise()
+{
+}
+
+void Engine::onRestore( gl::IVec2 const & event )
+{
+	if ( m_window )
+	{
+		m_window->resize( event );
+	}
+}
+
 void Engine::onResize( gl::IVec2 const & event )
 {
 	if ( m_window )

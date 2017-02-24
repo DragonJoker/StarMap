@@ -215,7 +215,7 @@ namespace gl
 	{
 		bool hasError = false;
 
-		if ( !m_hasExtension )
+		//if ( !m_hasExtension )
 		{
 			static std::string const Errors[]
 			{

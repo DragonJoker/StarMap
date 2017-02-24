@@ -334,8 +334,9 @@ void main()
 				if ( gl::OpenGL::checkSupport( gl::FeatureLevel::eGLES3 ) )
 				{
 					ret += "#version 300 es\n";
-					ret += "precision highp float;\n";
 				}
+
+				ret += "precision highp float;\n";
 
 				if ( textures )
 				{
@@ -774,9 +775,9 @@ void main()
 				if ( gl::OpenGL::checkSupport( gl::FeatureLevel::eGLES3 ) )
 				{
 					ret += "#version 300 es\n";
-					ret += "precision highp float;\n";
 				}
 
+				ret += "precision highp float;\n";
 				ret += getTextureDefines( textures );
 				ret += getOpacityDefines( opacity );
 

@@ -12,6 +12,7 @@
 #include <DesktopUtils/Log.h>
 
 #include <StarMapLib/CsvReader.h>
+#include <StarMapLib/StarMapState.h>
 #include <StarMapLib/XmlReader.h>
 
 Window::Window()
@@ -20,7 +21,6 @@ Window::Window()
 		, m_onScreenDoubleTap
 		, m_onScreenSingleMove
 		, m_onScreenDoubleMove }
-	, m_starmap{ m_events, 5u }
 {
 	std::string const appName = "RenderLibTestApp";
 	m_cout = new render::LogStreambuf< utils::InfoLogStreambufTraits >( appName
@@ -29,18 +29,6 @@ Window::Window()
 		, std::cerr );
 	m_clog = new render::LogStreambuf< utils::DebugLogStreambufTraits >( appName
 		, std::clog );
-
-	try
-	{
-		starmap::loadStarsFromXml( m_starmap
-			, utils::getFileTextContent( "stars.xml" ) );
-		starmap::loadConstellationsFromXml( m_starmap
-			, utils::getFileTextContent( "constellations.xml" ) );
-	}
-	catch ( std::exception & exc )
-	{
-		std::cerr << "Csv loading failed: " << exc.what() << std::endl;
-	}
 }
 
 Window::~Window()
@@ -52,28 +40,64 @@ Window::~Window()
 
 void Window::onDraw()
 {
-	m_starmap.beginFrame();
-	m_starmap.drawFrame();
-	doSwapBuffers();
-	m_starmap.endFrame();
+	if ( m_starmap )
+	{
+		m_starmap->beginFrame();
+		m_starmap->drawFrame();
+		doSwapBuffers();
+		m_starmap->endFrame();
+	}
 }
 
 void Window::onCreate()
 {
 	std::string dataPath{ "arial.ttf" };
-	m_starmap.initialise( size()
-		, utils::getFileBinaryContent( "halo.bmp" )
-		, utils::FontLoader{ dataPath } );
+	m_starmap = std::make_unique< starmap::StarMap >( m_events
+		, 5u
+		, size()
+		, utils::FontLoader{ dataPath }
+		, utils::getFileBinaryContent( "halo.bmp" ) );
+
+	try
+	{
+		starmap::loadStarsFromXml( *m_starmap
+			, utils::getFileTextContent( "stars.xml" ) );
+		starmap::loadConstellationsFromXml( *m_starmap
+			, utils::getFileTextContent( "constellations.xml" ) );
+		m_starmap->initialise();
+	}
+	catch ( std::exception & exc )
+	{
+		std::cerr << "Csv loading failed: " << exc.what() << std::endl;
+	}
 }
 
 void Window::onDestroy()
 {
-	m_starmap.cleanup();
+	m_starmap->cleanup();
+}
+
+void Window::onMinimise()
+{
+	m_starmap->save( m_savedState );
+	m_starmap.reset();
+}
+
+void Window::onRestore( gl::IVec2 const & event )
+{
+	std::string dataPath{ "arial.ttf" };
+	m_starmap = std::make_unique< starmap::StarMap >( m_events
+		, 5u
+		, size()
+		, utils::FontLoader{ dataPath }
+	, utils::getFileBinaryContent( "halo.bmp" ) );
+	m_starmap->restore( m_savedState );
+	m_starmap->initialise();
 }
 
 void Window::onResize( gl::IVec2 const & event )
 {
-	m_starmap.resize( event );
+	m_starmap->resize( event );
 }
 
 void Window::onMouseMove( utils::MouseEvent const & event )

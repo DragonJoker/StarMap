@@ -71,6 +71,16 @@ namespace utils
 		virtual void onDraw() = 0;
 		/**
 		*\brief
+		*	Minimisation de la fenêtre.
+		*/
+		virtual void onMinimise() = 0;
+		/**
+		*\brief
+		*	Réaffichage de la fenêtre après une minimisation.
+		*/
+		virtual void onRestore( gl::IVec2 const & event ) = 0;
+		/**
+		*\brief
 		*	Redimensionnement de la fenêtre.
 		*/
 		virtual void onResize( gl::IVec2 const & event ) = 0;
@@ -110,7 +120,8 @@ namespace utils
 	private:
 		void doCreate();
 		void doDestroy();
-		void doResize( gl::IVec2 const & size );
+		void doMinimise();
+		void doRestore( gl::IVec2 const & size );
 		bool doPrepareDC( HDC hdc );
 		HGLRC doCreateContext( HDC hdc );
 		void doRegisterClass( HINSTANCE hInstance
@@ -135,6 +146,7 @@ namespace utils
 		gl::IVec2 m_size;
 		int m_timer{ -1 };
 		static std::map< HWND, MsWindow * > sm_instances;
+		bool m_minimised{ false };
 	};
 }
 

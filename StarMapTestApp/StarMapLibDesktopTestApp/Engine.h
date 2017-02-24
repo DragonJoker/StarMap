@@ -32,6 +32,16 @@ public:
 	void onDestroy()override;
 	/**
 	*\brief
+	*	Minimisation de la fenêtre.
+	*/
+	void onMinimise()override;
+	/**
+	*\brief
+	*	Réaffichage de la fenêtre après une minimisation.
+	*/
+	void onRestore( gl::IVec2 const & event )override;
+	/**
+	*\brief
 	*	Initialisation de la fenêtre.
 	*/
 	void onResize( gl::IVec2 const & event )override;
@@ -97,5 +107,7 @@ private:
 	//! Les évènements écran.
 	starmap::ScreenEvents m_events;
 	//! La carte des étoiles.
-	starmap::StarMap m_starmap;
+	starmap::StarMapPtr m_starmap;
+	//! L'état sauvegardé de la fenêtre.
+	render::ByteArray m_savedState;
 };

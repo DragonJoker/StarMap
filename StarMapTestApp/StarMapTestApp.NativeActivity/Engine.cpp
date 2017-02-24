@@ -17,7 +17,11 @@ Window::Window( utils::AndroidApp const & parent
 		, m_onScreenDoubleTap
 		, m_onScreenSingleMove
 		, m_onScreenDoubleMove }
-	, m_starmap{ m_events, 5u }
+	, m_starmap{ m_events
+		, 5u
+		, m_size
+		, *doCreateFontLoader( "arial.ttf" )
+		, m_parent.getFileBinaryContent( "halo.bmp", true ) }
 {
 	if ( state.empty() )
 	{
@@ -38,9 +42,7 @@ void Window::onCreate()
 
 	if ( loader )
 	{
-		m_starmap.initialise( m_size
-			, m_parent.getFileBinaryContent( "halo.bmp", true )
-			, *loader );
+		m_starmap.initialise();
 	}
 }
 
@@ -57,16 +59,14 @@ void Window::onDraw()
 	m_starmap.endFrame();
 }
 
-void Window::onSave( render::ByteArray & state )
+void Window::onSave( render::ByteArray & save )
 {
-	state.resize( sizeof( starmap::StarMapState ) );
-	m_starmap.save( *reinterpret_cast< starmap::StarMapState * >( state.data() ) );
+	m_starmap.save( save );
 }
 
-void Window::onRestore( render::ByteArray const & state )
+void Window::onRestore( render::ByteArray const & save )
 {
-	assert( state.size() == sizeof( starmap::StarMapState ) );
-	m_starmap.restore( *reinterpret_cast< starmap::StarMapState const * >( state.data() ) );
+	m_starmap.restore( save );
 }
 
 void Window::onSingleTap( gl::IVec2 const & position )

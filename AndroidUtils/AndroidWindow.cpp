@@ -31,14 +31,6 @@ namespace utils
 		, m_parent{ parent }
 		, m_state{ state }
 	{
-	}
-
-	AndroidWindow::~AndroidWindow()
-	{
-	}
-
-	void AndroidWindow::initialise()
-	{
 		EGLConfig config{ 0 };
 		EGLDisplay display = doInitialiseEGL( config );
 
@@ -79,18 +71,44 @@ namespace utils
 
 					glCheckError( glEnable, GL_TEXTURE_2D );
 					glCheckError( glFrontFace, GL_CCW );
-
-					if ( !m_state.empty() )
-					{
-						onRestore( m_state );
-						m_state.clear();
-					}
-
-					onCreate();
-
-					draw();
 				}
 			}
+		}
+	}
+
+	AndroidWindow::~AndroidWindow()
+	{
+		if ( m_context != EGL_NO_CONTEXT )
+		{
+			eglDestroyContext( m_display, m_context );
+		}
+		if ( m_surface != EGL_NO_SURFACE )
+		{
+			eglDestroySurface( m_display, m_surface );
+		}
+
+		eglTerminate( m_display );
+
+		m_display = EGL_NO_DISPLAY;
+		m_context = EGL_NO_CONTEXT;
+		m_surface = EGL_NO_SURFACE;
+	}
+
+	void AndroidWindow::initialise()
+	{
+		if ( m_context != EGL_NO_CONTEXT
+			&& m_surface != EGL_NO_SURFACE
+			&& m_display != EGL_NO_DISPLAY )
+		{
+			if ( !m_state.empty() )
+			{
+				onRestore( m_state );
+				m_state.clear();
+			}
+
+			onCreate();
+
+			draw();
 		}
 	}
 
@@ -103,22 +121,7 @@ namespace utils
 				, EGL_NO_SURFACE
 				, EGL_NO_CONTEXT );
 			onDestroy();
-
-			if ( m_context != EGL_NO_CONTEXT )
-			{
-				eglDestroyContext( m_display, m_context );
-			}
-			if ( m_surface != EGL_NO_SURFACE )
-			{
-				eglDestroySurface( m_display, m_surface );
-			}
-
-			eglTerminate( m_display );
 		}
-
-		m_display = EGL_NO_DISPLAY;
-		m_context = EGL_NO_CONTEXT;
-		m_surface = EGL_NO_SURFACE;
 	}
 
 	void AndroidWindow::draw()

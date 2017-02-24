@@ -31,36 +31,37 @@ namespace starmap
 		*\param[in] maxDisplayedStarNames
 		*	Nombre d'étoiles dont on va afficher le nom, parmi les étoiles
 		*	ayant la plus faible magnitude.
+		*\param[in] size
+		*	Les dimensions de la fenêtre.
+		*\param[in] loader
+		*	Le loader de police.
+		*\param[in] opacityMap
+		*	Le contenu de la texture d'opacité des étoiles.
 		*/
 		StarMap( ScreenEvents & events
-			, uint32_t maxDisplayedStarNames );
+			, uint32_t maxDisplayedStarNames
+			, gl::IVec2 const & size
+			, render::FontLoader & loader
+			, render::ByteArray const & opacityMap );
 		/**
 		*\brief
 		*	Restaure l'état de la carte du ciel.
-		*\param[in] state
+		*\param[in] save
 		*	L'état à récupérer.
 		*/
-		void restore( StarMapState const & state );
+		void restore( render::ByteArray const & save );
 		/**
 		*\brief
 		*	Sauvegarde l'état de la carte du ciel.
-		*\param[out] state
+		*\param[out] save
 		*	Reçoit l'état actuel.
 		*/
-		void save( StarMapState & state );
+		void save( render::ByteArray & save );
 		/**
 		*\brief
 		*	Initialise les données GPU.
-		*\param[in] size
-		*	Les dimensions de la fenêtre.
-		*\param[in] opacityMap
-		*	Le contenu de la texture d'opacité des étoiles.
-		*\param[in] loader
-		*	Le loader de police.
 		*/
-		void initialise( gl::IVec2 const & size
-			, render::ByteArray const & opacityMap
-			, render::FontLoader & loader );
+		void initialise();
 		/**
 		*\brief
 		*	Nettoie les données GPU.
@@ -349,7 +350,7 @@ namespace starmap
 		//! La polyligne contenant les constellations.
 		render::PolyLinePtr m_lines;
 		//! La fenêtre où s'effectue le rendu.
-		render::RenderWindowPtr m_window;
+		render::RenderWindow m_window;
 		//! Les étoiles.
 		StarArray m_stars;
 		//! Dit si les étoiles sont triées.

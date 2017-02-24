@@ -59,7 +59,7 @@ namespace utils
 		m_hwnd = ::CreateWindowExA( 0u
 			, className.c_str()
 			, title.c_str()
-			, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU
+			, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
 			, CW_USEDEFAULT
 			, 0
 			, CW_USEDEFAULT
@@ -113,6 +113,7 @@ namespace utils
 					wglMakeCurrent( m_hdc, m_context );
 					glCheckError( glEnable, GL_TEXTURE_2D );
 					glCheckError( glFrontFace, GL_CCW );
+					gl::OpenGL::initialise();
 					onCreate();
 					wglMakeCurrent( m_hdc, 0 );
 				}
@@ -135,9 +136,25 @@ namespace utils
 		m_context = NULL;
 	}
 
-	void MsWindow::doResize( gl::IVec2 const & size )
+	void MsWindow::doMinimise()
 	{
-		if ( m_size != size )
+		::KillTimer( m_hwnd, 1 );
+		m_timer = -1;
+		onMinimise();
+		m_minimised = true;
+	}
+
+	void MsWindow::doRestore( gl::IVec2 const & size )
+	{
+		if ( m_minimised )
+		{
+			m_size = size;
+			wglMakeCurrent( m_hdc, m_context );
+			onRestore( size );
+			::SetTimer( m_hwnd, 1, 17, NULL );
+			m_timer = 1;
+		}
+		else if ( m_size != size )
 		{
 			m_size = size;
 			onResize( m_size );
@@ -273,18 +290,12 @@ namespace utils
 				switch ( wParam )
 				{
 				case SIZE_MINIMIZED:
-					::KillTimer( m_hwnd, 1 );
-					m_timer = -1;
+					doMinimise();
 					break;
 
 				case SIZE_RESTORED:
 				case SIZE_MAXIMIZED:
-					doResize( { w, h } );
-					if ( m_timer == -1 )
-					{
-						::SetTimer( m_hwnd, 1, 17, NULL );
-						m_timer = 1;
-					}
+					doRestore( { w, h } );
 				}
 			}
 			break;

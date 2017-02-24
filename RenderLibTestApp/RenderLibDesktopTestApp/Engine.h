@@ -32,6 +32,16 @@ public:
 	void onDestroy()override;
 	/**
 	*\brief
+	*	Minimisation de la fenêtre.
+	*/
+	void onMinimise()override;
+	/**
+	*\brief
+	*	Réaffichage de la fenêtre après une minimisation.
+	*/
+	void onRestore( gl::IVec2 const & event )override;
+	/**
+	*\brief
 	*	Initialisation de la fenêtre.
 	*/
 	void onResize( gl::IVec2 const & event )override;
