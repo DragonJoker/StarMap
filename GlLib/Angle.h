@@ -77,8 +77,6 @@ namespace gl
 		*	Constructeur, à partir d'un angle en degrés.
 		*\param[in] value
 		*	L'angle, exprimé en degrés.
-		*\return
-		*	L'angle construit.
 		*/
 		explicit inline AngleT( DegreesT< T > const & value )noexcept
 			: m_radians{ toRadians( value ) }
@@ -90,8 +88,6 @@ namespace gl
 		*	Constructeur, à partir d'un angle en radians.
 		*\param[in] value
 		*	L'angle, exprimé en radians.
-		*\return
-		*	L'angle construit.
 		*/
 		inline AngleT( RadiansT< T > const & value )noexcept
 			: m_radians{ value }
