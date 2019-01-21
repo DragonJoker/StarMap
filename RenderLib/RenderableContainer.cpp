@@ -36,6 +36,27 @@ namespace render
 
 	RenderableContainer::~RenderableContainer()
 	{
+		doCleanup();
+	}
+
+	void RenderableContainer::doCleanup()
+	{
+		for ( auto & objects : m_renderObjects )
+		{
+			objects.clear();
+		}
+
+		for ( auto & billboards : m_renderBillboards )
+		{
+			billboards.clear();
+		}
+
+		for ( auto & billboards : m_pickBillboards )
+		{
+			billboards.clear();
+		}
+
+		m_lines.clear();
 		m_objects.clear();
 		m_billboards.clear();
 		m_renderer.cleanup();
@@ -145,6 +166,7 @@ namespace render
 		auto textures = billboard->material().textureFlags();
 		size_t flags = size_t( UberShader::nodeType( opacity, textures ) );
 		m_renderBillboards[flags].push_back( billboard );
+		m_pickBillboards[flags].push_back( billboard );
 		m_billboards.push_back( billboard );
 	}
 
@@ -175,6 +197,17 @@ namespace render
 		}
 
 		m_renderBillboards[flags].erase( itr );
+		auto itrp = std::find( m_pickBillboards[flags].begin()
+			, m_pickBillboards[flags].end()
+			, billboard );
+
+		if ( itrp == m_pickBillboards[flags].end() )
+		{
+			assert( false && "Billboard not found in the list" );
+			return;
+		}
+
+		m_pickBillboards[flags].erase( itrp );
 	}
 
 	void RenderableContainer::doAdd( PolyLinePtr lines )

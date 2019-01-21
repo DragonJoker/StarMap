@@ -333,7 +333,7 @@ namespace starmap
 				auto colour = bvToRgb( ci );
 				sNode->first_attribute( "spect" );
 				sNode->first_attribute( "con" );
-				starmap.add( Star{ name, mag, gl::Vec2{ ra, dec },colour } );
+				starmap.add( Star{ name, mag, gl::Vec2{ ra, dec }, colour } );
 				auto bf = doParseString( sNode->first_attribute( "bf" ) );
 				auto bayer = doParseString( sNode->first_attribute( "bayer" ) );
 				auto con = doParseString( sNode->first_attribute( "con" ) );

@@ -32,7 +32,7 @@ namespace render
 			}
 
 		private:
-			//! Les données du stockage.
+			//! Les donnï¿½es du stockage.
 			std::vector< BillboardBuffer::Quad > m_data;
 		};
 
@@ -117,45 +117,58 @@ namespace render
 
 		if ( buffer )
 		{
+			auto current = buffer;
 			auto count = 0u;
 			std::for_each( std::begin( m_buffer )
-				, std::begin( m_buffer ) + m_unculled
+				, std::begin( m_buffer ) + m_buffer.size()
 				, [&count
 					, &camera
 					, &position
 					, &scale
-					, &buffer
+					, &current
 					, this]( Quad const & quad )
 			{
 				if ( m_scale )
 				{
 					if ( camera.visible( quad[0].data.center + position ) )
 					{
-						auto & visible = buffer[count];
+						auto & visible = *current;
 						visible = quad;
+						//auto realScale = scale;
+						//auto realAlpha = 1.0f;
+						auto realScale = 1.5f;
+						auto realAlpha = scale;
 
-						visible[0].data.scale *= scale;
-						visible[1].data.scale *= scale;
-						visible[2].data.scale *= scale;
-						visible[3].data.scale *= scale;
-						visible[4].data.scale *= scale;
-						visible[5].data.scale *= scale;
+						visible[0].data.scale *= realScale;
+						visible[0].alpha /= realAlpha;
+						visible[1].data.scale *= realScale;
+						visible[1].alpha /= realAlpha;
+						visible[2].data.scale *= realScale;
+						visible[2].alpha /= realAlpha;
+						visible[3].data.scale *= realScale;
+						visible[3].alpha /= realAlpha;
+						visible[4].data.scale *= realScale;
+						visible[4].alpha /= realAlpha;
+						visible[5].data.scale *= realScale;
+						visible[5].alpha /= realAlpha;
 
 						count++;
+						++current;
 					}
 				}
 				else
 				{
 					if ( camera.visible( quad[0].data.center + position ) )
 					{
-						auto & visible = buffer[count];
+						auto & visible = *current;
 						visible = quad;
+						++current;
 					}
 
 					count++;
 				}
 			} );
-			m_count = count;
+			m_count = uint32_t( std::distance( buffer, current ) );
 		}
 
 		m_visible->unlock();
@@ -169,16 +182,17 @@ namespace render
 
 	void BillboardBuffer::add( BillboardData const & data )
 	{
+		static Range< float > const alphaRange{ makeRange( 0.0f, 10.0f ) };
 		float fid{ float( m_buffer.size() ) };
 		auto quad = Quad
 		{
 			{
-				Vertex{ data,{ -0.5, -0.5 }, fid },
-				Vertex{ data,{ +0.5, +0.5 }, fid },
-				Vertex{ data,{ +0.5, -0.5 }, fid },
-				Vertex{ data,{ -0.5, -0.5 }, fid },
-				Vertex{ data,{ -0.5, +0.5 }, fid },
-				Vertex{ data,{ +0.5, +0.5 }, fid },
+				Vertex{ data, 2.0f * alphaRange.invpercent( data.magnitude ), { -0.5, -0.5 }, fid },
+				Vertex{ data, 2.0f * alphaRange.invpercent( data.magnitude ), { +0.5, +0.5 }, fid },
+				Vertex{ data, 2.0f * alphaRange.invpercent( data.magnitude ), { +0.5, -0.5 }, fid },
+				Vertex{ data, 2.0f * alphaRange.invpercent( data.magnitude ), { -0.5, -0.5 }, fid },
+				Vertex{ data, 2.0f * alphaRange.invpercent( data.magnitude ), { -0.5, +0.5 }, fid },
+				Vertex{ data, 2.0f * alphaRange.invpercent( data.magnitude ), { +0.5, +0.5 }, fid },
 			}
 		};
 		m_buffer.push_back( quad );

@@ -8,6 +8,7 @@
 #define ___RenderLib_BillboardBuffer_HPP___
 #pragma once
 
+#include "Range.h"
 #include "RenderSignal.h"
 
 #include <array>
@@ -44,10 +45,14 @@ namespace render
 		{
 			//! Ses données.
 			BillboardData data;
+			//! Sa transparence.
+			float alpha;
 			//! Ses coordonnées de texture.
 			gl::Vec2 texture;
 			//! Son ID de billboard.
 			float id;
+			//! Si elle est highlight ou pas.
+			int highlight;
 		};
 		//! Un quad est composé de 6 sommets, pour l'afficher en tant que triangle.
 		using Quad = std::array< Vertex, 6 >;
@@ -169,7 +174,7 @@ namespace render
 		*\return
 		*	Le nombre de billboards à afficher (prend en compte le seuil).
 		*/
-		inline uint32_t count()const
+		inline uint32_t count( bool threshold = false )const
 		{
 			return m_count;
 		}

@@ -1,4 +1,4 @@
-﻿#include "PlaneEquation.h"
+#include "PlaneEquation.h"
 
 namespace render
 {
@@ -71,7 +71,7 @@ namespace render
 
 		if ( ! parallel( plane ) )
 		{
-			float def{};
+			float constexpr def{};
 			float b1 = m_normal[1];
 			float c1 = m_normal[2];
 			float d1 = m_d;

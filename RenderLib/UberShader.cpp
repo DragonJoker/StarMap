@@ -149,6 +149,8 @@ uniform vec4 colour;
 #ifdef TEXTURED
 [varying] vec2 vtx_texture;
 #endif
+[varying] float vtx_alpha;
+[varying] float vtx_highlight;
 
 void main()
 {
@@ -159,6 +161,8 @@ void main()
 #ifdef TEXTURED
 	vtx_texture = texture;
 #endif
+	vtx_alpha = 1.0;
+	vtx_highlight = 1.0;
 }
 )"
 			};
@@ -176,6 +180,7 @@ uniform float scale;
 #ifdef TEXTURED
 [varying] vec2 vtx_texture;
 #endif
+[varying] float vtx_alpha;
 
 void main()
 {
@@ -184,6 +189,7 @@ void main()
 	vtx_texture = texture + vec2( 0.5, 0.5 );
 #endif
 	vtx_instance = 0.0;
+	vtx_alpha = 1.0;
 }
 )"
 			};
@@ -192,7 +198,9 @@ void main()
 			{
 				R"([attribute] vec3 position;
 [attribute] vec2 scale;
+[attribute] float alpha;
 [attribute] vec2 texture;
+[attribute] float highlight;
 
 #ifdef LIGHTING
 [varying] vec3 vtx_normal;
@@ -200,6 +208,8 @@ void main()
 #ifdef TEXTURED
 [varying] vec2 vtx_texture;
 #endif
+[varying] float vtx_alpha;
+[varying] float vtx_highlight;
 
 void main()
 {
@@ -221,6 +231,8 @@ void main()
 #ifdef TEXTURED
 	vtx_texture = texture + vec2( 0.5, 0.5 );
 #endif
+	vtx_alpha = alpha * 2.0;
+	vtx_highlight = highlight;
 }
 )"
 			};
@@ -229,6 +241,7 @@ void main()
 			{
 				R"([attribute] vec3 position;
 [attribute] vec2 scale;
+[attribute] float alpha;
 [attribute] vec2 texture;
 [attribute] float id;
 
@@ -236,22 +249,25 @@ void main()
 #ifdef TEXTURED
 [varying] vec2 vtx_texture;
 #endif
+[varying] float vtx_alpha;
 
 void main()
 {
 	vec4 mPosition = mtxModel * vec4( position, 1.0 );
 	vec3 right = vec3( mtxView[0][0], mtxView[1][0], mtxView[2][0] );
 	vec3 up = -vec3( mtxView[0][1], mtxView[1][1], mtxView[2][1] );
-	float width = dimensions.x;
-	float height = dimensions.y;
-	mPosition.xyz += ( right * texture.x * width * scale.x )
-			+ ( up * texture.y * height * scale.y );
+	vec3 width = ( right * texture.x * 10.0 );
+	vec3 height = ( up * texture.y * 10.0 );
+	//vec3 width = ( right * texture.x * dimension.x );
+	//vec3 height = ( up * texture.y * dimension.y );
+	mPosition.xyz += width + height;
 	vec4 mvPosition = mtxView * mPosition;
 	gl_Position = mtxProjection * mvPosition;
 #ifdef TEXTURED
 	vtx_texture = texture + vec2( 0.5, 0.5 );
 #endif
 	vtx_instance = float( id );
+	vtx_alpha = alpha;
 }
 )"
 			};
@@ -556,6 +572,8 @@ uniform sampler2D mapOpacity;
 #ifdef TEXTURED
 [varying] vec2 vtx_texture;
 #endif
+[varying] float vtx_alpha;
+[varying] float vtx_highlight;
 
 void main()
 {
@@ -576,6 +594,8 @@ void main()
 	pxl_fragColour.a = 1.0;
 #	endif
 #endif
+	pxl_fragColour.rgb *= clamp( vtx_alpha, 0.0, 1.0 );
+	pxl_fragColour.rgb *= 1.0 + vtx_highlight * step( 1.0, vtx_alpha );
 	[gl_FragColor] = pxl_fragColour;
 }
 )"
@@ -642,6 +662,7 @@ vec4 packPixel( int drawIndex, int nodeIndex, int instIndex )
 #ifdef TEXTURED
 [varying] vec2 vtx_texture;
 #endif
+[varying] float vtx_alpha;
 
 #ifdef OPACITY_MAP
 uniform sampler2D mapOpacity;
@@ -654,7 +675,7 @@ void main()
 #	ifdef OPACITY_MAP
 	alpha = [texture2D]( mapOpacity, vtx_texture ).r;
 #	endif
-	if ( alpha < 0.5 )
+	if ( alpha * vtx_alpha < 0.5 )
 	{
 		discard;
 	}

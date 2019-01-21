@@ -1,14 +1,21 @@
 #include "pch.h"
 #include "OpenGL.h"
+#include "GlDebug.h"
 
 #include "GlSampler.h"
 
 namespace gl
 {
+#if !defined( NDEBUG )
+
+	Debug OpenGL::m_debug;
+
+#endif
+
 	FeatureLevel OpenGL::m_level{ FeatureLevel::eUndefined };
 	std::string OpenGL::m_version;
 
-	void OpenGL::initialise()
+	bool OpenGL::initialise()
 	{
 		auto string = glGetString( GL_VERSION );
 		m_version = reinterpret_cast< char const * >( string );
@@ -51,6 +58,28 @@ namespace gl
 		string = glGetString( GL_RENDERER );
 		auto renderer = reinterpret_cast< char const * >( string );
 		std::clog << "    Renderer: " << renderer << std::endl;
+
+		auto result = m_level != FeatureLevel::eUndefined;
+
+#if _WIN32
+
+		glewExperimental = GL_TRUE;
+		auto err = glewInit();
+
+		if ( err != GLEW_NO_ERROR )
+		{
+			result = false;
+			std::cerr << "GLEW initialisation failed: " << glewGetErrorString( err ) << std::endl;
+		}
+
+#endif
+#if !defined( NDEBUG )
+
+		m_debug.initialise();
+
+#endif
+
+		return result;
 	}
 
 	bool OpenGL::hasInstancing()noexcept

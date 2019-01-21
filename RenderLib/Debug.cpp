@@ -13,6 +13,7 @@ namespace render
 	namespace
 	{
 		static std::string const Time = "Debug_Time";
+		static std::string const Fps = "Debug_FPS";
 		static std::string const Version = "Debug_Version";
 		static std::string const BillboardCount = "Debug_BillboardCount";
 		static std::string const BufferCount = "Debug_BufferCount";
@@ -47,14 +48,20 @@ namespace render
 			m_time->fontTexture( *m_fontTexture );
 			m_scene->overlays().addElement( Time, m_time );
 
+			m_fps = std::make_shared< TextOverlay >();
+			m_fps->position( { 0, 80 } );
+			m_fps->material( material );
+			m_fps->fontTexture( *m_fontTexture );
+			m_scene->overlays().addElement( Fps, m_fps );
+
 			m_billboardCount = std::make_shared< TextOverlay >();
-			m_billboardCount->position( { 0, 80 } );
+			m_billboardCount->position( { 0, 120 } );
 			m_billboardCount->material( material );
 			m_billboardCount->fontTexture( *m_fontTexture );
 			m_scene->overlays().addElement( BillboardCount, m_billboardCount );
 
 			m_buffersCount = std::make_shared< TextOverlay >();
-			m_buffersCount->position( { 0, 120 } );
+			m_buffersCount->position( { 0, 160 } );
 			m_buffersCount->material( material );
 			m_buffersCount->fontTexture( *m_fontTexture );
 			m_scene->overlays().addElement( BufferCount, m_buffersCount );
@@ -66,6 +73,7 @@ namespace render
 		if ( m_enabled )
 		{
 			m_time.reset();
+			m_fps.reset();
 			m_buffersCount.reset();
 			m_billboardCount.reset();
 			m_version.reset();
@@ -91,9 +99,16 @@ namespace render
 		{
 			auto end = Clock::now();
 			auto duration = std::chrono::duration_cast< std::chrono::microseconds >( end - m_startTime );
-			std::stringstream stream;
-			stream << std::fixed << std::setprecision( 2 ) << duration.count() / 1000.0 << "ms";
-			m_time->caption( "Time: " + stream.str() );
+			{
+				std::stringstream stream;
+				stream << std::fixed << std::setprecision( 2 ) << duration.count() / 1000.0 << "ms";
+				m_time->caption( "Time: " + stream.str() );
+			}
+			{
+				std::stringstream stream;
+				stream << std::fixed << std::setprecision( 2 ) << 1000.0 / ( duration.count() / 1000.0 );
+				m_fps->caption( "Fps: " + stream.str() );
+			}
 		}
 	}
 

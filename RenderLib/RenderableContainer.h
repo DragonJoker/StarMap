@@ -99,8 +99,21 @@ namespace render
 		{
 			return m_renderBillboards;
 		}
+		/**
+		*\return
+		*	La liste de billboards dessinés.
+		*/
+		inline RenderBillboardArray const & pickBillboards()const noexcept
+		{
+			return m_pickBillboards;
+		}
 
 	protected:
+		/**
+		*\brief
+		*	Vide le conteneur.
+		*/
+		void doCleanup();
 		/**
 		*\brief
 		*	Dessine les objets de la scène, à travers la vue de la caméra.
@@ -167,6 +180,8 @@ namespace render
 		RenderSubmeshArray m_renderObjects;
 		//! Les instances de billboards à dessiner.
 		RenderBillboardArray m_renderBillboards;
+		//! Les instances de billboards à pick.
+		RenderBillboardArray m_pickBillboards;
 	};
 }
 

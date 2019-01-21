@@ -264,6 +264,14 @@ namespace render
 			return m_threshold.range();
 		}
 		/**
+		*\return
+		*	L'intervalle de valeurs pour le seuil d'affichage.
+		*/
+		inline Range< float > const & range()const noexcept
+		{
+			return m_range;
+		}
+		/**
 		*\brief
 		*	Définit l'intervalle de valeurs pour le seuil d'affichage.
 		*/
@@ -337,6 +345,8 @@ namespace render
 			std::numeric_limits< float >::infinity(),
 			makeRange( -30.0f, 30.0f )
 		};
+		//! L'intervalle d'agrandissement des objets.
+		Range< float > m_range{ makeRange( 0.0f, 8.0f ) };
 		//! La liste de nouveaux tampons de billboards.
 		std::vector< BillboardBufferPtr > m_newBillboardBuffers;
 		//! Les Movable qui ont changé.
@@ -345,13 +355,6 @@ namespace render
 		std::map< Movable *, Connection< OnMovableChanged > > m_onMovableChanged;
 		//! Dit si la caméra a changé entre 2 updates.
 		bool m_cameraChanged{ true };
-
-#if !defined( NDEBUG )
-
-		//! Le contexte de débogage OpenGL.
-		gl::Debug m_debug;
-
-#endif
 	};
 }
 

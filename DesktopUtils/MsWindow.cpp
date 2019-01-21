@@ -113,7 +113,6 @@ namespace utils
 					wglMakeCurrent( m_hdc, m_context );
 					glCheckError( glEnable, GL_TEXTURE_2D );
 					glCheckError( glFrontFace, GL_CCW );
-					gl::OpenGL::initialise();
 					onCreate();
 					wglMakeCurrent( m_hdc, 0 );
 				}
@@ -200,11 +199,9 @@ namespace utils
 
 		wglMakeCurrent( hdc, context );
 
-		auto err = glewInit();
 
-		if ( err != GLEW_NO_ERROR )
+		if ( !gl::OpenGL::initialise() )
 		{
-			std::cout << "GLEW initialisation failed: " << glewGetErrorString( err ) << std::endl;
 			wglMakeCurrent( hdc, 0 );
 		}
 		else

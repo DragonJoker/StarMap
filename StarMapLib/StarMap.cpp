@@ -40,6 +40,13 @@ namespace starmap
 		{
 			return std::string{ str.data(), strlen( str.data() ) };
 		}
+
+		std::ostream & operator <<( std::ostream & stream, Star const & star )
+		{
+			stream << star.name() << "\n"
+				<< "Magnitude : " << star.magnitude();
+			return stream;
+		}
 	}
 
 	StarMap::StarMap( ScreenEvents & events
@@ -47,35 +54,35 @@ namespace starmap
 		, gl::IVec2 const & size
 		, render::FontLoader & loader
 		, render::ByteArray const & opacityMap )
-		: m_onPick{ events.onPick.connect
-		( [this]( gl::IVec2 const & coord )
-		{
-			if ( m_pickedStar )
+		: m_onPick{ events.onPick.connect( [this]( gl::IVec2 const & coord )
 			{
-				onUnpick();
-			}
-			else
+				if ( m_pickedStar )
+				{
+					onUnpick();
+				}
+				else
+				{
+					m_window.pick( coord );
+				}
+			} ) }
+		, m_onReset{ events.onReset.connect( [this]()
 			{
-				m_window.pick( coord );
-			}
-		} ) }
-		, m_onReset{ events.onReset.connect
-		( [this]()
-		{
-			m_window.state().reset();
-		} ) }
-		, m_onSetVelocity{ events.onSetVelocity.connect
-		( [this]( gl::IVec2 const & value )
-		{
-			m_window.state().velocity( gl::Vec2{ value } );
-		} ) }
-		, m_onSetZoomVelocity{ events.onSetZoomVelocity.connect
-		( [this]( float value )
-		{
-			m_window.state().zoomVelocity( value );
-		} ) }
+				m_window.state().reset();
+			} ) }
+		, m_onSetVelocity{ events.onSetVelocity.connect( [this]( gl::IVec2 const & value )
+			{
+				m_window.state().velocity( gl::Vec2{ value } );
+			} ) }
+		, m_onSetZoomVelocity{ events.onSetZoomVelocity.connect( [this]( float value )
+			{
+				m_window.state().zoomVelocity( value );
+			} ) }
 		, m_maxDisplayedStarNames{ maxDisplayedStarNames }
+#if 1 || !defined( NDEBUG )
 		, m_window{ size, loader, true }
+#else
+		, m_window{ size, loader, false }
+#endif
 	{
 		doLoadFontTextures( loader );
 		doLoadOpacityMap( opacityMap );
@@ -203,8 +210,10 @@ namespace starmap
 		if ( !m_stars.empty() )
 		{
 			doSortStars();
-			auto range = render::makeRange( m_stars.begin()->magnitude()
-				, m_stars.rbegin()->magnitude() );
+			//auto range = render::makeRange( m_stars.begin()->magnitude()
+			//	, m_stars.rbegin()->magnitude() );
+			auto range = render::makeRange( 0.0f
+				, m_stars.rbegin()->magnitude() / 2.0f );
 			m_window.scene().thresholdBounds( 4.0f, 21.0f );
 
 			for ( auto & star : m_stars )
@@ -410,8 +419,7 @@ namespace starmap
 				} );
 
 			std::stringstream stream;
-			stream << star.name() << "\n"
-				<< "Magnitude : " << star.magnitude();
+			stream << star;
 
 			if ( it != std::end( m_constellations ) )
 			{
@@ -822,9 +830,9 @@ namespace starmap
 			std::sort( std::begin( m_stars )
 				, std::end( m_stars )
 				, []( Star const & lhs, Star const & rhs )
-			{
-				return lhs.magnitude() < rhs.magnitude();
-			} );
+				{
+					return lhs.magnitude() < rhs.magnitude();
+				} );
 
 			uint32_t index{ 0u };
 
@@ -833,6 +841,8 @@ namespace starmap
 				star.index( index++ );
 			}
 
+			std::cout << "Most shiny star: " << m_stars.front() << std::endl;
+			std::cout << "Least shiny star: " << m_stars.back() << std::endl;
 			m_sorted = true;
 		}
 	}

@@ -10,6 +10,7 @@
 
 #include "BillboardBuffer.h"
 #include "Movable.h"
+#include "Range.h"
 
 namespace render
 {

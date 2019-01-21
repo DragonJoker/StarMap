@@ -73,6 +73,8 @@ namespace render
 		render::Scene * m_scene{ nullptr };
 		//! L'incrustation contenant le temps de rendu d'une frame.
 		render::TextOverlayPtr m_time;
+		//! L'incrustation contenant le nombre de frame par secondes.
+		render::TextOverlayPtr m_fps;
 		//! L'incrustation contenant la version d'OpenGL.
 		render::TextOverlayPtr m_version;
 		//! L'incrustation contenant le nombre de billboards affichés.

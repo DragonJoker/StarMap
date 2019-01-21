@@ -131,6 +131,9 @@ namespace render
 		, m_scale{ m_program->createAttribute< gl::Vec2 >( "scale"
 			, sizeof( BillboardBuffer::Vertex )
 			, offsetof( BillboardData, scale ) ) }
+		, m_alpha{ m_program->createAttribute< float >( "alpha"
+			, sizeof( BillboardBuffer::Vertex )
+			, offsetof( BillboardBuffer::Vertex, alpha ) ) }
 		, m_texture{ m_program->createAttribute< gl::Vec2 >( "texture"
 			, sizeof( BillboardBuffer::Vertex )
 			, offsetof( BillboardBuffer::Vertex, texture ) ) }
@@ -358,7 +361,7 @@ namespace render
 			for ( auto & billboard : billboards )
 			{
 				if ( billboard->visible()
-					&& billboard->buffer().count() )
+					&& billboard->buffer().count( true ) )
 				{
 					node.m_mtxModel->value( billboard->transform() );
 					node.m_nodeIndex->value( id );
@@ -369,14 +372,16 @@ namespace render
 					billboard->buffer().vbo().bind();
 					node.m_position->bind();
 					node.m_scale->bind();
+					node.m_alpha->bind();
 					node.m_texture->bind();
 					node.m_id->bind();
 					glCheckError( glDrawArrays
 						, GL_TRIANGLES
 						, 0
-						, billboard->buffer().count() * 6 );
+						, billboard->buffer().count( true ) * 6 );
 					node.m_id->unbind();
 					node.m_texture->unbind();
+					node.m_alpha->unbind();
 					node.m_scale->unbind();
 					node.m_position->unbind();
 					billboard->buffer().vbo().unbind();

@@ -121,6 +121,8 @@ namespace render
 			gl::Vec3AttributePtr m_position;
 			//! Attribut d'échelle.
 			gl::Vec2AttributePtr m_scale;
+			//! Attribut d'opacité.
+			gl::FloatAttributePtr m_alpha;
 			//! Attribut de coordonnées de texture.
 			gl::Vec2AttributePtr m_texture;
 			//! Attribut d'identifiant.

@@ -99,7 +99,7 @@ namespace render
 			, m_scene.camera()
 			, state().zoomBounds().percent( state().zoom() )
 			, m_scene.renderObjects()
-			, m_scene.renderBillboards() );
+			, m_scene.pickBillboards() );
 		doRenderTextureToScreen( m_picking.texture() );
 #endif
 

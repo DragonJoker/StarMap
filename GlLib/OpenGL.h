@@ -40,7 +40,7 @@ namespace gl
 		*	Récupère la version et détermine le niveau de fonctionnalités
 		*	associé.
 		*/
-		static void initialise();
+		static bool initialise();
 		/**
 		*\return
 		*	Dit si la version d'OpenGL chargée supporte l'instanciation
@@ -88,6 +88,13 @@ namespace gl
 		static FeatureLevel m_level;
 		//! La chaine contenant le numéro de version.
 		static std::string m_version;
+
+#if !defined( NDEBUG )
+
+		//! Le contexte de débogage OpenGL.
+		static Debug m_debug;
+
+#endif
 	};
 }
 

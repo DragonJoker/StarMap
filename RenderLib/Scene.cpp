@@ -52,12 +52,6 @@ namespace render
 			material->opacity( 1.0f );
 			m_materials.addElement( "FullAlphaWhite", material );
 		}
-
-#if !defined( NDEBUG )
-
-		m_debug.initialise();
-
-#endif
 	}
 
 	Scene::~Scene()
@@ -70,6 +64,7 @@ namespace render
 		m_materials.clear();
 		m_meshes.clear();
 		m_textures.clear();
+		doCleanup();
 	}
 
 	void Scene::update()

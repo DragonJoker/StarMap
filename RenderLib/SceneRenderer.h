@@ -121,8 +121,12 @@ namespace render
 			gl::Vec3AttributePtr m_position;
 			//! Attribut d'échelle.
 			gl::Vec2AttributePtr m_scale;
+			//! Attribut d'opacité.
+			gl::FloatAttributePtr m_alpha;
 			//! Attribut de coordonnées de texture.
 			gl::Vec2AttributePtr m_texture;
+			//! Attribut d'highlight.
+			gl::FloatAttributePtr m_highlight;
 		};
 		//! Un pointeur sur un BillboardNode.
 		using BillboardNodePtr = std::unique_ptr< BillboardNode >;
