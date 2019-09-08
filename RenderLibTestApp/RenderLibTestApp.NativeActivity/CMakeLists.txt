@@ -1,11 +1,5 @@
 project( RenderLibTestApp.NativeActivity )
 
-include( AndroidNdkModules )
-
-find_package( OpenGLES3 )
-
-android_ndk_import_module_native_app_glue()
-
 set( ${PROJECT_NAME}_SRC_FILES 
 	${CMAKE_CURRENT_SOURCE_DIR}/Engine.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
@@ -26,7 +20,7 @@ include_directories(
 
 add_library( ${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SRC_FILES} ${${PROJECT_NAME}_HDR_FILES} )
 target_link_libraries( ${PROJECT_NAME}
-  native_app_glue
+	native_app_glue
 	AndroidUtils
 	FreeType
 	RenderLib

@@ -256,11 +256,10 @@ void main()
 	vec4 mPosition = mtxModel * vec4( position, 1.0 );
 	vec3 right = vec3( mtxView[0][0], mtxView[1][0], mtxView[2][0] );
 	vec3 up = -vec3( mtxView[0][1], mtxView[1][1], mtxView[2][1] );
-	vec3 width = ( right * texture.x * 10.0 );
-	vec3 height = ( up * texture.y * 10.0 );
-	//vec3 width = ( right * texture.x * dimension.x );
-	//vec3 height = ( up * texture.y * dimension.y );
-	mPosition.xyz += width + height;
+	float width = dimensions.x;
+	float height = dimensions.y;
+	mPosition.xyz += ( right * texture.x * width * scale.x )
+			+ ( up * texture.y * height * scale.y );
 	vec4 mvPosition = mtxView * mPosition;
 	gl_Position = mtxProjection * mvPosition;
 #ifdef TEXTURED

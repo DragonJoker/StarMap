@@ -480,7 +480,7 @@ namespace starmap
 			starsMat->ambient( holder.m_colour );
 			starsMat->diffuse( holder.m_colour );
 			starsMat->emissive( holder.m_colour );
-			starsMat->alphaTest( true );
+			//starsMat->alphaTest( true );
 			scene.materials().addElement( sstars, starsMat );
 
 			auto halosMat = std::make_shared< render::Material >();

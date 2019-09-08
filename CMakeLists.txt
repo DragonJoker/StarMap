@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 2.8 )
+cmake_minimum_required( VERSION 3.7 )
 
 set( MAIN_PROJECT_NAME "StarMap" )
 
@@ -59,6 +59,12 @@ endmacro( source_add_forced_include )
 
 if ( MSVC )
 	string( REGEX REPLACE "/Zi" "/ZI" CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG} )
+endif ()
+
+if ( ANDROID )
+	include( AndroidNdkModules )
+	find_package( OpenGLES3 )
+	android_ndk_import_module_native_app_glue()
 endif ()
 
 add_subdirectory( GlLib )

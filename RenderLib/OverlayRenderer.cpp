@@ -153,7 +153,7 @@ namespace render
 	//*************************************************************************
 
 	OverlayRenderer::OverlayRenderer( uint32_t maxCharsPerBuffer )
-		: m_panelNodes{ doCreatePanelNodes() }
+		: m_panelNodes( doCreatePanelNodes() )
 		, m_textNode{ true, OpacityType::eAlphaTest, TextureFlag::eOpacity }
 		, m_pipeline{ true, false, true, true }
 		, m_panelBuffer{ gl::makeBuffer( gl::BufferTarget::eArrayBuffer
