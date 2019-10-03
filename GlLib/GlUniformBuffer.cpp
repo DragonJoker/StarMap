@@ -5,6 +5,7 @@
 #include "OpenGL.h"
 
 #include <algorithm>
+#include <cstring>
 
 #define DEBUG_UBO 0
 

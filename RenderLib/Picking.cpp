@@ -8,6 +8,8 @@
 #include "Submesh.h"
 #include "Viewport.h"
 
+#include <cstring>
+
 namespace render
 {
 	namespace

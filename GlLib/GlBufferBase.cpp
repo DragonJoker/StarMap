@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GlBufferBase.h"
 
+#include <cstring>
+
 namespace gl
 {
 	namespace

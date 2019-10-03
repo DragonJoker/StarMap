@@ -1,5 +1,7 @@
 #include "FontTexture.h"
 
+#include <cstring>
+
 namespace render
 {
 	namespace
